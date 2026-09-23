@@ -219,10 +219,64 @@ function showToast(message, duration = 2800) {
 }
 
 // ============================================
-// INIT: Update cart badge on page load
+// WISHLIST STATE & HELPER
+// ============================================
+const WISHLIST_KEY = 'luxury_wishlist';
+
+const Wishlist = {
+  get() {
+    try {
+      return JSON.parse(localStorage.getItem(WISHLIST_KEY)) || [];
+    } catch {
+      return [];
+    }
+  },
+  has(productId) {
+    return this.get().includes(productId);
+  },
+  toggle(productId) {
+    let items = this.get();
+    const index = items.indexOf(productId);
+    let added = false;
+    if (index >= 0) {
+      items.splice(index, 1);
+      added = false;
+    } else {
+      items.push(productId);
+      added = true;
+    }
+    localStorage.setItem(WISHLIST_KEY, JSON.stringify(items));
+    this.updateUI();
+    return added;
+  },
+  getCount() {
+    return this.get().length;
+  },
+  updateUI() {
+    const count = this.getCount();
+    document.querySelectorAll('.wishlist-count').forEach(el => {
+      el.textContent = count;
+      el.style.display = count > 0 ? 'flex' : 'none';
+    });
+    const items = this.get();
+    document.querySelectorAll('.card-wishlist').forEach(btn => {
+      const card = btn.closest('.product-card');
+      const href = card?.querySelector('.card-name a')?.getAttribute('href') || '';
+      const slugMatch = href.match(/id=([^&]+)/);
+      if (slugMatch) {
+        const p = typeof getProductBySlug === 'function' ? getProductBySlug(slugMatch[1]) : null;
+        if (p) btn.classList.toggle('favorited', items.includes(p.id));
+      }
+    });
+  }
+};
+
+// ============================================
+// INIT: Update cart badge and wishlist on page load
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
   Cart.updateUI();
+  Wishlist.updateUI();
 
   // Cart icon click
   document.querySelectorAll('[data-open-cart]').forEach(btn => {
@@ -236,4 +290,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // Close button
   const closeBtn = document.getElementById('cart-close-btn');
   if (closeBtn) closeBtn.addEventListener('click', closeCart);
+
+  // Global card wishlist clicks
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.card-wishlist');
+    if (btn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const card = btn.closest('.product-card');
+      const href = card?.querySelector('.card-name a')?.getAttribute('href') || '';
+      const slugMatch = href.match(/id=([^&]+)/);
+      if (slugMatch) {
+        const p = typeof getProductBySlug === 'function' ? getProductBySlug(slugMatch[1]) : null;
+        if (p) {
+          const added = Wishlist.toggle(p.id);
+          btn.classList.toggle('favorited', added);
+          showToast(added ? `${p.name} agregado a favoritos` : `${p.name} eliminado de favoritos`);
+        }
+      }
+    }
+  });
 });

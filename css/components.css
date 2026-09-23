@@ -1194,8 +1194,9 @@
   stroke-linejoin: round;
 }
 
-/* Cart Badge */
-.cart-count {
+/* Cart & Wishlist Badge */
+.cart-count,
+.wishlist-count {
   position: absolute;
   top: 0;
   right: 0;
@@ -2502,25 +2503,37 @@
 .size-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-bottom: var(--space-8);
+  gap: 10px;
+  margin-bottom: var(--space-6);
 }
 
 .size-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 48px;
   height: 48px;
   min-width: 48px;
-  padding: 0 0.5rem;
+  padding: 0;
   border: 1px solid var(--color-border);
-  background: transparent;
+  background: #ffffff;
   font-family: var(--font-sans);
   font-size: 0.85rem;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--color-text-primary);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.size-btn:hover {
+  border-color: var(--color-black);
+}
+
+.size-btn.selected {
+  background: var(--color-black) !important;
+  border-color: var(--color-black) !important;
+  color: #ffffff !important;
 }
 
 .quantity-selector {
@@ -2573,10 +2586,36 @@
 }
 
 .product-actions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  display: grid !important;
+  grid-template-columns: 1fr 54px !important;
+  gap: 12px !important;
   margin-bottom: var(--space-8);
+  align-items: stretch;
+}
+
+.btn-heart {
+  width: 54px;
+  height: 54px;
+  border: 1px solid var(--color-border);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.btn-heart:hover {
+  border-color: var(--color-black);
+}
+
+.btn-heart.favorited svg,
+.btn-heart.active svg,
+.card-wishlist.favorited svg {
+  fill: #e02424 !important;
+  stroke: #e02424 !important;
 }
 
 /* ============================================

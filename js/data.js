@@ -28,7 +28,7 @@ const CONFIG = {
 // FUNCIÓN HELPER: FORMATEAR PRECIO
 // ============================================
 function formatPrice(amount) {
-  return CONFIG.currencySymbol + amount.toLocaleString(CONFIG.currencyLocale);
+  return CONFIG.currencySymbol + ' ' + amount.toLocaleString(CONFIG.currencyLocale);
 }
 
 // ============================================

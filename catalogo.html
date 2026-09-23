@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo — URBANO</title>
+  <meta name="description" content="Explora el catálogo completo de URBANO. Camisetas, camibusos tipo polo, pantalonetas y jeans de calidad premium.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+<div class="scroll-progress"></div>
+
+<!-- Header -->
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+    <a href="index.html" class="site-logo"><span class="logo-text">URBAN<span class="logo-dot">O</span></span></a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="catalogo.html" class="nav-link active">Catálogo</a>
+      <a href="catalogo.html" class="nav-link">Categorías</a>
+      <a href="index.html#nosotros" class="nav-link">Nosotros</a>
+      <a href="index.html#contacto" class="nav-link">Contacto</a>
+    </nav>
+    <div class="header-actions">
+      <a href="catalogo.html" class="header-icon-btn" aria-label="Buscar">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </a>
+      <button class="header-icon-btn" aria-label="Favoritos">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <button class="header-icon-btn" data-open-cart aria-label="Carrito">
+        <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count" id="cart-count" style="display:none">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <a href="index.html">Inicio</a>
+  <a href="catalogo.html">Catálogo</a>
+  <a href="index.html#nosotros">Nosotros</a>
+  <a href="index.html#contacto">Contacto</a>
+</nav>
+
+<!-- ============================================
+     CATALOG HEADER
+     ============================================ -->
+<main class="catalog-page page-enter">
+  <div class="container">
+
+    <div class="catalog-header">
+      <p class="section-overline" data-reveal>Nuestra tienda</p>
+      <h1 class="section-title" style="font-size:clamp(2.5rem,5vw,4.5rem)" data-reveal>La Colección</h1>
+
+      <!-- Toolbar -->
+      <div class="catalog-toolbar">
+        <div class="catalog-toolbar-left">
+          <button class="filter-trigger-btn" id="filter-trigger-btn">
+            <svg viewBox="0 0 24 24"><path d="M3 6h18M7 12h10M10 18h4"/></svg>
+            FILTROS
+            <span class="filter-count-badge" id="filter-count-badge">0</span>
+          </button>
+          <span class="product-count-text" id="product-count">0 prendas</span>
+        </div>
+        <div class="catalog-toolbar-right">
+          <div class="catalog-search-wrap">
+            <svg class="catalog-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" id="catalog-search" class="catalog-search-input" placeholder="Buscar prendas..." autocomplete="off">
+            <button class="catalog-search-clear" id="catalog-search-clear" aria-label="Limpiar búsqueda">
+              <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <select class="sort-select" id="sort-select" aria-label="Ordenar por">
+            <option value="featured">Destacados</option>
+            <option value="newest">Más recientes</option>
+            <option value="price-asc">Precio: Menor a Mayor</option>
+            <option value="price-desc">Precio: Mayor a Menor</option>
+            <option value="name-asc">Nombre: A-Z</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid" id="catalog-grid" style="margin-bottom:5rem">
+      <!-- Rendered by JS -->
+    </div>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">URBAN<span style="color:var(--color-accent)">O</span></a>
+        <p class="footer-tagline">Ropa urbana y elegante para el hombre moderno.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="social-icon" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Tienda</h4>
+        <div class="footer-links">
+          <a href="catalogo.html">Catálogo</a>
+          <a href="catalogo.html?cat=camisetas">Camisetas</a>
+          <a href="catalogo.html?cat=polos">Camibusos Polo</a>
+          <a href="catalogo.html?cat=pantalonetas">Pantalonetas</a>
+          <a href="catalogo.html?cat=jeans">Jeans</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Contacto</h4>
+        <div class="footer-links">
+          <a href="#">WhatsApp</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">© 2026 URBANO. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Sidebar -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<aside class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header">
+    <h2 class="cart-title">Tu Carrito</h2>
+    <button class="cart-close" id="cart-close-btn"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <div class="cart-items" id="cart-items-container">
+    <div class="cart-empty" id="cart-empty">
+      <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <div><p style="font-weight:600;margin-bottom:.5rem">Tu carrito está vacío</p><p style="font-size:.875rem;color:var(--color-text-secondary)">Agrega prendas para continuar</p></div>
+      <a href="catalogo.html" class="btn btn-primary" onclick="closeCart()">Explorar Catálogo</a>
+    </div>
+  </div>
+  <div class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-totals">
+      <div class="cart-total-row"><span>Subtotal</span><span id="cart-subtotal">$0</span></div>
+      <div class="cart-total-row total"><span>Total</span><span id="cart-total">$0</span></div>
+    </div>
+    <a href="checkout.html" class="btn btn-primary btn-full">Finalizar Pedido</a>
+  </div>
+</aside>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/573000000000" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/filters.js"></script>
+
+<!-- Filter Drawer -->
+<div class="filter-overlay" id="filter-overlay"></div>
+<aside class="filter-drawer" id="filter-drawer">
+  <div class="fdrawer-topbar">
+    <span class="fdrawer-topbar-label">Filtros</span>
+    <button class="fdrawer-close-btn" id="fdrawer-close-btn" aria-label="Cerrar filtros">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  
+  <div class="fdrawer-title">Filtros</div>
+  
+  <div class="fdrawer-body">
+    
+    <div class="fdrawer-section">
+      <div class="fdrawer-section-label">Categoría</div>
+      <div class="fdrawer-cat-list" id="fdrawer-cat-list">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <div class="fdrawer-section">
+      <div class="fdrawer-section-label">Talla</div>
+      <div class="fdrawer-size-grid" id="fdrawer-size-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <div class="fdrawer-section">
+      <div class="fdrawer-section-label">Precio Máximo</div>
+      <input type="range" class="fdrawer-price-range" id="fdrawer-price-range" min="0" max="100000" step="1000">
+      <div class="fdrawer-price-display" id="fdrawer-price-display">$0</div>
+    </div>
+
+    <div class="fdrawer-section">
+      <label class="fdrawer-checkbox-row">
+        <input type="checkbox" id="fdrawer-available">
+        Mostrar solo prendas disponibles
+      </label>
+    </div>
+
+  </div>
+
+  <div class="fdrawer-footer">
+    <button class="fdrawer-clear-btn" id="fdrawer-clear-btn">Limpiar Filtros</button>
+  </div>
+</aside>
+
+<!-- Quick Select Modal -->
+<div class="qs-overlay" id="qs-overlay"></div>
+<div class="qs-modal" id="qs-modal" role="dialog" aria-modal="true" aria-label="Selección de talla y color">
+  <div class="qs-header">
+    <h3 class="qs-title" id="qs-modal-title">Elige tu talla</h3>
+    <button class="qs-close" id="qs-close-btn" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="qs-body">
+    <div class="qs-product-row">
+      <img class="qs-product-img" id="qs-img" src="" alt="">
+      <div class="qs-product-info">
+        <div class="qs-product-name" id="qs-name"></div>
+        <div class="qs-product-price" id="qs-price"></div>
+        <a id="qs-detail-link" href="#" style="font-size:0.75rem;color:var(--color-text-secondary);text-decoration:underline;margin-top:0.35rem;display:inline-block">Ver detalle completo</a>
+      </div>
+    </div>
+    <div class="qs-section">
+      <div class="qs-label"><span>Talla</span><span class="qs-selected-val" id="qs-size-val">—</span></div>
+      <div class="qs-sizes" id="qs-sizes"></div>
+    </div>
+    <div class="qs-section" id="qs-color-section" style="display:none">
+      <div class="qs-label"><span>Color</span><span class="qs-selected-val" id="qs-color-val">—</span></div>
+      <div class="qs-colors" id="qs-colors"></div>
+    </div>
+    <div class="qs-section">
+      <div class="qs-label">Cantidad</div>
+      <div class="qs-qty-row">
+        <button class="qs-qty-btn" id="qs-qty-minus" aria-label="Menos">−</button>
+        <span class="qs-qty-val" id="qs-qty-val">1</span>
+        <button class="qs-qty-btn" id="qs-qty-plus" aria-label="Más">+</button>
+      </div>
+    </div>
+  </div>
+  <div class="qs-footer">
+    <button class="btn btn-primary btn-full" id="qs-confirm-btn" style="padding:17px">Agregar al Carrito</button>
+  </div>
+</div>
+
+<script src="js/quickselect.js"></script>
+</body>
+</html>

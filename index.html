@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URBANO — Ropa Urbana y Elegante</title>
+  <meta name="description" content="Tienda de ropa moderna y urbana. Camisetas, camibusos tipo polo, pantalonetas y jeans de calidad premium.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+<!-- ============================================
+     TICKER BAR
+     ============================================ -->
+<div class="ticker-bar">
+  <div class="ticker-track">
+    <div class="ticker-item">ENVÍOS A TODO COLOMBIA</div>
+    <div class="ticker-sep">✦</div>
+    <div class="ticker-item">PAGOS CONTRA ENTREGA DISPONIBLES</div>
+    <div class="ticker-sep">✦</div>
+    <div class="ticker-item">ATENCIÓN PERSONALIZADA POR WHATSAPP</div>
+    <div class="ticker-sep">✦</div>
+    <div class="ticker-item">CALIDAD PREMIUM GARANTIZADA</div>
+    <div class="ticker-sep">✦</div>
+    <!-- Repetir para que sea infinito visualmente -->
+    <div class="ticker-item">ENVÍOS A TODO COLOMBIA</div>
+    <div class="ticker-sep">✦</div>
+    <div class="ticker-item">PAGOS CONTRA ENTREGA DISPONIBLES</div>
+    <div class="ticker-sep">✦</div>
+    <div class="ticker-item">ATENCIÓN PERSONALIZADA POR WHATSAPP</div>
+    <div class="ticker-sep">✦</div>
+    <div class="ticker-item">CALIDAD PREMIUM GARANTIZADA</div>
+    <div class="ticker-sep">✦</div>
+  </div>
+</div>
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<!-- ============================================
+     HEADER
+     ============================================ -->
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+
+    <!-- Hamburger (Mobile) -->
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- Logo -->
+    <a href="index.html" class="site-logo" aria-label="URBANO - Inicio">
+      <span class="logo-text">URBAN<span class="logo-dot">O</span></span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="site-nav" aria-label="Navegación principal">
+      <a href="index.html" class="nav-link active">Inicio</a>
+      <a href="catalogo.html" class="nav-link">Catálogo</a>
+      <a href="catalogo.html" class="nav-link">Categorías</a>
+      <a href="#nosotros" class="nav-link">Nosotros</a>
+      <a href="#contacto" class="nav-link">Contacto</a>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <a href="catalogo.html" class="header-icon-btn" aria-label="Buscar">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </a>
+      <button class="header-icon-btn" aria-label="Favoritos">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <button class="header-icon-btn" data-open-cart aria-label="Carrito">
+        <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count" id="cart-count" style="display:none">0</span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<nav class="mobile-nav" id="mobile-nav" aria-label="Menú móvil">
+  <a href="index.html">Inicio</a>
+  <a href="catalogo.html">Catálogo</a>
+  <a href="catalogo.html">Categorías</a>
+  <a href="#nosotros">Nosotros</a>
+  <a href="#contacto">Contacto</a>
+</nav>
+
+<!-- ============================================
+     HERO SLIDER
+     ============================================ -->
+<section class="hero-section" aria-label="Slider principal">
+  <div class="hero-slider" id="hero-slider">
+
+    <!-- Slide 1 -->
+    <div class="hero-slide active" role="group" aria-label="Slide 1 de 3">
+      <img class="slide-image" src="images/hero1.jpg" alt="Nueva Colección" loading="eager">
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <p class="slide-overline">Nueva Colección</p>
+        <h1 class="slide-title">Viste<br>tu estilo.</h1>
+        <p class="slide-subtitle">Descubre nuestra selección de prendas para cada momento.</p>
+        <a href="catalogo.html" class="btn btn-white slide-btn">Explorar Colección</a>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="hero-slide" role="group" aria-label="Slide 2 de 3">
+      <img class="slide-image" src="images/hero2.jpg" alt="Estilo para cada día" loading="lazy">
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <p class="slide-overline">Estilo para Cada Día</p>
+        <h1 class="slide-title">Prendas que<br>hablan por ti.</h1>
+        <p class="slide-subtitle">Calidad y comodidad en cada prenda.</p>
+        <a href="catalogo.html" class="btn btn-white slide-btn">Ver Catálogo</a>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="hero-slide" role="group" aria-label="Slide 3 de 3">
+      <img class="slide-image" src="images/hero3.jpg" alt="Colección Destacada" loading="lazy">
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <p class="slide-overline">Colección Destacada</p>
+        <h1 class="slide-title">Encuentra<br>tu próximo look.</h1>
+        <p class="slide-subtitle">Prendas seleccionadas para el hombre moderno.</p>
+        <a href="catalogo.html" class="btn btn-white slide-btn">Comprar Ahora</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Dots -->
+  <div class="slider-controls" role="tablist" aria-label="Controles del slider">
+    <button class="slider-dot active" role="tab" aria-label="Slide 1"></button>
+    <button class="slider-dot" role="tab" aria-label="Slide 2"></button>
+    <button class="slider-dot" role="tab" aria-label="Slide 3"></button>
+  </div>
+
+  <!-- Arrows -->
+  <div class="slider-arrows">
+    <button class="slider-arrow" id="slider-prev" aria-label="Slide anterior">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="slider-arrow" id="slider-next" aria-label="Siguiente slide">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+</section>
+
+<!-- ============================================
+     CATEGORÍAS
+     ============================================ -->
+<section class="section bg-warm" id="categorias">
+  <div class="container">
+
+    <div class="section-header centered" data-reveal>
+      <p class="section-overline">Encuentra tu prenda</p>
+      <h2 class="section-title">Explora Nuestras Prendas</h2>
+    </div>
+
+    <div class="categories-grid">
+      <a href="catalogo.html?cat=camisetas" class="category-card" data-reveal data-reveal-delay="1" aria-label="Ver Camisetas">
+        <img class="cat-image" src="images/cat-camisetas.jpg" alt="Camisetas" loading="lazy">
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <p class="cat-label">Colección</p>
+          <h3 class="cat-name">Camisetas</h3>
+          <span class="cat-arrow">Explorar <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="catalogo.html?cat=polos" class="category-card" data-reveal data-reveal-delay="2" aria-label="Ver Camibusos Tipo Polo">
+        <img class="cat-image" src="images/cat-polo.jpg" alt="Camibusos Tipo Polo" loading="lazy">
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <p class="cat-label">Colección</p>
+          <h3 class="cat-name">Camibusos<br>Tipo Polo</h3>
+          <span class="cat-arrow">Explorar <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="catalogo.html?cat=pantalonetas" class="category-card" data-reveal data-reveal-delay="3" aria-label="Ver Pantalonetas">
+        <img class="cat-image" src="images/cat-pantaloneta.jpg" alt="Pantalonetas" loading="lazy">
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <p class="cat-label">Colección</p>
+          <h3 class="cat-name">Pantalonetas</h3>
+          <span class="cat-arrow">Explorar <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="catalogo.html?cat=jeans" class="category-card" data-reveal data-reveal-delay="4" aria-label="Ver Jeans">
+        <img class="cat-image" src="images/cat-jeans.jpg" alt="Jeans" loading="lazy">
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <p class="cat-label">Colección</p>
+          <h3 class="cat-name">Jeans</h3>
+          <span class="cat-arrow">Explorar <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     PRODUCTOS DESTACADOS
+     ============================================ -->
+<section class="section bg-white" id="coleccion">
+  <div class="container">
+
+    <div class="section-header" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem" data-reveal>
+      <div>
+        <p class="section-overline">Disponible ahora</p>
+        <h2 class="section-title">La Colección</h2>
+      </div>
+      <a href="catalogo.html" class="btn btn-outline-dark">Ver todo</a>
+    </div>
+
+    <div class="products-grid" id="home-products-grid">
+      <!-- Rendered by JS -->
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     SELECCIÓN DESTACADA (Editorial)
+     ============================================ -->
+<section class="featured-section" id="destacados">
+  <div class="featured-grid">
+
+    <div class="featured-image-col img-reveal-wrap">
+      <img src="images/destacado.jpg" alt="Selección Destacada — Polo editorial">
+    </div>
+
+    <div class="featured-text-col">
+      <p class="featured-eyebrow" data-reveal>Selección Destacada</p>
+      <h2 class="featured-title" data-reveal data-reveal-delay="1">Estilo<br>que perdura.</h2>
+      <p class="featured-desc" data-reveal data-reveal-delay="2">
+        Descubre nuestras prendas seleccionadas. Cada pieza pensada para quienes valoran la calidad y el estilo en su forma más auténtica.
+      </p>
+      <div data-reveal data-reveal-delay="3">
+        <a href="catalogo.html" class="btn btn-primary">Ver Colección</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     BANNER EDITORIAL
+     ============================================ -->
+<section class="banner-editorial" aria-label="Banner Editorial">
+  <img class="banner-bg" src="images/banner-editorial.jpg" alt="Tu estilo. Tu forma." loading="lazy">
+  <div class="banner-overlay"></div>
+  <div class="banner-content">
+    <h2 class="banner-title" data-reveal>Tu estilo.<br>Tu forma.</h2>
+    <p class="banner-subtitle" data-reveal data-reveal-delay="1">Encuentra prendas para cada momento.</p>
+    <div data-reveal data-reveal-delay="2">
+      <a href="catalogo.html" class="btn btn-outline">Explorar</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     BENEFICIOS
+     ============================================ -->
+<section class="section bg-warm">
+  <div class="container">
+
+    <div class="benefits-grid">
+
+      <div class="benefit-item" data-reveal data-reveal-delay="1">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+        <h3 class="benefit-title">Compra Fácil</h3>
+        <p class="benefit-desc">Selecciona tus prendas y realiza tu pedido en minutos.</p>
+      </div>
+
+      <div class="benefit-item" data-reveal data-reveal-delay="2">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3 class="benefit-title">Atención por WhatsApp</h3>
+        <p class="benefit-desc">Confirma tu compra directamente con nosotros de forma inmediata.</p>
+      </div>
+
+      <div class="benefit-item" data-reveal data-reveal-delay="3">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h3 class="benefit-title">Envíos</h3>
+        <p class="benefit-desc">Consulta disponibilidad y opciones de envío con nuestro equipo.</p>
+      </div>
+
+      <div class="benefit-item" data-reveal data-reveal-delay="4">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h3 class="benefit-title">Catálogo Actualizado</h3>
+        <p class="benefit-desc">Consulta siempre nuestras prendas disponibles y su stock real.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     INSTAGRAM / REDES
+     ============================================ -->
+<section class="section instagram-section" id="contacto">
+  <div class="container">
+    <div class="section-header centered" data-reveal>
+      <p class="section-overline">Redes sociales</p>
+      <h2 class="section-title">Síguenos</h2>
+      <p class="body-text" style="margin-top:1rem;margin-inline:auto;max-width:400px">Próximamente encontrarás nuestras redes sociales aquí.</p>
+    </div>
+
+    <div class="instagram-placeholder" style="margin-top:3rem">
+      <div class="ig-placeholder-item">
+        <img src="images/cat-camisetas.jpg" alt="Camisetas">
+      </div>
+      <div class="ig-placeholder-item">
+        <img src="images/cat-polo.jpg" alt="Polo">
+      </div>
+      <div class="ig-placeholder-item">
+        <img src="images/cat-jeans.jpg" alt="Jeans">
+      </div>
+      <div class="ig-placeholder-item">
+        <img src="images/cat-pantaloneta.jpg" alt="Pantaloneta">
+      </div>
+      <div class="ig-placeholder-item">
+        <img src="images/banner-editorial.jpg" alt="Editorial">
+      </div>
+      <div class="ig-placeholder-item">
+        <img src="images/destacado.jpg" alt="Destacado">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     FAQ SECTION
+     ============================================ -->
+<section class="faq-section" style="padding:5rem 1.5rem">
+  <div class="container" style="max-width:1200px">
+    <div style="text-align:center">
+      <p class="section-overline" data-reveal>Soporte</p>
+      <h2 class="section-title" data-reveal data-reveal-delay="1">Preguntas Frecuentes</h2>
+    </div>
+
+    <div class="faq-list" data-reveal data-reveal-delay="2">
+      <div class="faq-item">
+        <button class="faq-question">
+          ¿Cómo funcionan los envíos?
+          <span class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Hacemos envíos a toda Colombia. El tiempo de entrega estimado es de 2 a 5 días hábiles dependiendo de la ciudad. Una vez despachado te enviaremos la guía de rastreo por WhatsApp.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          ¿Manejan pago contra entrega?
+          <span class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Sí, tenemos pago contra entrega en ciudades principales. Puedes confirmar disponibilidad para tu ubicación al momento de cerrar tu pedido por WhatsApp.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          ¿Tienen políticas de cambio?
+          <span class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Claro que sí. Tienes 15 días calendario para solicitar un cambio por talla o garantía. La prenda debe estar en perfecto estado, con etiquetas y sin signos de uso.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          ¿Cómo confirmo mi pedido?
+          <span class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Al hacer clic en "Finalizar Pedido" en el carrito, se abrirá un chat de WhatsApp con nuestro equipo. Allí enviaremos el resumen de tu carrito, confirmaremos la dirección de envío y te daremos las instrucciones de pago o pago contra entrega.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="site-footer" id="nosotros">
+  <div class="container">
+    <div class="footer-main">
+
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">URBAN<span style="color:var(--color-accent)">O</span></a>
+        <p class="footer-tagline">Ropa urbana y elegante para el hombre moderno. Calidad, estilo y comodidad en cada prenda.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="social-icon" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Tienda</h4>
+        <div class="footer-links">
+          <a href="catalogo.html">Catálogo</a>
+          <a href="catalogo.html?cat=camisetas">Camisetas</a>
+          <a href="catalogo.html?cat=polos">Camibusos Tipo Polo</a>
+          <a href="catalogo.html?cat=pantalonetas">Pantalonetas</a>
+          <a href="catalogo.html?cat=jeans">Jeans</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Contacto</h4>
+        <div class="footer-links">
+          <a href="#">WhatsApp</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">© 2026 URBANO. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================
+     CART SIDEBAR
+     ============================================ -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<aside class="cart-sidebar" id="cart-sidebar" aria-label="Carrito de compras">
+  <div class="cart-header">
+    <h2 class="cart-title">Tu Carrito</h2>
+    <button class="cart-close" id="cart-close-btn" aria-label="Cerrar carrito">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="cart-items" id="cart-items-container">
+    <div class="cart-empty" id="cart-empty">
+      <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <div>
+        <p style="font-weight:600;margin-bottom:0.5rem">Tu carrito está vacío</p>
+        <p style="font-size:0.875rem;color:var(--color-text-secondary)">Agrega prendas para continuar</p>
+      </div>
+      <a href="catalogo.html" class="btn btn-primary" onclick="closeCart()">Explorar Catálogo</a>
+    </div>
+  </div>
+
+  <div class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-totals">
+      <div class="cart-total-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">$0</span>
+      </div>
+      <div class="cart-total-row total">
+        <span>Total</span>
+        <span id="cart-total">$0</span>
+      </div>
+    </div>
+    <a href="checkout.html" class="btn btn-primary btn-full">Finalizar Pedido</a>
+  </div>
+</aside>
+
+<!-- ============================================
+     WHATSAPP FLOAT
+     ============================================ -->
+<a href="https://wa.me/573000000000" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+  </svg>
+</a>
+
+<!-- Toast Container -->
+<div id="toast-container" class="toast-container"></div>
+
+<!-- Scripts -->
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/slider.js"></script>
+<script src="js/animations.js"></script>
+<script>
+// Render products on home page
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.getElementById('home-products-grid');
+  if (!grid) return;
+
+  const products = getAllProducts();
+  grid.innerHTML = products.map(p => {
+    const stock = getStockLabel(p);
+    return `
+      <article class="product-card" data-reveal>
+        <div class="card-image-wrap" style="cursor:pointer" onclick="window.location.href='producto.html?id=${p.slug}'">
+          <img src="${p.images[0]}" alt="${p.name}" loading="lazy">
+          <div class="card-actions">
+            <button class="btn btn-primary btn-full"
+              onclick="event.stopPropagation(); openQuickSelect('${p.id}')">
+              Agregar al Carrito
+            </button>
+          </div>
+          <button class="card-wishlist" aria-label="Agregar a favoritos">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+        </div>
+        <div class="card-body">
+          <p class="card-category">${p.categoryLabel}</p>
+          <h3 class="card-name">
+            <a href="producto.html?id=${p.slug}" style="text-decoration:none;color:inherit">${p.name}</a>
+          </h3>
+          <div class="card-meta">
+            <span class="card-price">${formatPrice(p.price)}</span>
+            <span class="stock-badge ${stock.class === 'low' ? 'low' : ''}">${stock.label}</span>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  // Re-run scroll reveal for dynamic content
+  const revealEls = grid.querySelectorAll('[data-reveal]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+});
+
+// FAQ Accordion
+document.addEventListener('DOMContentLoaded', () => {
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    question.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      // Close all others
+      faqItems.forEach(faq => faq.classList.remove('open'));
+      // Toggle current
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+});
+</script>
+
+<!-- Quick Select Modal -->
+<div class="qs-overlay" id="qs-overlay"></div>
+<div class="qs-modal" id="qs-modal" role="dialog" aria-modal="true" aria-label="Selección de talla y color">
+  <div class="qs-header">
+    <h3 class="qs-title" id="qs-modal-title">Elige tu talla</h3>
+    <button class="qs-close" id="qs-close-btn" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="qs-body">
+    <!-- Product summary -->
+    <div class="qs-product-row">
+      <img class="qs-product-img" id="qs-img" src="" alt="">
+      <div class="qs-product-info">
+        <div class="qs-product-name" id="qs-name"></div>
+        <div class="qs-product-price" id="qs-price"></div>
+        <a id="qs-detail-link" href="#" style="font-size:0.75rem;color:var(--color-text-secondary);text-decoration:underline;margin-top:0.35rem;display:inline-block">Ver detalle completo</a>
+      </div>
+    </div>
+
+    <!-- Size -->
+    <div class="qs-section">
+      <div class="qs-label">
+        <span>Talla</span>
+        <span class="qs-selected-val" id="qs-size-val">—</span>
+      </div>
+      <div class="qs-sizes" id="qs-sizes"></div>
+    </div>
+
+    <!-- Color -->
+    <div class="qs-section" id="qs-color-section" style="display:none">
+      <div class="qs-label">
+        <span>Color</span>
+        <span class="qs-selected-val" id="qs-color-val">—</span>
+      </div>
+      <div class="qs-colors" id="qs-colors"></div>
+    </div>
+
+    <!-- Quantity -->
+    <div class="qs-section">
+      <div class="qs-label">Cantidad</div>
+      <div class="qs-qty-row">
+        <button class="qs-qty-btn" id="qs-qty-minus" aria-label="Menos">−</button>
+        <span class="qs-qty-val" id="qs-qty-val">1</span>
+        <button class="qs-qty-btn" id="qs-qty-plus" aria-label="Más">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="qs-footer">
+    <button class="btn btn-primary btn-full" id="qs-confirm-btn" style="padding:17px">
+      Agregar al Carrito
+    </button>
+  </div>
+</div>
+
+<script src="js/quickselect.js"></script>
+
+</body>
+</html>

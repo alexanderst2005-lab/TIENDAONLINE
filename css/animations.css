@@ -1,0 +1,486 @@
+/* ============================================
+   TIENDA ONLINE — ANIMATIONS CSS
+   Transitions, Hover Effects, Scroll Reveal,
+   Microinteractions & Keyframes
+   ============================================ */
+
+/* ============================================
+   SCROLL REVEAL — Intersection Observer
+   ============================================ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal="left"] {
+  transform: translateX(-32px);
+}
+
+[data-reveal="right"] {
+  transform: translateX(32px);
+}
+
+[data-reveal="scale"] {
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translate(0) scale(1);
+}
+
+/* Stagger delays for children */
+[data-reveal-delay="1"] { transition-delay: 0.1s; }
+[data-reveal-delay="2"] { transition-delay: 0.2s; }
+[data-reveal-delay="3"] { transition-delay: 0.3s; }
+[data-reveal-delay="4"] { transition-delay: 0.4s; }
+[data-reveal-delay="5"] { transition-delay: 0.5s; }
+
+/* ============================================
+   HERO SLIDER ANIMATIONS
+   ============================================ */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Hero slide content entrance */
+.hero-slide.active .slide-overline {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.hero-slide.active .slide-title {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+}
+
+.hero-slide.active .slide-subtitle {
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+
+.hero-slide.active .slide-btn {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both;
+}
+
+/* Image scale on slide transition */
+.hero-slide .slide-image {
+  transition: transform 8s ease-out;
+}
+
+.hero-slide.active .slide-image {
+  transform: scale(1.06);
+}
+
+/* ============================================
+   PRODUCT CARD HOVER
+   ============================================ */
+.product-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+}
+
+.product-card .card-image-wrap {
+  overflow: hidden;
+}
+
+.product-card .card-image-wrap img {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover .card-image-wrap img {
+  transform: scale(1.07);
+}
+
+.product-card .card-actions {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.product-card:hover .card-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   CATEGORY CARD HOVER
+   ============================================ */
+.category-card {
+  overflow: hidden;
+  transition: box-shadow 0.4s ease;
+}
+
+.category-card:hover {
+  box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+}
+
+.category-card .cat-image {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.category-card:hover .cat-image {
+  transform: scale(1.06);
+}
+
+.category-card .cat-overlay {
+  transition: background 0.4s ease;
+}
+
+.category-card:hover .cat-overlay {
+  background: rgba(0,0,0,0.35);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.1);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.btn:hover::after {
+  opacity: 1;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-outline:hover {
+  background: var(--color-black);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   CART SIDEBAR ANIMATION
+   ============================================ */
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes slideOutRight {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+
+.cart-sidebar {
+  animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cart-sidebar.closing {
+  animation: slideOutRight 0.3s cubic-bezier(0.7, 0, 1, 1) forwards;
+}
+
+/* Cart overlay fade */
+.cart-overlay {
+  animation: fadeIn 0.3s ease;
+}
+
+/* ============================================
+   NAV MOBILE MENU
+   ============================================ */
+@keyframes navMenuDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-nav.active {
+  animation: navMenuDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hamburger animation */
+.hamburger span {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ============================================
+   WHATSAPP FLOAT BUTTON
+   ============================================ */
+@keyframes waPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  70%  { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+.whatsapp-float {
+  animation: waPulse 2.5s infinite;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+
+/* ============================================
+   HEADER SCROLL EFFECT
+   ============================================ */
+.site-header {
+  transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+.site-header.scrolled {
+  background: rgba(245, 243, 239, 0.95) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--color-border);
+}
+
+/* ============================================
+   PAGE TRANSITIONS
+   ============================================ */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: pageEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================
+   CART BADGE BOUNCE
+   ============================================ */
+@keyframes cartBounce {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+.cart-badge.bump {
+  animation: cartBounce 0.3s ease;
+}
+
+/* ============================================
+   SIZE SELECTOR
+   ============================================ */
+.size-btn {
+  transition: all 0.2s ease;
+}
+
+.size-btn:hover {
+  border-color: var(--color-black);
+  background: var(--color-black);
+  color: #fff;
+}
+
+.size-btn.selected {
+  background: var(--color-black);
+  border-color: var(--color-black);
+  color: #fff;
+}
+
+/* ============================================
+   FORM INPUT FOCUS
+   ============================================ */
+.form-input {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: var(--color-black);
+  box-shadow: 0 0 0 3px rgba(11,11,11,0.08);
+  outline: none;
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg,
+    #f0ede8 25%,
+    #e8e4df 50%,
+    #f0ede8 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+/* ============================================
+   TOAST NOTIFICATION
+   ============================================ */
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.toast {
+  animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast.hiding {
+  animation: toastOut 0.3s ease forwards;
+}
+
+/* ============================================
+   NAV LINK UNDERLINE EFFECT
+   ============================================ */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-black);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* ============================================
+   IMAGE OVERLAY REVEAL
+   ============================================ */
+.img-reveal-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.img-reveal-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg-warm);
+  transform: scaleX(1);
+  transform-origin: right;
+  transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.img-reveal-wrap.revealed::after {
+  transform: scaleX(0);
+}
+
+/* ============================================
+   SCROLL PROGRESS BAR
+   ============================================ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--color-black);
+  z-index: calc(var(--z-header) + 1);
+  transition: width 0.1s linear;
+}

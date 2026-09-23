@@ -277,7 +277,8 @@
 
     // WA Button setup
     const waMessage = `Hola, estoy interesada en este producto de Luxury Boutique: *${p.name}*. Quisiera consultar disponibilidad y tallas.`;
-    document.getElementById('wa-consult-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(waMessage)}`;
+    const waBtn = document.getElementById('wa-consult-btn');
+    if (waBtn) waBtn.href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(waMessage)}`;
 
     // Update Recent History
     addRecentlyViewed(p.slug);
@@ -344,10 +345,12 @@
     document.getElementById('page-title').textContent = `${p.name} — Luxury Boutique`;
     document.getElementById('page-desc').content = p.description;
     document.getElementById('product-breadcrumb-name').textContent = p.name;
-    document.getElementById('product-category-label').textContent = p.categoryLabel;
+    const pcLabel = document.getElementById('product-category-label');
+    if (pcLabel) pcLabel.textContent = p.categoryLabel;
     document.getElementById('product-name').textContent = p.name;
     document.getElementById('product-price').textContent = formatPrice(p.price);
-    document.getElementById('product-desc').textContent = p.description;
+    const pDesc = document.getElementById('product-desc');
+    if (pDesc) pDesc.textContent = p.description;
 
     // Stock
     const stockInfo = getStockLabel(p);

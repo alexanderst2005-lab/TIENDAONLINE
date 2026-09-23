@@ -1075,14 +1075,20 @@
    SCROLL PROGRESS
    ============================================ */
 .scroll-progress {
-  position: fixed;
-  top: 0;
+  position: absolute;
+  bottom: -1px;
+  top: auto;
   left: 0;
   height: 2px;
   width: 0%;
   background: var(--color-black);
   z-index: 9999;
   pointer-events: none;
+}
+
+/* Hide stock badge entirely to clean up the UI */
+.stock-badge {
+  display: none !important;
 }
 
 /* ============================================

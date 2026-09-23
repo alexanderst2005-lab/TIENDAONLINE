@@ -38,13 +38,12 @@
     <div class="ticker-sep">✦</div>
   </div>
 </div>
-<!-- Scroll Progress -->
-<div class="scroll-progress" id="scroll-progress"></div>
-
 <!-- ============================================
      HEADER
      ============================================ -->
 <header class="site-header" id="site-header">
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scroll-progress"></div>
   <div class="header-inner">
 
     <!-- Hamburger (Mobile) -->
@@ -211,26 +210,7 @@
   </div>
 </section>
 
-<!-- ============================================
-     PRODUCTOS DESTACADOS
-     ============================================ -->
-<section class="section bg-white" id="coleccion">
-  <div class="container">
-
-    <div class="section-header" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem" data-reveal>
-      <div>
-        <p class="section-overline">Disponible ahora</p>
-        <h2 class="section-title">La Colección</h2>
-      </div>
-      <a href="catalogo.html" class="btn btn-outline-dark">Ver todo</a>
-    </div>
-
-    <div class="products-grid" id="home-products-grid">
-      <!-- Rendered by JS -->
-    </div>
-
-  </div>
-</section>
+<!-- Section Removed per user request -->
 
 <!-- ============================================
      SELECCIÓN DESTACADA (Editorial)
@@ -512,54 +492,7 @@
 <script src="js/slider.js"></script>
 <script src="js/animations.js"></script>
 <script>
-// Render products on home page
-document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.getElementById('home-products-grid');
-  if (!grid) return;
-
-  const products = getAllProducts();
-  grid.innerHTML = products.map(p => {
-    const stock = getStockLabel(p);
-    return `
-      <article class="product-card" data-reveal>
-        <div class="card-image-wrap" style="cursor:pointer" onclick="window.location.href='producto.html?id=${p.slug}'">
-          <img src="${p.images[0]}" alt="${p.name}" loading="lazy">
-          <div class="card-actions">
-            <button class="btn btn-primary btn-full"
-              onclick="event.stopPropagation(); openQuickSelect('${p.id}')">
-              Agregar al Carrito
-            </button>
-          </div>
-          <button class="card-wishlist" aria-label="Agregar a favoritos">
-            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
-        </div>
-        <div class="card-body">
-          <p class="card-category">${p.categoryLabel}</p>
-          <h3 class="card-name">
-            <a href="producto.html?id=${p.slug}" style="text-decoration:none;color:inherit">${p.name}</a>
-          </h3>
-          <div class="card-meta">
-            <span class="card-price">${formatPrice(p.price)}</span>
-            <span class="stock-badge ${stock.class === 'low' ? 'low' : ''}">${stock.label}</span>
-          </div>
-        </div>
-      </article>
-    `;
-  }).join('');
-
-  // Re-run scroll reveal for dynamic content
-  const revealEls = grid.querySelectorAll('[data-reveal]');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  revealEls.forEach(el => observer.observe(el));
-});
+// Product render logic removed per user request
 
 // FAQ Accordion
 document.addEventListener('DOMContentLoaded', () => {

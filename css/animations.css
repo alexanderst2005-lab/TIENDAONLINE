@@ -232,13 +232,7 @@
   to   { transform: translateX(100%); }
 }
 
-.cart-sidebar {
-  animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.cart-sidebar.closing {
-  animation: slideOutRight 0.3s cubic-bezier(0.7, 0, 1, 1) forwards;
-}
+/* Cart sidebar uses transitions defined in components.css */
 
 /* Cart overlay fade */
 .cart-overlay {

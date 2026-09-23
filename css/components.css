@@ -2809,6 +2809,45 @@
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-4);
   }
+  
+  .card-name {
+    font-size: 1rem;
+    margin-bottom: var(--space-1);
+  }
+  
+  .card-price {
+    font-size: 0.95rem;
+  }
+  
+  .card-actions {
+    display: none !important;
+  }
+  
+  .catalog-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+  
+  .catalog-toolbar-left {
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .catalog-toolbar-right {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  
+  .catalog-search-wrap {
+    max-width: 100%;
+    margin-bottom: 0;
+  }
+  
+  .sort-select {
+    width: 100%;
+  }
 
   .featured-grid {
     grid-template-columns: 1fr;

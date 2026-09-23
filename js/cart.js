@@ -249,6 +249,17 @@ const Wishlist = {
     this.updateUI();
     return added;
   },
+  remove(productId) {
+    let items = this.get();
+    const index = items.indexOf(productId);
+    if (index >= 0) {
+      items.splice(index, 1);
+      localStorage.setItem(WISHLIST_KEY, JSON.stringify(items));
+      this.updateUI();
+      renderWishlistSidebar();
+      showToast('Eliminado de tus favoritos');
+    }
+  },
   getCount() {
     return this.get().length;
   },
@@ -268,8 +279,139 @@ const Wishlist = {
         if (p) btn.classList.toggle('favorited', items.includes(p.id));
       }
     });
+
+    // Update product detail heart if on product page
+    const detailHeart = document.getElementById('product-wishlist-btn');
+    if (detailHeart) {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('id');
+      if (slug && typeof getProductBySlug === 'function') {
+        const currentP = getProductBySlug(slug);
+        if (currentP) {
+          detailHeart.classList.toggle('favorited', items.includes(currentP.id));
+        }
+      }
+    }
+
+    // If wishlist sidebar is open, re-render
+    const ws = document.getElementById('wishlist-sidebar');
+    if (ws && ws.classList.contains('active')) {
+      renderWishlistSidebar();
+    }
   }
 };
+
+// ============================================
+// WISHLIST SIDEBAR UI
+// ============================================
+function ensureWishlistDOM() {
+  if (document.getElementById('wishlist-sidebar')) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'cart-overlay';
+  overlay.id = 'wishlist-overlay';
+  document.body.appendChild(overlay);
+
+  const aside = document.createElement('aside');
+  aside.className = 'cart-sidebar';
+  aside.id = 'wishlist-sidebar';
+  aside.innerHTML = `
+    <div class="cart-header">
+      <h2 class="cart-title">Mis Favoritos</h2>
+      <button class="cart-close" id="wishlist-close-btn" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cart-items" id="wishlist-items-container">
+      <div class="cart-empty" id="wishlist-empty">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <div>
+          <p style="font-weight:600;margin-bottom:.5rem">No tienes favoritos aún</p>
+          <p style="font-size:.875rem;color:var(--color-text-secondary)">Guarda las prendas que más te gusten para verlas aquí</p>
+        </div>
+      </div>
+    </div>
+    <div class="cart-footer" id="wishlist-footer" style="display:none; padding:1.5rem; border-top:1px solid var(--color-border); text-align:center;">
+      <a href="catalogo.html" class="btn btn-outline-dark btn-full">Explorar Más Prendas</a>
+    </div>
+  `;
+  document.body.appendChild(aside);
+
+  overlay.addEventListener('click', closeWishlist);
+  document.getElementById('wishlist-close-btn').addEventListener('click', closeWishlist);
+}
+
+function openWishlist() {
+  ensureWishlistDOM();
+  const sidebar = document.getElementById('wishlist-sidebar');
+  const overlay = document.getElementById('wishlist-overlay');
+  if (sidebar && overlay) {
+    renderWishlistSidebar();
+    sidebar.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeWishlist() {
+  const sidebar = document.getElementById('wishlist-sidebar');
+  const overlay = document.getElementById('wishlist-overlay');
+  if (sidebar && overlay) {
+    sidebar.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+function renderWishlistSidebar() {
+  ensureWishlistDOM();
+  const container = document.getElementById('wishlist-items-container');
+  const emptyMsg  = document.getElementById('wishlist-empty');
+  const footer    = document.getElementById('wishlist-footer');
+  if (!container) return;
+
+  const itemIds = Wishlist.get();
+  const products = itemIds
+    .map(id => typeof getProductById === 'function' ? getProductById(id) : null)
+    .filter(Boolean);
+
+  if (products.length === 0) {
+    container.innerHTML = `
+      <div class="cart-empty" style="display:flex;">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <div>
+          <p style="font-weight:600;margin-bottom:.5rem">No tienes favoritos aún</p>
+          <p style="font-size:.875rem;color:var(--color-text-secondary)">Guarda las prendas que más te gusten para verlas aquí</p>
+        </div>
+      </div>
+    `;
+    if (footer) footer.style.display = 'none';
+    return;
+  }
+
+  if (footer) footer.style.display = 'block';
+
+  container.innerHTML = products.map(p => `
+    <div class="cart-item" data-wishlist-item="${p.id}" style="padding-bottom: 1.25rem; border-bottom: 1px solid var(--color-border); display:flex; gap:1rem; align-items:center;">
+      <a href="producto.html?id=${p.slug}">
+        <img class="cart-item-img" src="${p.images[0]}" alt="${p.name}" loading="lazy" style="object-fit:cover; width:75px; height:95px; flex-shrink:0;">
+      </a>
+      <div class="cart-item-info" style="flex:1;">
+        <a href="producto.html?id=${p.slug}" style="text-decoration:none; color:inherit;">
+          <div class="cart-item-name" style="font-weight:600; font-size:0.95rem; margin-bottom:0.2rem;">${p.name}</div>
+        </a>
+        <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--color-text-secondary); margin-bottom:0.35rem;">${p.categoryLabel}</div>
+        <div class="cart-item-price" style="font-size:0.95rem; font-weight:700; margin-bottom:0.6rem;">${formatPrice(p.price)}</div>
+        <div>
+          <a href="producto.html?id=${p.slug}" class="btn btn-outline-dark" style="display:inline-block; font-size:0.7rem; padding:6px 14px; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none;">Ver Prenda</a>
+        </div>
+      </div>
+      <button class="cart-item-remove" onclick="Wishlist.remove('${p.id}')" title="Eliminar de favoritos" style="align-self:flex-start; margin-top:4px;">
+        <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  `).join('');
+}
 
 // ============================================
 // INIT: Update cart badge and wishlist on page load
@@ -283,11 +425,19 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', openCart);
   });
 
-  // Overlay click to close
+  // Wishlist icon click
+  document.querySelectorAll('[data-open-wishlist]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openWishlist();
+    });
+  });
+
+  // Overlay click to close cart
   const overlay = document.getElementById('cart-overlay');
   if (overlay) overlay.addEventListener('click', closeCart);
 
-  // Close button
+  // Close button cart
   const closeBtn = document.getElementById('cart-close-btn');
   if (closeBtn) closeBtn.addEventListener('click', closeCart);
 

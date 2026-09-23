@@ -96,7 +96,7 @@
           <div class="size-selector" style="margin-bottom:1.5rem">
             <div class="size-selector-label" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; text-transform: uppercase; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; color: var(--color-text-secondary);">
     <span>Talla</span>
-    <a href="#" style="color: #111; text-decoration: none; border-bottom: 1px solid #111; display: flex; align-items: center; gap: 0.3rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg> GUÍA</a>
+    <a href="#" onclick="document.getElementById('size-guide-modal').style.display='flex'; return false;" style="color: #111; text-decoration: none; border-bottom: 1px solid #111; display: flex; align-items: center; gap: 0.3rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg> GUÍA</a>
   </div>
             <div class="size-grid" id="size-grid"></div>
           </div>
@@ -110,35 +110,16 @@
             <div class="color-swatches" id="color-swatches"></div>
           </div>
           <!-- Action Buttons -->
-          <div class="product-actions" style="display: flex; gap: 1rem; margin-top: 2rem;">
+          <div class="product-actions" style="display: flex; flex-wrap: nowrap; gap: 1rem; margin-top: 2rem;">
     <button class="btn" id="add-to-cart-btn" style="flex: 1; background: #000; color: #fff; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem; font-weight: 600; border: none; padding: 18px;">
       Añadir a la bolsa
     </button>
-    <button class="btn-heart" style="width: 56px; height: 56px; border: 1px solid var(--color-border); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+    <button class="btn-heart" style="width: 56px; height: 56px; flex-shrink: 0; border: 1px solid var(--color-border); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer;">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
     </button>
   </div>
 
-          <!-- Accordions -->
-  <div class="product-accordions" style="margin-top: 3rem;">
-    <div style="padding: 1.25rem 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-sans); font-size: 0.95rem; font-weight: 500; color: #111; cursor: pointer;">
-      <span>¿Cómo funcionan los envíos?</span>
-      <span style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: 1px solid #ddd; font-size: 1.1rem; color: #555; font-weight: 300;">+</span>
-    </div>
-    <div style="padding: 1.25rem 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-sans); font-size: 0.95rem; font-weight: 500; color: #111; cursor: pointer;">
-      <span>¿Manejan pago contra entrega?</span>
-      <span style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: 1px solid #ddd; font-size: 1.1rem; color: #555; font-weight: 300;">+</span>
-    </div>
-    <div style="padding: 1.25rem 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-sans); font-size: 0.95rem; font-weight: 500; color: #111; cursor: pointer;">
-      <span>¿Tienen políticas de cambio?</span>
-      <span style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: 1px solid #ddd; font-size: 1.1rem; color: #555; font-weight: 300;">+</span>
-    </div>
-    <div style="padding: 1.25rem 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-sans); font-size: 0.95rem; font-weight: 500; color: #111; cursor: pointer;">
-      <span>¿Cómo confirmo mi pedido?</span>
-      <span style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: 1px solid #ddd; font-size: 1.1rem; color: #555; font-weight: 300;">+</span>
-    </div>
-    </div>
-  </div>
+          </div></div>
   
   </div>
     </div>
@@ -454,5 +435,47 @@
 })();
   </script>
 
+
+<!-- Size Guide Modal -->
+<div id="size-guide-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#fff; padding:2rem; width:90%; max-width:500px; position:relative;">
+    <button onclick="document.getElementById('size-guide-modal').style.display='none'" style="position:absolute; right:1.5rem; top:1.5rem; background:none; border:none; font-size:1.5rem; cursor:pointer; line-height:1;">&times;</button>
+    <h2 style="font-family:var(--font-serif); font-size:2rem; margin-bottom:1.5rem; color:#111;">Guía de Tallas</h2>
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; text-align:left; font-family:var(--font-sans); font-size:0.9rem;">
+        <tr style="border-bottom:1px solid #111;">
+          <th style="padding:0.75rem 0.5rem; font-weight:600;">Talla</th>
+          <th style="padding:0.75rem 0.5rem; font-weight:600;">Busto (cm)</th>
+          <th style="padding:0.75rem 0.5rem; font-weight:600;">Cintura (cm)</th>
+          <th style="padding:0.75rem 0.5rem; font-weight:600;">Cadera (cm)</th>
+        </tr>
+        <tr style="border-bottom:1px solid #eee;">
+          <td style="padding:0.75rem 0.5rem;">S</td>
+          <td style="padding:0.75rem 0.5rem;">86-90</td>
+          <td style="padding:0.75rem 0.5rem;">66-70</td>
+          <td style="padding:0.75rem 0.5rem;">90-94</td>
+        </tr>
+        <tr style="border-bottom:1px solid #eee;">
+          <td style="padding:0.75rem 0.5rem;">M</td>
+          <td style="padding:0.75rem 0.5rem;">90-94</td>
+          <td style="padding:0.75rem 0.5rem;">70-74</td>
+          <td style="padding:0.75rem 0.5rem;">94-98</td>
+        </tr>
+        <tr style="border-bottom:1px solid #eee;">
+          <td style="padding:0.75rem 0.5rem;">L</td>
+          <td style="padding:0.75rem 0.5rem;">94-100</td>
+          <td style="padding:0.75rem 0.5rem;">74-80</td>
+          <td style="padding:0.75rem 0.5rem;">98-104</td>
+        </tr>
+        <tr style="border-bottom:1px solid #eee;">
+          <td style="padding:0.75rem 0.5rem;">XL</td>
+          <td style="padding:0.75rem 0.5rem;">100-106</td>
+          <td style="padding:0.75rem 0.5rem;">80-86</td>
+          <td style="padding:0.75rem 0.5rem;">104-110</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
 </body>
 </html>

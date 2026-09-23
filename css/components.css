@@ -1904,19 +1904,36 @@
 }
 
 .benefit-title {
-  font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
   color: var(--color-text-primary);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
+  line-height: 1.25;
 }
 
 .benefit-desc {
-  font-size: var(--text-sm);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
   color: var(--color-text-secondary);
-  line-height: 1.6;
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+.ig-btn-follow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 13px 22px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* ============================================

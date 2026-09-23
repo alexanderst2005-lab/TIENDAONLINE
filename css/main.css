@@ -10,13 +10,13 @@
    ============================================ */
 :root {
   /* Colors */
-  --color-black:         #0B0B0B;
+  --color-black:         #111111;
   --color-charcoal:      #171717;
-  --color-bg-warm:       #F5F3EF;
+  --color-bg-warm:       #FAFAFA;
   --color-bg-white:      #FFFFFF;
   --color-text-primary:  #111111;
   --color-text-secondary:#6B6B6B;
-  --color-accent:        #8C8C8C;
+  --color-accent:        #D4AF37;
   --color-border:        #E0DDD8;
   --color-border-light:  #EBEBEB;
 

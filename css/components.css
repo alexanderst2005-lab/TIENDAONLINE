@@ -1752,18 +1752,23 @@
    FEATURED / DESTACADO SECTION
    ============================================ */
 .featured-section {
+  padding-block: clamp(4rem, 7vw, 7.5rem);
   background: var(--color-bg-white);
 }
 
 .featured-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 600px;
+  min-height: 540px;
+  background: var(--color-bg-warm);
+  align-items: stretch;
+  overflow: hidden;
 }
 
 .featured-image-col {
   position: relative;
   overflow: hidden;
+  min-height: 480px;
 }
 
 .featured-image-col img {
@@ -1772,6 +1777,7 @@
   object-fit: cover;
   object-position: center top;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
 }
 
 .featured-image-col:hover img {
@@ -1782,7 +1788,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: var(--space-20) var(--space-16);
+  padding: clamp(3rem, 5vw, 5.5rem);
   background: var(--color-bg-warm);
 }
 
@@ -1798,7 +1804,7 @@
 
 .featured-title {
   font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-size: clamp(2.3rem, 3.5vw, 3.8rem);
   font-weight: 400;
   line-height: 1.05;
   color: var(--color-text-primary);
@@ -1811,7 +1817,7 @@
   line-height: 1.7;
   color: var(--color-text-secondary);
   margin-bottom: var(--space-10);
-  max-width: 360px;
+  max-width: 420px;
 }
 
 /* ============================================
@@ -1819,8 +1825,9 @@
    ============================================ */
 .banner-editorial {
   position: relative;
-  height: 80vh;
-  min-height: 500px;
+  height: 75vh;
+  min-height: 480px;
+  max-height: 720px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -2937,8 +2944,17 @@
     width: 100%;
   }
 
+  .featured-section {
+    padding-block: var(--space-8);
+  }
+
   .featured-grid {
     grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .featured-image-col {
+    min-height: 360px;
   }
 
   .featured-text-col {

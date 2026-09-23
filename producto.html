@@ -120,22 +120,25 @@
   </div>
 
           <!-- Accordions -->
-  <div class="product-accordions" style="margin-top: 2.5rem; border-top: 1px solid var(--color-border);">
-    <div style="padding: 1.25rem 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; cursor: pointer;">
-      <span>Detalles del diseño</span>
-      <span>+</span>
+  <div class="product-accordions" style="margin-top: 3rem;">
+    <div style="padding: 1.25rem 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-sans); font-size: 0.95rem; font-weight: 500; color: #111; cursor: pointer;">
+      <span>¿Cómo funcionan los envíos?</span>
+      <span style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: 1px solid #ddd; font-size: 1.1rem; color: #555; font-weight: 300;">+</span>
     </div>
-    <div style="padding: 1.25rem 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; cursor: pointer;">
-      <span>Composición y cuidados</span>
-      <span>+</span>
+    <div style="padding: 1.25rem 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-sans); font-size: 0.95rem; font-weight: 500; color: #111; cursor: pointer;">
+      <span>¿Manejan pago contra entrega?</span>
+      <span style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: 1px solid #ddd; font-size: 1.1rem; color: #555; font-weight: 300;">+</span>
     </div>
-    <div style="padding: 1.25rem 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; cursor: pointer;">
-      <span>Envíos y devoluciones</span>
-      <span>+</span>
+    <div style="padding: 1.25rem 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-sans); font-size: 0.95rem; font-weight: 500; color: #111; cursor: pointer;">
+      <span>¿Tienen políticas de cambio?</span>
+      <span style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: 1px solid #ddd; font-size: 1.1rem; color: #555; font-weight: 300;">+</span>
+    </div>
+    <div style="padding: 1.25rem 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-sans); font-size: 0.95rem; font-weight: 500; color: #111; cursor: pointer;">
+      <span>¿Cómo confirmo mi pedido?</span>
+      <span style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: 1px solid #ddd; font-size: 1.1rem; color: #555; font-weight: 300;">+</span>
     </div>
   </div>
-  
-  </div></div></div>
+  </div></div></div></div></div>
     </div>
 
     <!-- Related Products -->
@@ -390,12 +393,15 @@
     }
 
     // Qty controls
-    document.getElementById('qty-minus').addEventListener('click', () => {
-      if (quantity > 1) { quantity--; document.getElementById('qty-display').textContent = quantity; }
-    });
-    document.getElementById('qty-plus').addEventListener('click', () => {
-      quantity++; document.getElementById('qty-display').textContent = quantity;
-    });
+    const qm = document.getElementById('qty-minus');
+    if (qm) {
+      qm.addEventListener('click', () => {
+        if (quantity > 1) { quantity--; document.getElementById('qty-display').textContent = quantity; }
+      });
+      document.getElementById('qty-plus').addEventListener('click', () => {
+        quantity++; document.getElementById('qty-display').textContent = quantity;
+      });
+    }
 
     // Add to cart
     document.getElementById('add-to-cart-btn').addEventListener('click', () => {
@@ -418,60 +424,26 @@
     });
 
     // Buy now
-    document.getElementById('buy-now-btn').addEventListener('click', (e) => {
-      const hasColors = currentProduct.colors && currentProduct.colors.length > 0;
-      if (!selectedSize) {
-        e.preventDefault();
-        showToast('Por favor selecciona una talla');
-        return;
-      }
-      if (hasColors && !selectedColor) {
-        e.preventDefault();
-        showToast('Por favor selecciona un color');
-        return;
-      }
-      const sizeLabel = selectedColor ? `${selectedSize} / ${selectedColor}` : selectedSize;
-      Cart.addItem(p.id, sizeLabel, quantity);
-    });
-
-    // Image reveal
-    setTimeout(() => {
-      document.querySelector('.img-reveal-wrap')?.classList.add('revealed');
-    }, 100);
-  }
-
-  let selectedColor = null;
-
-  window.selectSize = function(size) {
-    selectedSize = size;
-    document.getElementById('selected-size-display').textContent = size;
-    document.querySelectorAll('.size-btn').forEach(btn => {
-      btn.classList.toggle('selected', btn.dataset.size === size);
-    });
-    document.getElementById('size-grid').style.outline = '';
-  };
-
-  window.selectColor = function(colorName) {
-    selectedColor = colorName;
-    document.getElementById('selected-color-display').textContent = colorName;
-    document.querySelectorAll('.color-swatch-btn').forEach(btn => {
-      btn.classList.toggle('selected', btn.dataset.color === colorName);
-    });
-    document.getElementById('color-swatches').style.outline = '';
-  };
-
-  window.changeImage = function(idx) {
-    const mainImg = document.getElementById('gallery-main-img');
-    if (!currentProduct || !currentProduct.images[idx]) return;
-    mainImg.src = currentProduct.images[idx];
-    document.querySelectorAll('.gallery-thumb').forEach((thumb, i) => {
-      thumb.classList.toggle('active', i === idx);
-    });
-  };
-
-  document.addEventListener('DOMContentLoaded', init);
-})();
-</script>
+    const bnb = document.getElementById('buy-now-btn');
+    if (bnb) {
+      bnb.addEventListener('click', (e) => {
+        const hasColors = currentProduct.colors && currentProduct.colors.length > 0;
+        if (!selectedSize) {
+          e.preventDefault();
+          showToast('Por favor selecciona una talla');
+          return;
+        }
+        if (hasColors && !selectedColor) {
+          e.preventDefault();
+          showToast('Por favor selecciona un color');
+          return;
+        }
+        const sizeLabel = selectedColor ? `${selectedSize} / ${selectedColor}` : selectedSize;
+        Cart.addItem(p.id, sizeLabel, quantity);
+        window.location.href = 'checkout.html';
+      });
+    }
+  </script>
 
 </body>
 </html>

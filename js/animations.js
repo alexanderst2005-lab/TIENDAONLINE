@@ -15,6 +15,14 @@
     const revealEls = document.querySelectorAll('[data-reveal]');
     if (!revealEls.length) return;
 
+    // Reveal immediately anything in or close to the viewport
+    revealEls.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 300) {
+        el.classList.add('revealed');
+      }
+    });
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -23,11 +31,15 @@
         }
       });
     }, {
-      threshold: 0.05,
-      rootMargin: '120px 0px 60px 0px'
+      threshold: 0.01,
+      rootMargin: '250px 0px 150px 0px'
     });
 
-    revealEls.forEach(el => observer.observe(el));
+    revealEls.forEach(el => {
+      if (!el.classList.contains('revealed')) {
+        observer.observe(el);
+      }
+    });
   }
 
   // ============================================

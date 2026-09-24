@@ -111,15 +111,15 @@ function renderCatalogProducts() {
     const outOfStock = p.stock === 0;
 
     return `
-      <article class="product-card${outOfStock ? ' out-of-stock' : ''}" data-reveal>
+      <article class="product-card${outOfStock ? ' out-of-stock' : ''}" data-reveal style="cursor:pointer" onclick="window.location.href='producto.html?id=${p.slug}'">
         <div class="card-image-wrap${hasTwo ? ' has-hover-img' : ''}" style="cursor:pointer" onclick="window.location.href='producto.html?id=${p.slug}'">
           <img
             class="card-img-main"
             src="${p.images[0]}"
             alt="${p.name}"
-            loading="lazy"
+            loading="eager" decoding="async"
           >
-          ${hasTwo ? `<img class="card-img-hover" src="${p.images[1]}" alt="${p.name} vista 2" loading="lazy">` : ''}
+          ${hasTwo ? `<img class="card-img-hover" src="${p.images[1]}" alt="${p.name} vista 2" loading="eager" decoding="async">` : ''}
 
           ${p.isNew ? '<span class="card-badge">Nuevo</span>' : ''}
           ${outOfStock ? '<span class="card-badge out">Agotado</span>' : ''}

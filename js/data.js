@@ -11,7 +11,7 @@
 // ============================================
 const CONFIG = {
   // Número de WhatsApp (57 + número sin espacios ni guiones)
-  whatsappNumber: '573128301547',
+  whatsappNumber: '573113694414',
 
   // Nombre de la tienda
   storeName: 'BUFALO STORE',

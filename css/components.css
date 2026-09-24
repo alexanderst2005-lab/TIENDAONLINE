@@ -1150,6 +1150,18 @@
   color: var(--color-accent);
 }
 
+.site-logo img {
+  height: 52px;
+  width: auto;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-logo:hover img {
+  transform: scale(1.06);
+}
+
 /* Desktop Nav */
 .site-nav {
   display: flex;

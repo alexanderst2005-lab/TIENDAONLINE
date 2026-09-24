@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">Producto — URBANO</title>
-  <meta name="description" id="page-desc" content="Detalle del producto en URBANO.">
+  <title id="page-title">Producto — BUFALO STORE</title>
+  <meta name="description" id="page-desc" content="Detalle del producto en BUFALO STORE.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,9 @@
   <div class="scroll-progress" id="scroll-progress"></div>
   <div class="header-inner">
     <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
-    <a href="index.html" class="site-logo"><img src="images/logo.png" alt="Luxury Boutique" style="height: 48px; width: auto; border-radius: 50%;"></a>
+    <a href="index.html" class="site-logo" aria-label="BUFALO STORE - Inicio">
+      <img src="images/logo.png" alt="BUFALO STORE" style="height: 52px; width: auto; border-radius: 50%; object-fit: cover;">
+    </a>
     <nav class="site-nav">
       <a href="index.html" class="nav-link">Inicio</a>
       <a href="catalogo.html" class="nav-link active">Catálogo</a>
@@ -89,6 +91,7 @@
           <h1 class="product-detail-name" id="product-name"></h1>
           <div class="product-detail-price" id="product-price"></div>
           
+          <p id="product-desc" style="color:var(--color-text-secondary);font-size:0.95rem;line-height:1.6;margin-bottom:1.5rem;"></p>
 
           <!-- Stock -->
           <div id="product-stock" style="margin-bottom:1.5rem"></div>
@@ -147,12 +150,9 @@
     <div class="footer-main">
 
       <div class="footer-brand">
-        <a href="index.html" class="footer-logo">Luxury Boutique</a>
-        <p class="footer-tagline">Moda femenina moderna, elegante y sofisticada.</p>
+        <a href="index.html" class="footer-logo">BUFALO STORE</a>
+        <p class="footer-tagline">Ropa masculina moderna, urbana y con estilo. Calidad premium garantizada en cada prenda.</p>
         <div class="footer-socials">
-          <a href="https://www.instagram.com/luxury_queens21" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </a>
           <a href="https://wa.me/573128301547" class="social-icon" aria-label="WhatsApp" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
           </a>
@@ -160,45 +160,43 @@
       </div>
 
       <div>
-        <h4 class="footer-col-title">Tienda</h4>
+        <h4 class="footer-col-title">Colección</h4>
         <div class="footer-links">
-          <a href="catalogo.html">Catálogo</a>
-          <a href="catalogo.html?cat=sets">Sets</a>
-          <a href="catalogo.html?cat=vestidos">Vestidos</a>
+          <a href="catalogo.html">Catálogo Completo</a>
+          <a href="catalogo.html?cat=camisetas">Camisetas</a>
+          <a href="catalogo.html?cat=polos">Camibusos Tipo Polo</a>
+          <a href="catalogo.html?cat=pantalonetas">Pantalonetas</a>
           <a href="catalogo.html?cat=jeans">Jeans</a>
-          <a href="catalogo.html?cat=enterizos">Enterizos</a>
         </div>
       </div>
 
       <div id="contacto">
         <div style="margin-bottom: 2.5rem;">
-          <h4 style="font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.25em; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; margin-bottom: 1.25rem;">REDES</h4>
-          <a href="https://www.instagram.com/luxury_queens21" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 0.75rem; color: #fff; font-size: 0.95rem; margin-bottom: 1rem; text-decoration: none; font-weight: 400; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
-            <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 1.5; flex-shrink: 0;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            @luxury_queens21
+          <h4 style="font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.25em; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; margin-bottom: 1.25rem;">ATENCIÓN AL CLIENTE</h4>
+          <a href="https://wa.me/573128301547" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 0.75rem; color: #fff; font-size: 0.95rem; margin-bottom: 1rem; text-decoration: none; font-weight: 400; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+            <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 1.5; flex-shrink: 0;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            WhatsApp Directo: +57 312 830 1547
           </a>
         </div>
         
         <div>
-          <h4 style="font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.25em; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; margin-bottom: 1.25rem;">ENCUÉNTRANOS</h4>
+          <h4 style="font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.25em; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; margin-bottom: 1.25rem;">ENVÍOS</h4>
           
           <div style="display: flex; align-items: flex-start; gap: 0.75rem; color: #fff; font-size: 0.95rem; margin-bottom: 0.6rem; font-weight: 400;">
-            <span style="font-size: 1.1rem; line-height: 1;">📍</span>
-            <span style="line-height: 1.4;">CC el tesoro Cali - Local 304a torre B</span>
+            <span style="font-size: 1.1rem; line-height: 1;">📦</span>
+            <span style="line-height: 1.4;">Envíos a todo el territorio nacional</span>
           </div>
           
           <div style="color: #fff; font-size: 0.95rem; margin-bottom: 0.6rem; font-weight: 400; padding-left: 30px; line-height: 1.4;">
-            Domicilios en Cali, Palmira, Jamundi y Puerto T
+            Pagos contra entrega en ciudades principales
           </div>
-
-          
         </div>
       </div>
 
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copyright">© 2026 Luxury Boutique. Todos los derechos reservados.</p>
+      <p class="footer-copyright">© 2026 BUFALO STORE. Todos los derechos reservados.</p>
     </div>
   </div>
 </footer>
@@ -258,10 +256,10 @@
     }
 
     currentProduct = p;
-    document.title = p.name + ' — Luxury Boutique';
+    document.title = `${p.name} — BUFALO STORE`;
 
     // WA Button setup
-    const waMessage = `Hola, estoy interesada en este producto de Luxury Boutique: *${p.name}*. Quisiera consultar disponibilidad y tallas.`;
+    const waMessage = `Hola, estoy interesado en este producto de BUFALO STORE: *${p.name}*. Quisiera consultar disponibilidad y tallas.`;
     const waBtn = document.getElementById('wa-consult-btn');
     if (waBtn) waBtn.href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(waMessage)}`;
 
@@ -323,7 +321,7 @@
 
   function renderProduct(p) {
     document.getElementById('product-content').style.display = 'block';
-    document.getElementById('page-title').textContent = `${p.name} — Luxury Boutique`;
+    document.getElementById('page-title').textContent = `${p.name} — BUFALO STORE`;
     document.getElementById('page-desc').content = p.description;
     document.getElementById('product-breadcrumb-name').textContent = p.name;
     const pcLabel = document.getElementById('product-category-label');
@@ -441,70 +439,122 @@
 })();
 </script>
 
-<!-- Size Guide Modal -->
+<!-- Size Guide Modal (Guía de Tallas para Hombre) -->
 <div id="size-guide-modal" onclick="if(event.target===this) this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); z-index:9999; align-items:center; justify-content:center; padding:1.25rem;">
-  <div style="background:#ffffff; width:100%; max-width:540px; position:relative; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25); border:1px solid #eee; padding:2.5rem 2rem; max-height:90vh; overflow-y:auto;">
+  <div style="background:#ffffff; width:100%; max-width:560px; position:relative; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25); border:1px solid #eee; padding:2.5rem 2rem; max-height:90vh; overflow-y:auto;">
     <button onclick="document.getElementById('size-guide-modal').style.display='none'" aria-label="Cerrar" style="position:absolute; right:1.5rem; top:1.5rem; background:none; border:none; font-size:1.75rem; line-height:1; cursor:pointer; color:#777; transition:color 0.2s;" onmouseover="this.style.color='#000'" onmouseout="this.style.color='#777'">&times;</button>
     
     <div style="text-align:center; margin-bottom:2rem;">
-      <p style="font-family:var(--font-sans); font-size:0.7rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#999; margin-bottom:0.4rem;">Luxury Boutique</p>
-      <h2 style="font-family:var(--font-serif); font-size:2rem; font-weight:400; color:#111; margin:0 0 0.5rem 0;">Guía de Tallas</h2>
+      <p style="font-family:var(--font-sans); font-size:0.7rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#999; margin-bottom:0.4rem;">BUFALO STORE</p>
+      <h2 style="font-family:var(--font-serif); font-size:2rem; font-weight:400; color:#111; margin:0 0 0.5rem 0;">Guía de Tallas para Hombre</h2>
       <p style="font-family:var(--font-sans); font-size:0.85rem; color:#666; margin:0;">Medidas corporales de referencia expresadas en centímetros (cm).</p>
     </div>
 
-    <!-- Table -->
-    <div style="overflow-x:auto; margin-bottom:2rem;">
-      <table style="width:100%; border-collapse:collapse; text-align:center; font-family:var(--font-sans); font-size:0.85rem;">
-        <thead>
-          <tr style="background:#f8f8f8; border-bottom:1.5px solid #111;">
-            <th style="padding:0.85rem 0.5rem; font-weight:600; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:#111;">Talla</th>
-            <th style="padding:0.85rem 0.5rem; font-weight:600; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:#111;">Busto (cm)</th>
-            <th style="padding:0.85rem 0.5rem; font-weight:600; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:#111;">Cintura (cm)</th>
-            <th style="padding:0.85rem 0.5rem; font-weight:600; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:#111;">Cadera (cm)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom:1px solid #f0f0f0;">
-            <td style="padding:0.85rem 0.5rem; font-weight:600; color:#111;">XS</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">82 - 86</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">62 - 66</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">86 - 90</td>
-          </tr>
-          <tr style="border-bottom:1px solid #f0f0f0; background:#fdfdfd;">
-            <td style="padding:0.85rem 0.5rem; font-weight:600; color:#111;">S</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">86 - 90</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">66 - 70</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">90 - 94</td>
-          </tr>
-          <tr style="border-bottom:1px solid #f0f0f0;">
-            <td style="padding:0.85rem 0.5rem; font-weight:600; color:#111;">M</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">90 - 94</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">70 - 74</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">94 - 98</td>
-          </tr>
-          <tr style="border-bottom:1px solid #f0f0f0; background:#fdfdfd;">
-            <td style="padding:0.85rem 0.5rem; font-weight:600; color:#111;">L</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">94 - 100</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">74 - 80</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">98 - 104</td>
-          </tr>
-          <tr style="border-bottom:1px solid #111;">
-            <td style="padding:0.85rem 0.5rem; font-weight:600; color:#111;">XL</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">100 - 106</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">80 - 86</td>
-            <td style="padding:0.85rem 0.5rem; color:#555;">104 - 110</td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Table Tops -->
+    <div style="margin-bottom:1.5rem;">
+      <h4 style="font-family:var(--font-sans); font-size:0.8rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#111; margin-bottom:0.75rem;">Prendas Superiores (Camisetas y Polos)</h4>
+      <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse; text-align:center; font-family:var(--font-sans); font-size:0.85rem;">
+          <thead>
+            <tr style="background:#f8f8f8; border-bottom:1.5px solid #111;">
+              <th style="padding:0.75rem 0.5rem; font-weight:600; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:#111;">Talla</th>
+              <th style="padding:0.75rem 0.5rem; font-weight:600; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:#111;">Pecho (cm)</th>
+              <th style="padding:0.75rem 0.5rem; font-weight:600; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:#111;">Cintura (cm)</th>
+              <th style="padding:0.75rem 0.5rem; font-weight:600; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:#111;">Largo (cm)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #f0f0f0;">
+              <td style="padding:0.75rem 0.5rem; font-weight:600; color:#111;">S</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">92 - 96</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">78 - 82</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">69</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0; background:#fdfdfd;">
+              <td style="padding:0.75rem 0.5rem; font-weight:600; color:#111;">M</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">97 - 102</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">83 - 88</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">71</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0;">
+              <td style="padding:0.75rem 0.5rem; font-weight:600; color:#111;">L</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">103 - 108</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">89 - 94</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">73</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0; background:#fdfdfd;">
+              <td style="padding:0.75rem 0.5rem; font-weight:600; color:#111;">XL</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">109 - 114</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">95 - 100</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">75</td>
+            </tr>
+            <tr style="border-bottom:1px solid #111;">
+              <td style="padding:0.75rem 0.5rem; font-weight:600; color:#111;">XXL</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">115 - 120</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">101 - 106</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">77</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Table Pants -->
+    <div style="margin-bottom:2rem;">
+      <h4 style="font-family:var(--font-sans); font-size:0.8rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#111; margin-bottom:0.75rem;">Jeans y Pantalones</h4>
+      <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse; text-align:center; font-family:var(--font-sans); font-size:0.85rem;">
+          <thead>
+            <tr style="background:#f8f8f8; border-bottom:1.5px solid #111;">
+              <th style="padding:0.75rem 0.5rem; font-weight:600; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:#111;">Talla</th>
+              <th style="padding:0.75rem 0.5rem; font-weight:600; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:#111;">Cintura (cm)</th>
+              <th style="padding:0.75rem 0.5rem; font-weight:600; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:#111;">Cadera (cm)</th>
+              <th style="padding:0.75rem 0.5rem; font-weight:600; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:#111;">Largo (cm)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #f0f0f0;">
+              <td style="padding:0.75rem 0.5rem; font-weight:600; color:#111;">28</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">71 - 74</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">88 - 91</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">102</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0; background:#fdfdfd;">
+              <td style="padding:0.75rem 0.5rem; font-weight:600; color:#111;">30</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">76 - 79</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">93 - 96</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">104</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0;">
+              <td style="padding:0.75rem 0.5rem; font-weight:600; color:#111;">32</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">81 - 84</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">98 - 101</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">105</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0; background:#fdfdfd;">
+              <td style="padding:0.75rem 0.5rem; font-weight:600; color:#111;">34</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">86 - 89</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">103 - 106</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">106</td>
+            </tr>
+            <tr style="border-bottom:1px solid #111;">
+              <td style="padding:0.75rem 0.5rem; font-weight:600; color:#111;">36</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">91 - 94</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">108 - 111</td>
+              <td style="padding:0.75rem 0.5rem; color:#555;">107</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- How to measure -->
     <div style="background:#fafafa; border:1px solid #eee; padding:1.25rem; margin-bottom:1.5rem;">
       <h4 style="font-family:var(--font-sans); font-size:0.75rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:#111; margin-bottom:0.75rem;">¿Cómo tomar tus medidas?</h4>
       <div style="display:flex; flex-direction:column; gap:0.6rem; font-family:var(--font-sans); font-size:0.8rem; color:#555; line-height:1.4;">
-        <div><strong>1. Busto:</strong> Mide alrededor de la parte más llena del busto manteniendo la cinta horizontal.</div>
-        <div><strong>2. Cintura:</strong> Mide la parte más estrecha de la cintura, por encima del ombligo.</div>
-        <div><strong>3. Cadera:</strong> Con los pies juntos, mide alrededor de la parte más ancha de la cadera.</div>
+        <div><strong>1. Pecho:</strong> Pasa la cinta métrica horizontalmente alrededor de la parte más ancha del pecho.</div>
+        <div><strong>2. Cintura:</strong> Mide la circunferencia a la altura de tu cintura natural o donde usas usualmente el pantalón.</div>
+        <div><strong>3. Cadera:</strong> Con los pies juntos, mide alrededor del punto más amplio de la cadera.</div>
       </div>
     </div>
 

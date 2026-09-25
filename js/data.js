@@ -1,5 +1,5 @@
 /* ============================================
-   BUFALO STORE — DATA.JS
+   URBANOO — DATA.JS
    Configuración Central y Base de Datos de Productos
    Ropa Masculina, Urbana y Elegante
    ============================================ */
@@ -11,10 +11,10 @@
 // ============================================
 const CONFIG = {
   // Número de WhatsApp (57 + número sin espacios ni guiones)
-  whatsappNumber: '573113694414',
+  whatsappNumber: '573027642208',
 
   // Nombre de la tienda
-  storeName: 'BUFALO STORE',
+  storeName: 'URBANOO',
 
   // Moneda
   currency: 'COP',

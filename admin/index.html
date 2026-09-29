@@ -302,23 +302,43 @@
             <input type="number" id="prodPrice" class="form-control" required style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
           </div>
           <div class="form-group" style="flex: 1;">
+            <label>Precio Anterior (COP) <small>(Opcional)</small></label>
+            <input type="number" id="prodComparePrice" class="form-control" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
+          </div>
+          <div class="form-group" style="flex: 1;">
             <label>Disponibilidad</label>
             <select id="prodStock" class="form-control" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
               <option value="1">Disponible</option>
               <option value="0">Agotado</option>
             </select>
-            <small style="color: var(--text-light); font-size: 11px;">Indica si el producto tiene existencias</small>
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Categoría</label>
-          <select id="prodCategory" class="form-control" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
-            <option value="blusas">Blusas</option>
-            <option value="vestidos">Vestidos</option>
-            <option value="pantalones">Pantalones</option>
-            <option value="cuidado">Cuidado Corporal</option>
-          </select>
+        <div style="display: flex; gap: 15px;">
+          <div class="form-group" style="flex: 1;">
+            <label>Categoría</label>
+            <select id="prodCategory" class="form-control" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
+              <option value="blusas">Blusas y Tops</option>
+              <option value="vestidos">Vestidos</option>
+              <option value="pantalones">Pantalones y Faldas</option>
+              <option value="cuidado">Cuidado Corporal</option>
+            </select>
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label>Colección <small>(Opcional)</small></label>
+            <input type="text" id="prodCollection" class="form-control" placeholder="Ej: Verano 2026" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 15px;">
+          <div class="form-group" style="flex: 1;">
+            <label>Tallas <small>(Separadas por coma)</small></label>
+            <input type="text" id="prodSizes" class="form-control" placeholder="S, M, L" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label>Colores <small>(Separados por coma)</small></label>
+            <input type="text" id="prodColors" class="form-control" placeholder="Blanco, Negro" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
+          </div>
         </div>
         
         <div class="form-group">
@@ -332,6 +352,21 @@
             Producto Visible en la Tienda Pública
           </label>
           <p style="margin-top: 5px; font-size: 12px; color: var(--text-light); margin-left: 28px;">Si desmarcas esto, el producto se ocultará completamente de la tienda, sin importar el stock.</p>
+        </div>
+
+        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+          <div class="form-group" style="flex: 1; background: #f0f4f8; padding: 10px; border-radius: 6px; border: 1px solid var(--border);">
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 500;">
+              <input type="checkbox" id="prodIsNew" style="width: 18px; height: 18px;"> 
+              Marcar como Nuevo
+            </label>
+          </div>
+          <div class="form-group" style="flex: 1; background: #fff8e1; padding: 10px; border-radius: 6px; border: 1px solid var(--border);">
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 500;">
+              <input type="checkbox" id="prodIsFeatured" style="width: 18px; height: 18px;"> 
+              Marcar como Destacado
+            </label>
+          </div>
         </div>
         
         <button type="submit" class="btn-primary" id="btnSaveProduct" style="width: 100%; margin-top: 20px; padding: 12px; font-size: 16px;">Guardar Producto</button>

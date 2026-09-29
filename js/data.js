@@ -87,8 +87,7 @@ function hasStock(product) {
 }
 
 function getStockLabel(product) {
-  if (product.stock === 0) return { label: 'Agotado', class: 'out' };
-  if (product.stock <= 5) return { label: `Últimas ${product.stock} unidades`, class: 'low' };
+  if (product.stock <= 0) return { label: 'Agotado', class: 'out' };
   return { label: 'Disponible', class: '' };
 }
 

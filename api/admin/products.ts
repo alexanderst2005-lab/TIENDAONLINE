@@ -18,13 +18,18 @@ export default async function handler(req: any, res: any) {
       await db.insert(products).values({
         id: data.id || `prod-${Date.now()}`,
         name: data.name,
-        slug: data.slug || data.name.toLowerCase().replace(/\\s+/g, '-'),
+        slug: data.slug || data.name.toLowerCase().replace(/\s+/g, '-'),
         price: Number(data.price),
+        compareAtPrice: data.compareAtPrice ? Number(data.compareAtPrice) : null,
         category: data.category,
         categoryLabel: data.categoryLabel,
         description: data.description || '',
         stock: Number(data.stock || 0),
         isActive: data.isActive !== false,
+        isNew: !!data.isNew,
+        isFeatured: !!data.isFeatured,
+        sizes: data.sizes || [],
+        colors: data.colors || [],
         images: data.images || []
       });
       return res.status(201).json({ message: 'Product created' });
@@ -37,11 +42,16 @@ export default async function handler(req: any, res: any) {
       await db.update(products).set({
         name: data.name,
         price: Number(data.price),
+        compareAtPrice: data.compareAtPrice ? Number(data.compareAtPrice) : null,
         category: data.category,
         categoryLabel: data.categoryLabel,
         description: data.description,
         stock: Number(data.stock),
         isActive: data.isActive,
+        isNew: !!data.isNew,
+        isFeatured: !!data.isFeatured,
+        sizes: data.sizes || [],
+        colors: data.colors || [],
         images: data.images
       }).where(eq(products.id, data.id));
       

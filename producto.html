@@ -388,7 +388,21 @@
     }
 
     // Add to cart
-    document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    if (p.stock <= 0) {
+      addToCartBtn.textContent = 'AGOTADO';
+      addToCartBtn.disabled = true;
+      addToCartBtn.style.opacity = '0.5';
+      addToCartBtn.style.cursor = 'not-allowed';
+    } else {
+      addToCartBtn.textContent = 'Añadir a la bolsa';
+      addToCartBtn.disabled = false;
+      addToCartBtn.style.opacity = '1';
+      addToCartBtn.style.cursor = 'pointer';
+    }
+
+    addToCartBtn.addEventListener('click', () => {
+      if (p.stock <= 0) return;
       const hasColors = currentProduct.colors && currentProduct.colors.length > 0;
       if (!selectedSize) {
         showToast('Por favor selecciona una talla');

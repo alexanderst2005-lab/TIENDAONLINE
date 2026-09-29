@@ -159,17 +159,49 @@ document.addEventListener('DOMContentLoaded', async () => {
       data.forEach(o => {
         const tr = document.createElement('tr');
         const date = new Date(o.createdAt).toLocaleDateString();
+        const selectHtml = `
+          <select onchange="updateOrderStatus('${o.id}', this.value)" style="padding: 4px; border-radius: 4px; border: 1px solid var(--border);">
+            <option value="Pendiente" ${o.status === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
+            <option value="Confirmado" ${o.status === 'Confirmado' ? 'selected' : ''}>Confirmado</option>
+            <option value="En preparación" ${o.status === 'En preparación' ? 'selected' : ''}>En preparación</option>
+            <option value="Enviado" ${o.status === 'Enviado' ? 'selected' : ''}>Enviado</option>
+            <option value="Entregado" ${o.status === 'Entregado' ? 'selected' : ''}>Entregado</option>
+            <option value="Cancelado" ${o.status === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+          </select>
+        `;
+
         tr.innerHTML = `
           <td>#${o.orderNumber}</td>
           <td>${date}</td>
           <td>${o.customerName}</td>
           <td>${formatCurrency(o.total)}</td>
-          <td>${o.status}</td>
-          <td><button class="btn-edit" onclick="viewOrder('${o.id}')">Ver detalle</button></td>
+          <td>${selectHtml}</td>
+          <td>
+            <button class="btn-edit" onclick="viewOrder('${o.id}')">Ver detalle</button>
+          </td>
         `;
         tbody.appendChild(tr);
       });
     } catch(err) { console.error(err); }
+  }
+
+  window.updateOrderStatus = async function(id, newStatus) {
+    try {
+      await fetch('/api/admin/orders', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ id: parseInt(id, 10), status: newStatus })
+      });
+      alert('Estado del pedido actualizado a: ' + newStatus);
+    } catch (err) {
+      console.error(err);
+      alert('Error al actualizar el pedido');
+      loadOrders(); // reload to reset state
+    }
+  }
+
+  window.viewOrder = function(id) {
+    alert('Función para ver detalles del pedido ' + id + ' en construcción.');
   }
 
   // --- Modal Logic ---
@@ -247,8 +279,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('prodId').value = p.id;
         document.getElementById('prodName').value = p.name;
         document.getElementById('prodPrice').value = p.price;
+        document.getElementById('prodComparePrice').value = p.compareAtPrice || '';
         document.getElementById('prodStock').value = p.stock > 0 ? "1" : "0";
         document.getElementById('prodCategory').value = p.category;
+        document.getElementById('prodCollection').value = p.collectionId ? p.collectionId : '';
+        document.getElementById('prodSizes').value = p.sizes ? p.sizes.join(', ') : '';
+        document.getElementById('prodColors').value = p.colors ? p.colors.map(c => c.name).join(', ') : '';
+        document.getElementById('prodIsNew').checked = !!p.isNew;
+        document.getElementById('prodIsFeatured').checked = !!p.isFeatured;
         document.getElementById('prodDesc').value = p.description;
         document.getElementById('prodActive').checked = p.isActive;
         currentImages = [...(p.images || [])];
@@ -258,6 +296,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       form.reset();
       document.getElementById('prodId').value = '';
       document.getElementById('prodActive').checked = true;
+      document.getElementById('prodIsNew').checked = false;
+      document.getElementById('prodIsFeatured').checked = false;
       currentImages = [];
     }
     renderGallery();
@@ -282,13 +322,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     saveBtn.textContent = 'Guardando...';
     saveBtn.disabled = true;
 
+    const rawSizes = document.getElementById('prodSizes').value;
+    const sizesArr = rawSizes ? rawSizes.split(',').map(s => s.trim()).filter(Boolean) : [];
+    
+    const rawColors = document.getElementById('prodColors').value;
+    const colorsArr = rawColors ? rawColors.split(',').map(c => ({ name: c.trim(), hex: '#000000' })).filter(c => c.name) : [];
+    
+    const rawComparePrice = document.getElementById('prodComparePrice').value;
+
     const payload = {
       id: id || undefined,
       name: document.getElementById('prodName').value,
       price: document.getElementById('prodPrice').value,
+      compareAtPrice: rawComparePrice ? parseInt(rawComparePrice, 10) : null,
       stock: parseInt(document.getElementById('prodStock').value, 10),
       category: document.getElementById('prodCategory').value,
       categoryLabel: document.getElementById('prodCategory').options[document.getElementById('prodCategory').selectedIndex].text,
+      sizes: sizesArr,
+      colors: colorsArr,
+      isNew: document.getElementById('prodIsNew').checked,
+      isFeatured: document.getElementById('prodIsFeatured').checked,
       description: document.getElementById('prodDesc').value,
       isActive: document.getElementById('prodActive').checked,
       images: currentImages.length > 0 ? currentImages : ['images/placeholder.jpg']

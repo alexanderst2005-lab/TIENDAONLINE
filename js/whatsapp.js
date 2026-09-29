@@ -72,7 +72,7 @@ function initCheckoutForm() {
   // Render order summary
   renderOrderSummary();
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const customerData = {
@@ -89,7 +89,55 @@ function initCheckoutForm() {
       return;
     }
 
-    sendOrderToWhatsApp(customerData);
+    const items = Cart.get();
+    if (items.length === 0) {
+      alert('Tu carrito está vacío.');
+      return;
+    }
+
+    const submitBtn = document.getElementById('whatsapp-submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'PROCESANDO...';
+    }
+
+    try {
+      const subtotal = Cart.getSubtotal();
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerData,
+          items,
+          subtotal,
+          total: subtotal // assuming no shipping cost yet
+        })
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Error creando pedido');
+
+      // Add order number to notes for whatsapp
+      customerData.notes = (customerData.notes ? customerData.notes + '\n\n' : '') + 'Número de pedido web: ' + data.orderNumber;
+
+      sendOrderToWhatsApp(customerData);
+      
+      // Clear cart
+      Cart.clear();
+      
+      // Optionally redirect to a thank you page, but WhatsApp opens in a new tab anyway
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1500);
+
+    } catch (err) {
+      console.error(err);
+      alert('Hubo un problema generando tu pedido. Por favor intenta de nuevo.');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'ENVIAR PEDIDO POR WHATSAPP';
+      }
+    }
   });
 }
 

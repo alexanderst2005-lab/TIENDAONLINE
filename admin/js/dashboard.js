@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('prodId').value = p.id;
         document.getElementById('prodName').value = p.name;
         document.getElementById('prodPrice').value = p.price;
-        document.getElementById('prodStock').value = p.stock;
+        document.getElementById('prodStock').value = p.stock > 0 ? "1" : "0";
         document.getElementById('prodCategory').value = p.category;
         document.getElementById('prodDesc').value = p.description;
         document.getElementById('prodActive').checked = p.isActive;
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       id: id || undefined,
       name: document.getElementById('prodName').value,
       price: document.getElementById('prodPrice').value,
-      stock: document.getElementById('prodStock').value,
+      stock: parseInt(document.getElementById('prodStock').value, 10),
       category: document.getElementById('prodCategory').value,
       categoryLabel: document.getElementById('prodCategory').options[document.getElementById('prodCategory').selectedIndex].text,
       description: document.getElementById('prodDesc').value,

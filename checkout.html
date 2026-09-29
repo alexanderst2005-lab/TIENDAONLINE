@@ -277,7 +277,7 @@
 <script src="js/animations.js"></script>
 <script src="js/whatsapp.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => { if(window.PRODUCTS_READY) await window.PRODUCTS_READY;
   const cartItems = Cart.get();
   if (cartItems.length === 0) {
     document.getElementById('empty-cart-warning').style.display = 'block';
@@ -288,3 +288,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+

@@ -181,7 +181,7 @@
   // ============================================
   // INIT EVENT LISTENERS
   // ============================================
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => { if(window.PRODUCTS_READY) await window.PRODUCTS_READY;
     // Overlay click
     const overlay = document.getElementById('qs-overlay');
     if (overlay) overlay.addEventListener('click', closeQuickSelect);
@@ -207,3 +207,4 @@
   });
 
 })();
+

@@ -375,7 +375,7 @@ function initFromURL() {
 // ============================================
 // INIT ALL
 // ============================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => { if(window.PRODUCTS_READY) await window.PRODUCTS_READY;
   initFromURL();
   initFilterDrawer();
   initSort();
@@ -383,3 +383,4 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCatalogProducts();
   updateActiveFiltersCount();
 });
+

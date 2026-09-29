@@ -1,5 +1,32 @@
 {
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "dotenv": "^18.0.4",
+    "drizzle-orm": "^0.45.3",
     "jsdom": "^29.1.1"
+  },
+  "name": "tienda-online",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexanderst2005-lab/TIENDAONLINE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexanderst2005-lab/TIENDAONLINE/issues"
+  },
+  "homepage": "https://github.com/alexanderst2005-lab/TIENDAONLINE#readme",
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "drizzle-kit": "^0.31.11",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
   }
 }

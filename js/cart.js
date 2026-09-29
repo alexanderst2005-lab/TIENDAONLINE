@@ -416,7 +416,7 @@ function renderWishlistSidebar() {
 // ============================================
 // INIT: Update cart badge and wishlist on page load
 // ============================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => { if(window.PRODUCTS_READY) await window.PRODUCTS_READY;
   Cart.updateUI();
   Wishlist.updateUI();
 
@@ -461,3 +461,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+

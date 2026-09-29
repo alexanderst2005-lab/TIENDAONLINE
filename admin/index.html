@@ -47,7 +47,8 @@
     </header>
 
     <div class="content-area" id="mainContent">
-      <!-- Vistas Inyectadas Din谩micamente -->
+      
+      <!-- Vista Dashboard -->
       <div id="view-dashboard" class="page-view">
         <div class="stats-grid">
           <div class="stat-card">
@@ -87,7 +88,9 @@
             </tbody>
           </table>
         </div>
-            <!-- Vista Productos -->
+      </div>
+
+      <!-- Vista Productos -->
       <div id="view-products" class="page-view" style="display: none;">
         <div class="table-container">
           <div class="table-header">
@@ -130,7 +133,7 @@
               </tr>
             </thead>
             <tbody id="inventoryTableBody">
-              <tr><td colspan="6" style="text-align: center;">En construcci髇...</td></tr>
+              <tr><td colspan="6" style="text-align: center;">En construcci贸n...</td></tr>
             </tbody>
           </table>
         </div>
@@ -154,20 +157,65 @@
               </tr>
             </thead>
             <tbody id="ordersTableBody">
-              <tr><td colspan="6" style="text-align: center;">En construcci髇...</td></tr>
+              <tr><td colspan="6" style="text-align: center;">En construcci贸n...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Vistas Placeholder para el resto -->
-      <div id="view-categories" class="page-view" style="display: none;"><h3>Categor韆s (Pr髕imamente)</h3></div>
-      <div id="view-collections" class="page-view" style="display: none;"><h3>Colecciones (Pr髕imamente)</h3></div>
-      <div id="view-customers" class="page-view" style="display: none;"><h3>Clientes (Pr髕imamente)</h3></div>
-      <div id="view-content" class="page-view" style="display: none;"><h3>Contenido (Pr髕imamente)</h3></div>
-      <div id="view-settings" class="page-view" style="display: none;"><h3>Configuraci髇 (Pr髕imamente)</h3></div>
+      <!-- Vistas Placeholder -->
+      <div id="view-categories" class="page-view" style="display: none;"><h3>Categor铆as (Pr贸ximamente)</h3></div>
+      <div id="view-collections" class="page-view" style="display: none;"><h3>Colecciones (Pr贸ximamente)</h3></div>
+      <div id="view-customers" class="page-view" style="display: none;"><h3>Clientes (Pr贸ximamente)</h3></div>
+      <div id="view-content" class="page-view" style="display: none;"><h3>Contenido (Pr贸ximamente)</h3></div>
+      <div id="view-settings" class="page-view" style="display: none;"><h3>Configuraci贸n (Pr贸ximamente)</h3></div>
+      
     </div>
   </main>
+
+  <!-- Modal Producto -->
+  <div id="productModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+    <div class="modal-content" style="background: white; padding: 30px; border-radius: 8px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+        <h2 id="modalTitle">Agregar Producto</h2>
+        <button onclick="closeProductModal()" style="background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+      </div>
+      <form id="productForm">
+        <input type="hidden" id="prodId">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" id="prodName" required>
+        </div>
+        <div style="display: flex; gap: 15px;">
+          <div class="form-group" style="flex: 1;">
+            <label>Precio</label>
+            <input type="number" id="prodPrice" required>
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label>Stock General</label>
+            <input type="number" id="prodStock" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Categor铆a</label>
+          <select id="prodCategory" style="width: 100%; padding: 10px;">
+            <option value="blusas">Blusas</option>
+            <option value="vestidos">Vestidos</option>
+            <option value="pantalones">Pantalones</option>
+            <option value="cuidado">Cuidado Corporal</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Descripci贸n</label>
+          <textarea id="prodDesc" rows="4" style="width: 100%; padding: 10px;"></textarea>
+        </div>
+        <div class="form-group">
+          <label><input type="checkbox" id="prodActive"> Producto Activo (Visible en la tienda)</label>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 20px;">Guardar Producto</button>
+      </form>
+    </div>
+  </div>
 
   <script>
     // Initialize icons
@@ -196,4 +244,3 @@
   <script src="js/dashboard.js"></script>
 </body>
 </html>
-

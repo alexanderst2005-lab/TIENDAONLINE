@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&amp;family=Inter:wght@400&amp;display=swap');
+      .logo-text {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 85px;
+        fill: #FDF4A3;
+        text-anchor: middle;
+      }
+      .logo-sub {
+        font-family: 'Inter', sans-serif;
+        font-size: 26px;
+        fill: #DDAFA0;
+        text-anchor: middle;
+        letter-spacing: 12px;
+      }
+    </style>
+  </defs>
+  
+  <rect width="500" height="500" fill="#405146" />
+  
+  <!-- Heart -->
+  <g transform="translate(225, 130) scale(0.5)">
+    <path d="M50,30 C30,-10 0,20 0,50 C0,70 50,110 50,110 C50,110 100,70 100,50 C100,20 70,-10 50,30 Z" fill="#F2B39B" />
+  </g>
+  
+  <!-- Text -->
+  <text x="250" y="270" class="logo-text">Monatela</text>
+  <text x="256" y="325" class="logo-sub">Boutique</text>
+</svg>

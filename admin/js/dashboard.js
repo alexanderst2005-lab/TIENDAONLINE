@@ -92,7 +92,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
       data.forEach(p => {
         const tr = document.createElement('tr');
-        const img = p.images && p.images[0] ? `<img src="../${p.images[0]}" width="40" style="border-radius:4px">` : 'N/A';
+        let imgSrc = p.images && p.images[0] ? p.images[0] : '';
+        if (imgSrc && !imgSrc.startsWith('data:') && !imgSrc.startsWith('http')) {
+          imgSrc = '../' + imgSrc;
+        }
+        const img = imgSrc ? `<img src="${imgSrc}" width="40" height="40" style="border-radius:4px; object-fit:cover;">` : 'N/A';
         const statusClass = p.isActive ? 'success' : 'error';
         const statusText = p.isActive ? 'Activo' : 'Oculto';
         tr.innerHTML = `

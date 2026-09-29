@@ -439,7 +439,10 @@
     });
   };
 
-  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('DOMContentLoaded', async () => { 
+    if(window.PRODUCTS_READY) await window.PRODUCTS_READY; 
+    init(); 
+  });
 })();
 </script>
 

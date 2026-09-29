@@ -277,37 +277,64 @@
       </div>
       <form id="productForm">
         <input type="hidden" id="prodId">
+        
+        <!-- Galería de Imágenes -->
+        <div class="form-group">
+          <label>Imágenes del Producto</label>
+          <div id="imageGallery" style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+            <!-- Imágenes se cargarán aquí -->
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <input type="file" id="prodImageInput" accept="image/*" multiple style="display: none;">
+            <button type="button" class="btn-primary" style="background: #EAA9AE; color: #111;" onclick="document.getElementById('prodImageInput').click()">+ Subir Imágenes</button>
+            <span style="font-size: 12px; color: var(--text-light);">Puedes subir varias imágenes</span>
+          </div>
+        </div>
+
         <div class="form-group">
           <label>Nombre</label>
-          <input type="text" id="prodName" required>
+          <input type="text" id="prodName" class="form-control" required style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
         </div>
+        
         <div style="display: flex; gap: 15px;">
           <div class="form-group" style="flex: 1;">
-            <label>Precio</label>
-            <input type="number" id="prodPrice" required>
+            <label>Precio (COP)</label>
+            <input type="number" id="prodPrice" class="form-control" required style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
           </div>
           <div class="form-group" style="flex: 1;">
             <label>Stock General</label>
-            <input type="number" id="prodStock" required>
+            <div style="display: flex; gap: 10px;">
+              <input type="number" id="prodStock" class="form-control" required style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
+              <button type="button" class="btn-primary" style="background: #eee; color: #333;" onclick="document.getElementById('prodStock').value = 0" title="Marcar como Agotado">Agotar</button>
+            </div>
+            <small style="color: var(--text-light); font-size: 11px;">Si el stock es 0, saldrá como "Agotado"</small>
           </div>
         </div>
+
         <div class="form-group">
           <label>Categoría</label>
-          <select id="prodCategory" style="width: 100%; padding: 10px;">
+          <select id="prodCategory" class="form-control" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
             <option value="blusas">Blusas</option>
             <option value="vestidos">Vestidos</option>
             <option value="pantalones">Pantalones</option>
             <option value="cuidado">Cuidado Corporal</option>
           </select>
         </div>
+        
         <div class="form-group">
           <label>Descripción</label>
-          <textarea id="prodDesc" rows="4" style="width: 100%; padding: 10px;"></textarea>
+          <textarea id="prodDesc" class="form-control" rows="4" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;"></textarea>
         </div>
-        <div class="form-group">
-          <label><input type="checkbox" id="prodActive"> Producto Activo (Visible en la tienda)</label>
+        
+        <div class="form-group" style="background: #f9f9f9; padding: 15px; border-radius: 6px; border: 1px solid var(--border);">
+          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 500;">
+            <input type="checkbox" id="prodActive" style="width: 18px; height: 18px;"> 
+            Producto Visible en la Tienda Pública
+          </label>
+          <p style="margin-top: 5px; font-size: 12px; color: var(--text-light); margin-left: 28px;">Si desmarcas esto, el producto se ocultará completamente de la tienda, sin importar el stock.</p>
         </div>
-        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 20px;">Guardar Producto</button>
+        
+        <button type="submit" class="btn-primary" id="btnSaveProduct" style="width: 100%; margin-top: 20px; padding: 12px; font-size: 16px;">Guardar Producto</button>
       </form>
     </div>
   </div>

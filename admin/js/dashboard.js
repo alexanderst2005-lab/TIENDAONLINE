@@ -171,6 +171,69 @@ document.addEventListener('DOMContentLoaded', async () => {
   const modal = document.getElementById('productModal');
   const form = document.getElementById('productForm');
 
+  let currentImages = [];
+
+  function renderGallery() {
+    const gallery = document.getElementById('imageGallery');
+    gallery.innerHTML = '';
+    currentImages.forEach((imgSrc, index) => {
+      const container = document.createElement('div');
+      container.style.position = 'relative';
+      container.style.width = '80px';
+      container.style.height = '80px';
+      container.style.borderRadius = '6px';
+      container.style.overflow = 'hidden';
+      container.style.border = '1px solid #ccc';
+      
+      const img = document.createElement('img');
+      img.src = imgSrc.startsWith('data:') || imgSrc.startsWith('http') ? imgSrc : `../${imgSrc}`;
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      
+      const btnRemove = document.createElement('button');
+      btnRemove.innerHTML = '&times;';
+      btnRemove.style.position = 'absolute';
+      btnRemove.style.top = '2px';
+      btnRemove.style.right = '2px';
+      btnRemove.style.background = 'rgba(0,0,0,0.6)';
+      btnRemove.style.color = 'white';
+      btnRemove.style.border = 'none';
+      btnRemove.style.borderRadius = '50%';
+      btnRemove.style.width = '20px';
+      btnRemove.style.height = '20px';
+      btnRemove.style.cursor = 'pointer';
+      btnRemove.style.display = 'flex';
+      btnRemove.style.alignItems = 'center';
+      btnRemove.style.justifyContent = 'center';
+      btnRemove.onclick = (e) => {
+        e.preventDefault();
+        currentImages.splice(index, 1);
+        renderGallery();
+      };
+
+      container.appendChild(img);
+      container.appendChild(btnRemove);
+      gallery.appendChild(container);
+    });
+  }
+
+  const imageInput = document.getElementById('prodImageInput');
+  if (imageInput) {
+    imageInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          currentImages.push(ev.target.result);
+          renderGallery();
+        };
+        reader.readAsDataURL(file);
+      });
+      imageInput.value = ''; // Reset input
+    });
+  }
+
   window.openProductModal = function(id = null) {
     if (id) {
       document.getElementById('modalTitle').textContent = 'Editar Producto';
@@ -183,13 +246,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('prodCategory').value = p.category;
         document.getElementById('prodDesc').value = p.description;
         document.getElementById('prodActive').checked = p.isActive;
+        currentImages = [...(p.images || [])];
       }
     } else {
       document.getElementById('modalTitle').textContent = 'Agregar Producto';
       form.reset();
       document.getElementById('prodId').value = '';
       document.getElementById('prodActive').checked = true;
+      currentImages = [];
     }
+    renderGallery();
     modal.style.display = 'flex';
   }
 
@@ -205,6 +271,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     e.preventDefault();
     const id = document.getElementById('prodId').value;
     const method = id ? 'PUT' : 'POST';
+    
+    const saveBtn = document.getElementById('btnSaveProduct');
+    const originalText = saveBtn.textContent;
+    saveBtn.textContent = 'Guardando...';
+    saveBtn.disabled = true;
+
     const payload = {
       id: id || undefined,
       name: document.getElementById('prodName').value,
@@ -214,7 +286,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       categoryLabel: document.getElementById('prodCategory').options[document.getElementById('prodCategory').selectedIndex].text,
       description: document.getElementById('prodDesc').value,
       isActive: document.getElementById('prodActive').checked,
-      images: ['images/placeholder.jpg'] // Hardcoded demo fallback
+      images: currentImages.length > 0 ? currentImages : ['images/placeholder.jpg']
     };
 
     try {
@@ -228,6 +300,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (err) {
       console.error(err);
       alert('Error guardando el producto');
+    } finally {
+      saveBtn.textContent = originalText;
+      saveBtn.disabled = false;
     }
   });
 

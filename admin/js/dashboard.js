@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (pageId === 'products') loadProducts();
       if (pageId === 'inventory') loadInventory();
       if (pageId === 'orders') loadOrders();
+      if (pageId === 'categories') loadCategories();
+      if (pageId === 'collections') loadCollections();
+      if (pageId === 'customers') loadCustomers();
     });
   });
 
@@ -183,6 +186,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         tbody.appendChild(tr);
       });
     } catch(err) { console.error(err); }
+  }
+
+  function loadCategories() {
+    const tbody = document.getElementById('categoriesTableBody');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Módulo en construcción (Próximamente)</td></tr>';
+  }
+
+  function loadCollections() {
+    const tbody = document.getElementById('collectionsTableBody');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Módulo en construcción (Próximamente)</td></tr>';
+  }
+
+  function loadCustomers() {
+    const tbody = document.getElementById('customersTableBody');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Módulo en construcción (Próximamente)</td></tr>';
   }
 
   window.updateOrderStatus = async function(id, newStatus) {

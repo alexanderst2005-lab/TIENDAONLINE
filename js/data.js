@@ -50,7 +50,7 @@ const CATEGORIES = [
 // PRECIOS MIN/MAX (para slider de filtros)
 // ============================================
 const PRICE_MIN = 0;
-const PRICE_MAX = Math.max(...PRODUCTS.map(p => p.price));
+const PRICE_MAX = 500000;
 
 // ============================================
 // HELPERS DE PRODUCTOS

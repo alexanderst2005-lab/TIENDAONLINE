@@ -163,12 +163,107 @@
         </div>
       </div>
 
-      <!-- Vistas Placeholder -->
-      <div id="view-categories" class="page-view" style="display: none;"><h3>Categorías (Próximamente)</h3></div>
-      <div id="view-collections" class="page-view" style="display: none;"><h3>Colecciones (Próximamente)</h3></div>
-      <div id="view-customers" class="page-view" style="display: none;"><h3>Clientes (Próximamente)</h3></div>
-      <div id="view-content" class="page-view" style="display: none;"><h3>Contenido (Próximamente)</h3></div>
-      <div id="view-settings" class="page-view" style="display: none;"><h3>Configuración (Próximamente)</h3></div>
+      <!-- Vista Categorías -->
+      <div id="view-categories" class="page-view" style="display: none;">
+        <div class="table-container">
+          <div class="table-header">
+            <h3>Categorías</h3>
+            <button class="btn-primary" onclick="alert('Función de agregar categoría en desarrollo')">+ Agregar Categoría</button>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Slug</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="categoriesTableBody">
+              <tr><td colspan="5" style="text-align: center;">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Vista Colecciones -->
+      <div id="view-collections" class="page-view" style="display: none;">
+        <div class="table-container">
+          <div class="table-header">
+            <h3>Colecciones</h3>
+            <button class="btn-primary" onclick="alert('Función de agregar colección en desarrollo')">+ Agregar Colección</button>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Slug</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="collectionsTableBody">
+              <tr><td colspan="5" style="text-align: center;">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Vista Clientes -->
+      <div id="view-customers" class="page-view" style="display: none;">
+        <div class="table-container">
+          <div class="table-header">
+            <h3>Clientes Registrados</h3>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Total Gastado</th>
+                <th>Pedidos</th>
+                <th>Fecha Registro</th>
+              </tr>
+            </thead>
+            <tbody id="customersTableBody">
+              <tr><td colspan="5" style="text-align: center;">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Vista Configuración -->
+      <div id="view-settings" class="page-view" style="display: none;">
+        <div class="table-container" style="padding: 30px;">
+          <h3>Configuración de la Tienda</h3>
+          <p style="margin-bottom: 20px; color: var(--text-light);">Aquí podrás ajustar enlaces de redes sociales y costos de envío globales.</p>
+          <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div class="form-group" style="flex: 1; min-width: 250px;">
+              <label>WhatsApp</label>
+              <input type="text" value="+573027642208" class="form-control">
+            </div>
+            <div class="form-group" style="flex: 1; min-width: 250px;">
+              <label>Instagram URL</label>
+              <input type="text" placeholder="https://instagram.com/monatela" class="form-control">
+            </div>
+            <div class="form-group" style="flex: 1; min-width: 250px;">
+              <label>Costo de Envío</label>
+              <input type="number" value="15000" class="form-control">
+            </div>
+          </div>
+          <button class="btn-primary" style="margin-top: 10px;">Guardar Cambios</button>
+        </div>
+      </div>
+      
+      <!-- Vista Contenido -->
+      <div id="view-content" class="page-view" style="display: none;">
+        <div class="table-container" style="padding: 30px;">
+          <h3>Gestor de Contenidos (Banners)</h3>
+          <p style="color: var(--text-light);">Próximamente podrás cambiar las imágenes principales del inicio desde aquí.</p>
+        </div>
+      </div>
       
     </div>
   </main>

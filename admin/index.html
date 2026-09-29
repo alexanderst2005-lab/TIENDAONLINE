@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Monatela Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Feather Icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="admin-layout" style="display: none;"> <!-- Hidden until auth check -->
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <svg width="150" height="30" viewBox="0 0 150 40" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="25" font-family="'Didot', serif" font-size="20" font-weight="bold" fill="#111111" letter-spacing="2">MONATELA</text>
+      </svg>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-page="dashboard"><i data-feather="home" class="nav-icon"></i> Dashboard</a>
+      <a href="#" class="nav-item" data-page="products"><i data-feather="shopping-bag" class="nav-icon"></i> Productos</a>
+      <a href="#" class="nav-item" data-page="inventory"><i data-feather="package" class="nav-icon"></i> Inventario</a>
+      <a href="#" class="nav-item" data-page="orders"><i data-feather="shopping-cart" class="nav-icon"></i> Pedidos</a>
+      <a href="#" class="nav-item" data-page="categories"><i data-feather="list" class="nav-icon"></i> CategorÃ­as</a>
+      <a href="#" class="nav-item" data-page="collections"><i data-feather="layers" class="nav-icon"></i> Colecciones</a>
+      <a href="#" class="nav-item" data-page="customers"><i data-feather="users" class="nav-icon"></i> Clientes</a>
+      <a href="#" class="nav-item" data-page="content"><i data-feather="layout" class="nav-icon"></i> Contenido</a>
+      <a href="#" class="nav-item" data-page="settings"><i data-feather="settings" class="nav-icon"></i> ConfiguraciÃ³n</a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-logout" id="logoutBtn"><i data-feather="log-out" style="width: 14px;"></i> Cerrar SesiÃ³n</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-title">
+        <h1 id="pageTitle">Dashboard</h1>
+      </div>
+      <div class="topbar-user">
+        <span id="userNameDisplay">Admin</span>
+        <div class="user-avatar" id="userInitialDisplay">A</div>
+      </div>
+    </header>
+
+    <div class="content-area" id="mainContent">
+      <!-- Vistas Inyectadas DinÃ¡micamente -->
+      <div id="view-dashboard" class="page-view">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-title">Ventas Hoy</div>
+            <div class="stat-value" id="statsSalesToday">$0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Pedidos Pendientes</div>
+            <div class="stat-value" id="statsPendingOrders">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Productos Activos</div>
+            <div class="stat-value" id="statsActiveProducts">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Poco Stock</div>
+            <div class="stat-value" id="statsLowStock" style="color: var(--error)">0</div>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <div class="table-header">
+            <h3>Pedidos Recientes</h3>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Pedido</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="recentOrdersTableBody">
+              <tr><td colspan="5" style="text-align: center;">Cargando pedidos...</td></tr>
+            </tbody>
+          </table>
+        </div>
+            <!-- Vista Productos -->
+      <div id="view-products" class="page-view" style="display: none;">
+        <div class="table-container">
+          <div class="table-header">
+            <h3>Lista de Productos</h3>
+            <button class="btn-primary" id="btnAddProduct">+ Agregar Producto</button>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody">
+              <tr><td colspan="6" style="text-align: center;">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Vista Inventario -->
+      <div id="view-inventory" class="page-view" style="display: none;">
+        <div class="table-container">
+          <div class="table-header">
+            <h3>Control de Inventario</h3>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Talla</th>
+                <th>Color</th>
+                <th>Stock Actual</th>
+                <th>Estado</th>
+                <th>Actualizar</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTableBody">
+              <tr><td colspan="6" style="text-align: center;">En construcción...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Vista Pedidos -->
+      <div id="view-orders" class="page-view" style="display: none;">
+        <div class="table-container">
+          <div class="table-header">
+            <h3>Todos los Pedidos</h3>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Pedido</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody">
+              <tr><td colspan="6" style="text-align: center;">En construcción...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Vistas Placeholder para el resto -->
+      <div id="view-categories" class="page-view" style="display: none;"><h3>Categorías (Próximamente)</h3></div>
+      <div id="view-collections" class="page-view" style="display: none;"><h3>Colecciones (Próximamente)</h3></div>
+      <div id="view-customers" class="page-view" style="display: none;"><h3>Clientes (Próximamente)</h3></div>
+      <div id="view-content" class="page-view" style="display: none;"><h3>Contenido (Próximamente)</h3></div>
+      <div id="view-settings" class="page-view" style="display: none;"><h3>Configuración (Próximamente)</h3></div>
+    </div>
+  </main>
+
+  <script>
+    // Initialize icons
+    feather.replace();
+
+    // Authentication Guard
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      window.location.href = '/admin/login.html';
+    } else {
+      document.body.style.display = 'flex';
+      const user = JSON.parse(localStorage.getItem('adminUser') || '{}');
+      if (user.name) {
+        document.getElementById('userNameDisplay').textContent = user.name;
+        document.getElementById('userInitialDisplay').textContent = user.name.charAt(0).toUpperCase();
+      }
+    }
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminUser');
+      window.location.href = '/admin/login.html';
+    });
+  </script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
+

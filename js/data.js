@@ -57,28 +57,28 @@ const PRICE_MAX = Math.max(...PRODUCTS.map(p => p.price));
 // ============================================
 
 function getAllProducts() {
-  return PRODUCTS.filter(p => p.active);
+  return PRODUCTS.filter(p => p.isActive);
 }
 
 function getProductsByCategory(categoryId) {
   if (categoryId === 'todas' || !categoryId) return getAllProducts();
-  return PRODUCTS.filter(p => p.active && p.category === categoryId);
+  return PRODUCTS.filter(p => p.isActive && p.category === categoryId);
 }
 
 function getProductBySlug(slug) {
-  return PRODUCTS.find(p => p.slug === slug && p.active) || null;
+  return PRODUCTS.find(p => p.slug === slug && p.isActive) || null;
 }
 
 function getProductById(id) {
-  return PRODUCTS.find(p => p.id === id && p.active) || null;
+  return PRODUCTS.find(p => p.id === id && p.isActive) || null;
 }
 
 function getFeaturedProducts() {
-  return PRODUCTS.filter(p => p.active && p.featured);
+  return PRODUCTS.filter(p => p.isActive && p.isFeatured);
 }
 
 function getRelatedProducts(product, limit = 4) {
-  return PRODUCTS.filter(p => p.active && p.category === product.category && p.id !== product.id)
+  return PRODUCTS.filter(p => p.isActive && p.category === product.category && p.id !== product.id)
     .slice(0, limit);
 }
 

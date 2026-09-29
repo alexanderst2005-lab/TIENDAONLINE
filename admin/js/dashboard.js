@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <td>${img}</td>
           <td>${p.name}</td>
           <td>${formatCurrency(p.price)}</td>
-          <td>${p.stock}</td>
+          <td>${p.stock > 0 ? '<span style="color:#2ecc71;font-weight:600;">Disponible</span>' : '<span style="color:#e74c3c;font-weight:600;">Agotado</span>'}</td>
           <td><span class="status-badge ${statusClass}">${statusText}</span></td>
           <td>
             <button class="btn-edit" onclick="openProductModal('${p.id}')">Editar</button>
@@ -125,17 +125,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       tbody.innerHTML = '';
       data.forEach(p => {
         const tr = document.createElement('tr');
-        let status = 'Disponible';
-        let statusClass = 'success';
-        if (p.stock <= 0) { status = 'Agotado'; statusClass = 'error'; }
-        else if (p.stock < 5) { status = 'Poco stock'; statusClass = 'warning'; }
+        let status = p.stock > 0 ? 'Disponible' : 'Agotado';
+        let statusClass = p.stock > 0 ? 'success' : 'error';
 
         tr.innerHTML = `
           <td>${p.name}</td>
           <td>General</td>
           <td>General</td>
           <td>
-            <input type="number" value="${p.stock}" id="stock-${p.id}" style="width: 60px; padding: 5px;">
+            <select id="stock-${p.id}" style="width: 100px; padding: 5px;">
+              <option value="1" ${p.stock > 0 ? 'selected' : ''}>Disponible</option>
+              <option value="0" ${p.stock <= 0 ? 'selected' : ''}>Agotado</option>
+            </select>
           </td>
           <td><span class="status-badge ${statusClass}">${status}</span></td>
           <td><button class="btn-primary" style="padding: 5px 10px;" onclick="updateStock('${p.id}')">Actualizar</button></td>
@@ -327,7 +328,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Small PUT trick to just update stock (requires passing minimal fields to our simple API or a dedicated endpoint. 
       // For now we will fetch, patch, and save).
       const p = window.productsList.find(x => x.id === id);
-      p.stock = newStock;
+      p.stock = parseInt(newStock, 10);
       await fetch('/api/admin/products', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },

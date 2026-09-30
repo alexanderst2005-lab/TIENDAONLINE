@@ -136,9 +136,9 @@ function initCheckoutForm() {
       // Clear cart because order is already created in DB
       Cart.clear();
 
-      if (customerData.payment_method === 'Mercado Pago' || customerData.payment_method === 'Sistecrédito') {
+      if (customerData.payment_method === 'Wompi') {
         // Redirect to test payment gateway
-        window.location.href = `pago.html?order=${data.orderNumber}&total=${subtotal}&method=${customerData.payment_method}`;
+        window.location.href = `pago.html?order=${data.orderNumber}&total=${subtotal}`;
         return;
       }
 

@@ -29,7 +29,10 @@ function buildWhatsAppMessage(customerData, cartItems) {
   lines.push('');
   lines.push('👤 *DATOS DEL CLIENTE:*');
   lines.push(`Nombre: ${customerData.name}`);
+  if (customerData.email) lines.push(`Correo: ${customerData.email}`);
+  if (customerData.cedula) lines.push(`Cédula: ${customerData.cedula}`);
   lines.push(`Teléfono: ${customerData.phone}`);
+  if (customerData.department) lines.push(`Departamento: ${customerData.department}`);
   lines.push(`Ciudad: ${customerData.city}`);
   lines.push(`Dirección: ${customerData.address}`);
   if (customerData.payment_method) {
@@ -79,16 +82,19 @@ function initCheckoutForm() {
     e.preventDefault();
 
     const customerData = {
-      name:    form.querySelector('#customer-name').value.trim(),
-      phone:   form.querySelector('#customer-phone').value.trim(),
-      city:    form.querySelector('#customer-city').value.trim(),
-      address: form.querySelector('#customer-address').value.trim(),
-      notes:   form.querySelector('#customer-notes').value.trim(),
+      email:      form.querySelector('#customer-email')?.value.trim() || '',
+      name:       form.querySelector('#customer-name').value.trim(),
+      cedula:     form.querySelector('#customer-cedula')?.value.trim() || '',
+      department: form.querySelector('#customer-department')?.value.trim() || '',
+      city:       form.querySelector('#customer-city').value.trim(),
+      address:    form.querySelector('#customer-address').value.trim(),
+      phone:      form.querySelector('#customer-phone').value.trim(),
+      notes:      form.querySelector('#customer-notes').value.trim(),
       payment_method: form.querySelector('input[name="payment_method"]:checked')?.value || 'Contra Entrega'
     };
 
     // Basic validation
-    if (!customerData.name || !customerData.phone || !customerData.city || !customerData.address) {
+    if (!customerData.name || !customerData.phone || !customerData.city || !customerData.address || !customerData.email) {
       alert('Por favor completa todos los campos requeridos.');
       return;
     }

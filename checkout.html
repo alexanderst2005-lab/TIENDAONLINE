@@ -77,28 +77,54 @@
           <form id="checkout-form" novalidate>
 
             <div class="form-group">
+              <label class="form-label" for="customer-email">Correo electrónico *</label>
+              <input
+                type="email"
+                id="customer-email"
+                name="email"
+                class="form-input"
+                placeholder="Ej. juan@gmail.com (Para enviarte la factura)"
+                required
+                autocomplete="email"
+              >
+            </div>
+
+            <div class="form-group">
               <label class="form-label" for="customer-name">Nombre completo *</label>
               <input
                 type="text"
                 id="customer-name"
                 name="name"
                 class="form-input"
-                placeholder="Ingresa tu nombre completo"
+                placeholder="Ej. Juan Pérez"
                 required
                 autocomplete="name"
               >
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="customer-phone">Número de teléfono *</label>
+              <label class="form-label" for="customer-cedula">Cédula (para el envío) *</label>
               <input
-                type="tel"
-                id="customer-phone"
-                name="phone"
+                type="text"
+                id="customer-cedula"
+                name="cedula"
                 class="form-input"
-                placeholder="Ej: 3001234567"
+                placeholder="Ej. 1010123456"
                 required
-                autocomplete="tel"
+                inputmode="numeric"
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="customer-department">Departamento *</label>
+              <input
+                type="text"
+                id="customer-department"
+                name="department"
+                class="form-input"
+                placeholder="Ej. Antioquia"
+                required
+                autocomplete="address-level1"
               >
             </div>
 
@@ -109,32 +135,46 @@
                 id="customer-city"
                 name="city"
                 class="form-input"
-                placeholder="Tu ciudad"
+                placeholder="Ej. Medellín"
                 required
                 autocomplete="address-level2"
               >
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="customer-address">Dirección de entrega *</label>
+              <label class="form-label" for="customer-address">Dirección exacta *</label>
               <input
                 type="text"
                 id="customer-address"
                 name="address"
                 class="form-input"
-                placeholder="Dirección completa"
+                placeholder="Ej. Calle 123 # 45-67 Apto 8"
                 required
                 autocomplete="street-address"
               >
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="customer-notes">Notas del pedido</label>
+              <label class="form-label" for="customer-phone">Teléfono / WhatsApp *</label>
+              <input
+                type="tel"
+                id="customer-phone"
+                name="phone"
+                class="form-input"
+                placeholder="Ej. 3001234567"
+                required
+                autocomplete="tel"
+                inputmode="numeric"
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="customer-notes">Notas adicionales (opcional)</label>
               <textarea
                 id="customer-notes"
                 name="notes"
                 class="form-input form-textarea"
-                placeholder="Instrucciones especiales, referencias, etc. (opcional)"
+                placeholder="Instrucciones especiales de entrega, referencias, etc."
               ></textarea>
             </div>
 

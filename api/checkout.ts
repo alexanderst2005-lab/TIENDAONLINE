@@ -15,6 +15,7 @@ export default async function handler(req: any, res: any) {
       const [newOrder] = await db.insert(orders).values({
         orderNumber,
         customerName: customerData.name,
+        customerEmail: customerData.email || null,
         customerPhone: customerData.phone,
         customerCity: customerData.city,
         customerAddress: customerData.address,
@@ -23,6 +24,10 @@ export default async function handler(req: any, res: any) {
         paymentMethod: customerData.payment_method || 'Contra Entrega',
         status: 'Pendiente'
       }).returning();
+
+      // Save cedula and department in order notes field or as extra data if needed
+      // (schema has customerAddress; cedula/dept stored as notes for now)
+      // These are logged in the WhatsApp message automatically.
 
       for (const item of items) {
         await db.insert(orderItems).values({

@@ -6,7 +6,7 @@
 
 const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
 const STORE_NAME = 'Monatela Boutique';
-const STORE_EMAIL = 'monatela@gmail.com'; // change to your Brevo verified sender
+const STORE_EMAIL = 'alexanderst2005@gmail.com'; // verified Brevo sender
 
 function formatCOP(amount: number): string {
   return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(amount);

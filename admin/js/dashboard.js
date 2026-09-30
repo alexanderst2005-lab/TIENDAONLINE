@@ -354,42 +354,49 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
       
       currentOrderId = order.id;
-      document.getElementById('orderDetailTitle').textContent = `Pedido #${order.orderNumber}`;
-      document.getElementById('orderDetailDate').textContent = `Fecha: ${new Date(order.createdAt).toLocaleString()}`;
+      document.getElementById('orderDetailTitle').textContent = `PEDIDO ${order.orderNumber}`;
+      
+      const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sept", "oct", "nov", "dic"];
+      const d = new Date(order.createdAt);
+      document.getElementById('orderDetailDate').textContent = `${d.getDate()} de ${months[d.getMonth()]} de ${d.getFullYear()}, ${d.toLocaleTimeString('es-CO', {hour: '2-digit', minute:'2-digit'})}`;
       
       document.getElementById('odName').textContent = order.customerName || 'N/A';
       document.getElementById('odPhone').textContent = order.customerPhone || 'N/A';
+      document.getElementById('odCedula').textContent = order.customerCedula || 'N/A';
       document.getElementById('odEmail').textContent = order.customerEmail || 'N/A';
       document.getElementById('odCity').textContent = order.customerCity || 'N/A';
       document.getElementById('odAddress').textContent = order.customerAddress || 'N/A';
-      document.getElementById('odPaymentMethod').textContent = order.paymentMethod || 'Contra Entrega';
       
       document.getElementById('odStatusSelect').value = order.status;
       
-      const tbody = document.getElementById('odItemsTable');
-      tbody.innerHTML = '';
+      const container = document.getElementById('odItemsContainer');
+      container.innerHTML = '';
       if (order.items && order.items.length > 0) {
         order.items.forEach(item => {
-          const tr = document.createElement('tr');
-          const variantText = [item.size, item.color].filter(Boolean).join(' - ') || 'N/A';
-          const imgSrc = item.image ? (item.image.startsWith('http') || item.image.startsWith('data:') ? item.image : `../${item.image}`) : '';
-          const imgHtml = imgSrc ? `<img src="${imgSrc}" width="40" style="border-radius:4px; vertical-align:middle; margin-right:10px;">` : '';
-          
-          tr.innerHTML = `
-            <td>${imgHtml}${item.productName}</td>
-            <td><span class="status-badge" style="background:#eee;color:#333;">${variantText}</span></td>
-            <td>${formatCurrency(item.price)}</td>
-            <td>${item.quantity}</td>
-            <td style="font-weight:600;">${formatCurrency(item.price * item.quantity)}</td>
+          const variantText = [item.size, item.color].filter(Boolean).join(' - ') || 'ÚNICA';
+          container.innerHTML += `
+            <div style="margin-bottom: 15px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="font-size: 14px; color: #fff;">${item.productName}</span>
+                <span style="font-size: 14px; color: #fff;">${formatCurrency(item.price)}</span>
+              </div>
+              <div style="color: #888; font-size: 12px; margin-bottom: 4px;">
+                Talla: <span style="text-transform: uppercase;">${variantText}</span>
+              </div>
+              <div style="color: #666; font-size: 12px;">
+                Cant: ${item.quantity} &times; ${formatCurrency(item.price)}
+              </div>
+            </div>
+            <hr style="border:0; border-top: 1px solid #444; margin: 15px 0;">
           `;
-          tbody.appendChild(tr);
         });
       } else {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No hay productos en este pedido</td></tr>';
+        container.innerHTML = '<p style="color:#666;">No hay artículos</p>';
       }
       
-      document.getElementById('odSubtotal').textContent = formatCurrency(order.subtotal);
-      document.getElementById('odShipping').textContent = formatCurrency(order.shipping || 0);
+      document.getElementById('odCreated').textContent = new Date(order.createdAt).toLocaleString('es-CO');
+      document.getElementById('odUpdated').textContent = new Date(order.updatedAt).toLocaleString('es-CO');
+      
       document.getElementById('odTotal').textContent = formatCurrency(order.total);
       
       document.getElementById('orderDetailModal').style.display = 'flex';
@@ -403,7 +410,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('orderDetailModal').style.display = 'none';
   }
 
-  document.getElementById('odStatusBtn')?.addEventListener('click', async () => {
+  document.getElementById('odStatusSelect')?.addEventListener('change', async () => {
     if (!currentOrderId) return;
     const newStatus = document.getElementById('odStatusSelect').value;
 

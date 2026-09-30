@@ -115,6 +115,7 @@
     .btn-secondary-action { background: #f5f5f5; color: #333; }
     .btn-secondary-action:hover { background: #eee; }
   </style>
+  <script src="https://checkout.wompi.co/widget.js"></script>
 </head>
 <body>
 
@@ -183,7 +184,7 @@
           <p>⚠️ No se pudo cargar la pasarela de pago.</p>
           <p style="margin-top:8px;font-size:13px;color:#666;">Intenta recargar la página o contacta soporte.</p>
         </div>
-        <div id="wompi-button-container"></div>
+        <form id="wompi-button-container"></form>
       </div>
 
       <!-- Wompi footer -->
@@ -229,22 +230,29 @@
         // Redirect URL after payment
         const redirectUrl = `${window.location.origin}/pago.html?order=${orderNumber}&total=${total}&wompi=1`;
 
-        // Create Wompi checkout script dynamically
-        const script = document.createElement('script');
-        script.src = 'https://checkout.wompi.co/widget.js';
-        script.setAttribute('data-render', 'button');
-        script.setAttribute('data-public-key', publicKey);
-        script.setAttribute('data-currency', 'COP');
-        script.setAttribute('data-amount-in-cents', String(amountInCents));
-        script.setAttribute('data-reference', reference);
-        script.setAttribute('data-signature:integrity', signature);
-        script.setAttribute('data-redirect-url', redirectUrl);
-        script.setAttribute('data-customer-data:email', '');
-        script.setAttribute('data-customer-data:full-name', '');
-        script.setAttribute('data-customer-data:phone-number', '');
-        script.setAttribute('data-customer-data:phone-number-prefix', '+57');
+        // Create standard button
+        const btnContainer = document.getElementById('wompi-button-container');
+        btnContainer.innerHTML = '<button type="button" id="start-wompi-btn" style="width: 100%; padding: 16px; background: #009ee3; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s;">Pagar con Wompi</button>';
 
-        document.getElementById('wompi-button-container').appendChild(script);
+        document.getElementById('start-wompi-btn').addEventListener('click', () => {
+          const checkout = new WidgetCheckout({
+            currency: 'COP',
+            amountInCents: amountInCents,
+            reference: reference,
+            publicKey: publicKey,
+            signature: { integrity: signature },
+            redirectUrl: redirectUrl,
+            customerData: {
+              email: '',
+              fullName: '',
+              phoneNumber: '',
+              phoneNumberPrefix: '+57'
+            }
+          });
+          checkout.open(function(result) {
+            console.log('Wompi closed:', result);
+          });
+        });
 
       } catch (err) {
         console.error('[Wompi Init]', err);

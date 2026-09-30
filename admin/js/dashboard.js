@@ -642,37 +642,56 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       window.salesChartInstance = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
           labels,
           datasets: [{
             label: 'Ventas (COP)',
             data: values,
-            borderColor: '#111111',
-            backgroundColor: 'rgba(17, 17, 17, 0.05)',
-            fill: true,
-            tension: 0.3,
-            pointBackgroundColor: '#111111',
-            pointRadius: 4,
-            borderWidth: 2
+            backgroundColor: '#111111',
+            borderRadius: 4,
+            barThickness: 'flex',
+            maxBarThickness: 40
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          animation: {
+            duration: 500
+          },
           scales: {
             y: {
               beginAtZero: true,
+              grid: {
+                color: 'rgba(0,0,0,0.05)',
+                drawBorder: false
+              },
               ticks: {
-                callback: function(value) { return formatCurrency(value); }
+                callback: function(value) { return formatCurrency(value); },
+                font: { family: "'Inter', sans-serif", size: 11 }
+              }
+            },
+            x: {
+              grid: {
+                display: false,
+                drawBorder: false
+              },
+              ticks: {
+                font: { family: "'Inter', sans-serif", size: 11 }
               }
             }
           },
           plugins: {
             legend: { display: false },
             tooltip: {
+              backgroundColor: '#111111',
+              titleFont: { family: "'Inter', sans-serif", size: 13 },
+              bodyFont: { family: "'Inter', sans-serif", size: 14, weight: 'bold' },
+              padding: 10,
+              cornerRadius: 6,
               callbacks: {
-                label: function(context) { return formatCurrency(context.parsed.y); }
+                label: function(context) { return ' ' + formatCurrency(context.parsed.y); }
               }
             }
           }

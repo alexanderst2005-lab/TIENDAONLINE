@@ -15,15 +15,8 @@ function formatCOP(amount: number): string {
 function buildItemsTable(items: any[]): string {
   const rows = items.map(item => {
     const variant = [item.size, item.color].filter(Boolean).join(' / ');
-    const imgSrc = item.image
-      ? (item.image.startsWith('http') ? item.image : `https://monatela.vercel.app/${item.image}`)
-      : '';
-    const imgTag = imgSrc
-      ? `<img src="${imgSrc}" width="60" style="border-radius:6px;object-fit:cover;" />`
-      : '';
     return `
       <tr>
-        <td style="padding:12px 8px;border-bottom:1px solid #f0f0f0;vertical-align:middle;">${imgTag}</td>
         <td style="padding:12px 8px;border-bottom:1px solid #f0f0f0;vertical-align:middle;">
           <strong>${item.productName}</strong>
           ${variant ? `<br><span style="color:#888;font-size:13px;">${variant}</span>` : ''}
@@ -37,7 +30,6 @@ function buildItemsTable(items: any[]): string {
     <table width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial,sans-serif;font-size:14px;border-collapse:collapse;">
       <thead>
         <tr style="background:#f9f9f9;">
-          <th style="padding:10px 8px;text-align:left;color:#666;font-weight:600;font-size:12px;text-transform:uppercase;border-bottom:2px solid #eee;">Foto</th>
           <th style="padding:10px 8px;text-align:left;color:#666;font-weight:600;font-size:12px;text-transform:uppercase;border-bottom:2px solid #eee;">Producto</th>
           <th style="padding:10px 8px;text-align:center;color:#666;font-weight:600;font-size:12px;text-transform:uppercase;border-bottom:2px solid #eee;">Cant.</th>
           <th style="padding:10px 8px;text-align:right;color:#666;font-weight:600;font-size:12px;text-transform:uppercase;border-bottom:2px solid #eee;">Subtotal</th>

@@ -339,3 +339,37 @@ body {
 @media (max-width: 768px) {
   .sidebar { display: none; } /* Implement toggle logic later */
 }
+
+/* Action Buttons */
+.btn-action {
+  background: transparent;
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 5px;
+}
+.btn-action:hover {
+  background: var(--bg-main);
+  border-color: #ccc;
+}
+.btn-action.edit:hover {
+  background: #f0f4f8;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+.btn-action.delete {
+  color: var(--error);
+}
+.btn-action.delete:hover {
+  background: #fef2f2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}

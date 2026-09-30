@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const tbody = document.getElementById('productsTableBody');
       tbody.innerHTML = '';
       if (!data || data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No hay productos</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No hay productos</td></tr>';
         return;
       }
       data.forEach(p => {
@@ -98,22 +98,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (imgSrc && !imgSrc.startsWith('data:') && !imgSrc.startsWith('http')) {
           imgSrc = '../' + imgSrc;
         }
-        const img = imgSrc ? `<img src="${imgSrc}" width="40" height="40" style="border-radius:4px; object-fit:cover;">` : 'N/A';
+        const img = imgSrc ? `<img src="${imgSrc}" width="40" height="40" style="border-radius:4px; object-fit:cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">` : 'N/A';
         const statusClass = p.isActive ? 'success' : 'error';
         const statusText = p.isActive ? 'Activo' : 'Oculto';
         tr.innerHTML = `
           <td>${img}</td>
-          <td>${p.name}</td>
+          <td style="font-weight: 500;">${p.name}</td>
+          <td style="color: var(--text-light); font-size: 13px;">${p.categoryLabel || p.category}</td>
           <td>${formatCurrency(p.price)}</td>
-          <td>${p.stock > 0 ? '<span style="color:#2ecc71;font-weight:600;">Disponible</span>' : '<span style="color:#e74c3c;font-weight:600;">Agotado</span>'}</td>
+          <td>${p.stock > 0 ? '<span style="color:#2ecc71;font-weight:600;font-size:13px;">Disponible</span>' : '<span style="color:#e74c3c;font-weight:600;font-size:13px;">Agotado</span>'}</td>
           <td><span class="status-badge ${statusClass}">${statusText}</span></td>
           <td>
-            <button class="btn-edit" onclick="openProductModal('${p.id}')">Editar</button>
-            <button class="btn-delete" onclick="deleteProduct('${p.id}')">Eliminar</button>
+            <button class="btn-action edit" onclick="openProductModal('${p.id}')">
+              <i data-feather="edit-2" style="width: 14px; height: 14px;"></i> Editar
+            </button>
+            <button class="btn-action delete" onclick="deleteProduct('${p.id}')">
+              <i data-feather="trash-2" style="width: 14px; height: 14px;"></i> Eliminar
+            </button>
           </td>
         `;
         tbody.appendChild(tr);
       });
+      if (typeof feather !== 'undefined') {
+        feather.replace();
+      }
     } catch(err) {
       console.error(err);
     }
@@ -141,10 +149,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             </select>
           </td>
           <td><span class="status-badge ${statusClass}">${status}</span></td>
-          <td><button class="btn-primary" style="padding: 5px 10px;" onclick="updateStock('${p.id}')">Actualizar</button></td>
+          <td>
+            <button class="btn-action edit" onclick="updateStock('${p.id}')">
+              <i data-feather="refresh-cw" style="width: 14px; height: 14px;"></i> Guardar
+            </button>
+          </td>
         `;
         tbody.appendChild(tr);
       });
+      if (typeof feather !== 'undefined') {
+        feather.replace();
+      }
     } catch(err) { console.error(err); }
   }
   
@@ -173,17 +188,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
 
         tr.innerHTML = `
-          <td>#${o.orderNumber}</td>
-          <td>${date}</td>
+          <td style="font-weight: 500;">#${o.orderNumber}</td>
+          <td style="color: var(--text-light);">${date}</td>
           <td>${o.customerName}</td>
-          <td>${formatCurrency(o.total)}</td>
+          <td style="font-weight: 600;">${formatCurrency(o.total)}</td>
           <td>${selectHtml}</td>
           <td>
-            <button class="btn-edit" onclick="viewOrder('${o.id}')">Ver detalle</button>
+            <button class="btn-action edit" onclick="viewOrder('${o.id}')">
+              <i data-feather="eye" style="width: 14px; height: 14px;"></i> Detalle
+            </button>
           </td>
         `;
         tbody.appendChild(tr);
       });
+      if (typeof feather !== 'undefined') {
+        feather.replace();
+      }
     } catch(err) { console.error(err); }
   }
 

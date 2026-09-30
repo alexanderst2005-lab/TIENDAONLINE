@@ -20,6 +20,7 @@ export default async function handler(req: any, res: any) {
         customerAddress: customerData.address,
         total: total,
         subtotal: subtotal,
+        paymentMethod: customerData.payment_method || 'Contra Entrega',
         status: 'Pendiente'
       }).returning();
 

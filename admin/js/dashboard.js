@@ -362,6 +362,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('odEmail').textContent = order.customerEmail || 'N/A';
       document.getElementById('odCity').textContent = order.customerCity || 'N/A';
       document.getElementById('odAddress').textContent = order.customerAddress || 'N/A';
+      document.getElementById('odPaymentMethod').textContent = order.paymentMethod || 'Contra Entrega';
       
       document.getElementById('odStatusSelect').value = order.status;
       

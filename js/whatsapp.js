@@ -32,6 +32,9 @@ function buildWhatsAppMessage(customerData, cartItems) {
   lines.push(`Teléfono: ${customerData.phone}`);
   lines.push(`Ciudad: ${customerData.city}`);
   lines.push(`Dirección: ${customerData.address}`);
+  if (customerData.payment_method) {
+    lines.push(`Método de Pago: ${customerData.payment_method}`);
+  }
 
   if (customerData.notes && customerData.notes.trim()) {
     lines.push('');
@@ -81,6 +84,7 @@ function initCheckoutForm() {
       city:    form.querySelector('#customer-city').value.trim(),
       address: form.querySelector('#customer-address').value.trim(),
       notes:   form.querySelector('#customer-notes').value.trim(),
+      payment_method: form.querySelector('input[name="payment_method"]:checked')?.value || 'Contra Entrega'
     };
 
     // Basic validation

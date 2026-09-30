@@ -337,7 +337,25 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .sidebar { display: none; } /* Implement toggle logic later */
+  #mobileMenuBtn { display: block !important; }
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    height: 100vh;
+    z-index: 2000;
+    transition: left 0.3s ease;
+  }
+  .sidebar.active {
+    left: 0;
+  }
+  .admin-layout.sidebar-open::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1500;
+  }
 }
 
 /* Action Buttons */

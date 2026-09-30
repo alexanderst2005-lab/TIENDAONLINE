@@ -39,7 +39,10 @@
   <!-- Main Content -->
   <main class="main-content">
     <header class="topbar">
-      <div class="topbar-title">
+      <div class="topbar-title" style="display: flex; align-items: center; gap: 15px;">
+        <button id="mobileMenuBtn" style="display: none; background: none; border: none; cursor: pointer; color: var(--primary);">
+          <i data-feather="menu"></i>
+        </button>
         <h1 id="pageTitle">Dashboard</h1>
       </div>
       <div class="topbar-user">
@@ -51,108 +54,108 @@
     <div class="content-area" id="mainContent">
       
       <!-- Vista Dashboard -->
-      <div id="view-dashboard" class="page-view" style="max-width: 800px; margin: 0 auto; color: #fff;">
+      <div id="view-dashboard" class="page-view" style="max-width: 800px; margin: 0 auto; color: var(--primary);">
         
         <div style="margin-bottom: 30px;">
-          <h2 style="font-size: 24px; letter-spacing: 2px; text-transform: uppercase; color: #fff; margin-bottom: 5px; display: flex; align-items: center; gap: 10px;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          <h2 style="font-size: 24px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 5px; display: flex; align-items: center; gap: 10px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
             COMMAND CENTER
           </h2>
-          <p style="color: #888; font-size: 14px; margin: 0;">Resumen operativo — <span id="dashMonthName"></span></p>
+          <p style="color: var(--text-light); font-size: 14px; margin: 0;">Resumen operativo — <span id="dashMonthName"></span></p>
         </div>
 
         <!-- KPI Grid 1 -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
           <!-- Ingresos del mes -->
-          <div style="background: #18181b; padding: 20px; border-radius: 6px; border: 1px solid #333;">
+          <div style="background: var(--bg-card); padding: 20px; border-radius: 6px; border: 1px solid var(--border);">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-              <span style="font-size: 11px; letter-spacing: 1px; color: #888; text-transform: uppercase;">Ingresos del Mes</span>
-              <span style="color: #888;">$</span>
+              <span style="font-size: 11px; letter-spacing: 1px; color: var(--text-light); text-transform: uppercase;">Ingresos del Mes</span>
+              <span style="color: var(--text-light);">$</span>
             </div>
-            <div id="dashIngresosMes" style="font-size: 24px; font-weight: 600; color: #fff; margin-bottom: 5px;">$ 0</div>
-            <div style="font-size: 12px; color: #888;">Pedidos confirmados</div>
+            <div id="dashIngresosMes" style="font-size: 24px; font-weight: 600; color: var(--primary); margin-bottom: 5px;">$ 0</div>
+            <div style="font-size: 12px; color: var(--text-light);">Pedidos confirmados</div>
           </div>
           <!-- Esta semana -->
-          <div style="background: #18181b; padding: 20px; border-radius: 6px; border: 1px solid #333;">
+          <div style="background: var(--bg-card); padding: 20px; border-radius: 6px; border: 1px solid var(--border);">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-              <span style="font-size: 11px; letter-spacing: 1px; color: #888; text-transform: uppercase;">Esta Semana</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+              <span style="font-size: 11px; letter-spacing: 1px; color: var(--text-light); text-transform: uppercase;">Esta Semana</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
             </div>
-            <div id="dashIngresosSemana" style="font-size: 24px; font-weight: 600; color: #fff; margin-bottom: 5px;">$ 0</div>
-            <div id="dashPercentChange" style="font-size: 12px; color: #4ade80;">+0% vs semana anterior</div>
+            <div id="dashIngresosSemana" style="font-size: 24px; font-weight: 600; color: var(--primary); margin-bottom: 5px;">$ 0</div>
+            <div id="dashPercentChange" style="font-size: 12px; color: var(--success);">+0% vs semana anterior</div>
           </div>
         </div>
 
         <!-- KPI Grid 2 -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
           <!-- Total pedidos -->
-          <div style="background: #18181b; padding: 20px; border-radius: 6px; border: 1px solid #333;">
+          <div style="background: var(--bg-card); padding: 20px; border-radius: 6px; border: 1px solid var(--border);">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-              <span style="font-size: 11px; letter-spacing: 1px; color: #888; text-transform: uppercase;">Total Pedidos</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <span style="font-size: 11px; letter-spacing: 1px; color: var(--text-light); text-transform: uppercase;">Total Pedidos</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             </div>
-            <div id="dashTotalPedidos" style="font-size: 24px; font-weight: 600; color: #fff; margin-bottom: 5px;">0</div>
-            <div id="dashPedidosConfirmados" style="font-size: 12px; color: #888;">0 confirmados</div>
+            <div id="dashTotalPedidos" style="font-size: 24px; font-weight: 600; color: var(--primary); margin-bottom: 5px;">0</div>
+            <div id="dashPedidosConfirmados" style="font-size: 12px; color: var(--text-light);">0 confirmados</div>
           </div>
           <!-- Ingresos totales -->
-          <div style="background: #18181b; padding: 20px; border-radius: 6px; border: 1px solid #333;">
+          <div style="background: var(--bg-card); padding: 20px; border-radius: 6px; border: 1px solid var(--border);">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-              <span style="font-size: 11px; letter-spacing: 1px; color: #888; text-transform: uppercase;">Ingresos Totales</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
+              <span style="font-size: 11px; letter-spacing: 1px; color: var(--text-light); text-transform: uppercase;">Ingresos Totales</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
             </div>
-            <div id="dashIngresosTotales" style="font-size: 24px; font-weight: 600; color: #fff; margin-bottom: 5px;">$ 0</div>
-            <div style="font-size: 12px; color: #888;">Histórico</div>
+            <div id="dashIngresosTotales" style="font-size: 24px; font-weight: 600; color: var(--primary); margin-bottom: 5px;">$ 0</div>
+            <div style="font-size: 12px; color: var(--text-light);">Histórico</div>
           </div>
         </div>
 
         <!-- Top Productos -->
-        <div style="background: #18181b; padding: 20px; border-radius: 6px; border: 1px solid #333; margin-bottom: 20px;">
-          <h3 style="font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: #888; margin-bottom: 20px;">TOP PRODUCTOS VENDIDOS</h3>
+        <div style="background: var(--bg-card); padding: 20px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 20px;">
+          <h3 style="font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-light); margin-bottom: 20px;">TOP PRODUCTOS VENDIDOS</h3>
           <div id="dashTopProducts">
             <!-- Injected by JS -->
-            <p style="color:#666; font-size:13px;">No hay datos aún.</p>
+            <p style="color:var(--text-light); font-size:13px;">No hay datos aún.</p>
           </div>
         </div>
 
         <!-- Pedidos por estado -->
-        <div style="background: #18181b; padding: 20px; border-radius: 6px; border: 1px solid #333; margin-bottom: 20px;">
-          <h3 style="font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: #888; margin-bottom: 20px;">PEDIDOS POR ESTADO</h3>
+        <div style="background: var(--bg-card); padding: 20px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 20px;">
+          <h3 style="font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-light); margin-bottom: 20px;">PEDIDOS POR ESTADO</h3>
           <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-            <div style="background: #1a365d; border-radius: 4px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; min-width: 140px;">
-              <span id="dashStatusEnviado" style="font-size: 20px; font-weight: 600; color: #60a5fa;">0</span>
-              <span style="font-size: 11px; letter-spacing: 1px; color: #60a5fa; text-transform: uppercase;">EN CAMINO</span>
+            <div style="background: #e0f2fe; border-radius: 4px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; flex: 1; min-width: 140px;">
+              <span id="dashStatusEnviado" style="font-size: 20px; font-weight: 600; color: #0284c7;">0</span>
+              <span style="font-size: 11px; letter-spacing: 1px; color: #0284c7; text-transform: uppercase;">EN CAMINO</span>
             </div>
-            <div style="background: #422006; border-radius: 4px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; min-width: 140px;">
-              <span id="dashStatusPendiente" style="font-size: 20px; font-weight: 600; color: #facc15;">0</span>
-              <span style="font-size: 11px; letter-spacing: 1px; color: #facc15; text-transform: uppercase;">PENDIENTE PAGO</span>
+            <div style="background: #fef9c3; border-radius: 4px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; flex: 1; min-width: 140px;">
+              <span id="dashStatusPendiente" style="font-size: 20px; font-weight: 600; color: #ca8a04;">0</span>
+              <span style="font-size: 11px; letter-spacing: 1px; color: #ca8a04; text-transform: uppercase;">PENDIENTE PAGO</span>
             </div>
-            <div style="background: #451a20; border-radius: 4px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; min-width: 140px;">
-              <span id="dashStatusCancelado" style="font-size: 20px; font-weight: 600; color: #f87171;">0</span>
-              <span style="font-size: 11px; letter-spacing: 1px; color: #f87171; text-transform: uppercase;">CANCELADO</span>
+            <div style="background: #fee2e2; border-radius: 4px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; flex: 1; min-width: 140px;">
+              <span id="dashStatusCancelado" style="font-size: 20px; font-weight: 600; color: #dc2626;">0</span>
+              <span style="font-size: 11px; letter-spacing: 1px; color: #dc2626; text-transform: uppercase;">CANCELADO</span>
             </div>
           </div>
         </div>
 
         <!-- Stock Crítico -->
-        <div style="background: #18181b; padding: 20px; border-radius: 6px; border: 1px solid #333; margin-bottom: 20px;">
-          <h3 style="font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        <div style="background: var(--bg-card); padding: 20px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 20px;">
+          <h3 style="font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
             STOCK CRÍTICO
           </h3>
           <div id="dashStockCritico" style="text-align: center; padding: 20px 0;">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="1.5" style="margin-bottom:10px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            <div style="color: #666; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">INVENTARIO ÓPTIMO</div>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" style="margin-bottom:10px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            <div style="color: var(--text-light); font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">INVENTARIO ÓPTIMO</div>
           </div>
         </div>
 
         <!-- Últimos pedidos -->
-        <div style="background: #18181b; padding: 20px; border-radius: 6px; border: 1px solid #333; margin-bottom: 20px;">
+        <div style="background: var(--bg-card); padding: 20px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 20px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h3 style="font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; margin: 0; display: flex; align-items: center; gap: 8px;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <h3 style="font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary); margin: 0; display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
               ÚLTIMOS PEDIDOS
             </h3>
-            <a href="#" onclick="document.querySelector('[data-page=orders]').click(); return false;" style="color: #888; font-size: 11px; letter-spacing: 1px; text-decoration: none; text-transform: uppercase;">Ver todos &nearr;</a>
+            <a href="#" onclick="document.querySelector('[data-page=orders]').click(); return false;" style="color: var(--text-light); font-size: 11px; letter-spacing: 1px; text-decoration: none; text-transform: uppercase;">Ver todos &nearr;</a>
           </div>
           
           <div id="dashUltimosPedidos">

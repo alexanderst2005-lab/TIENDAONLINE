@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       navItems.forEach(n => n.classList.remove('active'));
       item.classList.add('active');
       pageTitle.textContent = item.textContent.trim();
+
+      // Close sidebar on mobile
+      document.querySelector('.sidebar').classList.remove('active');
+      document.querySelector('.admin-layout').classList.remove('sidebar-open');
       
       // Show View
       pageViews.forEach(view => {
@@ -39,6 +43,24 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (pageId === 'customers') loadCustomers();
     });
   });
+
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const sidebar = document.querySelector('.sidebar');
+  const adminLayout = document.querySelector('.admin-layout');
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      adminLayout.classList.toggle('sidebar-open');
+    });
+    // Close on overlay click
+    adminLayout.addEventListener('click', (e) => {
+      if (adminLayout.classList.contains('sidebar-open') && !sidebar.contains(e.target) && e.target !== mobileMenuBtn) {
+        sidebar.classList.remove('active');
+        adminLayout.classList.remove('sidebar-open');
+      }
+    });
+  }
 
   async function loadDashboard() {
     try {
@@ -67,19 +89,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       const topProdContainer = document.getElementById('dashTopProducts');
       topProdContainer.innerHTML = '';
       if (!data.topProducts || data.topProducts.length === 0) {
-        topProdContainer.innerHTML = '<p style="color:#666; font-size:13px;">No hay datos aún.</p>';
+        topProdContainer.innerHTML = '<p style="color:var(--text-light); font-size:13px;">No hay datos aún.</p>';
       } else {
         data.topProducts.forEach((p, idx) => {
           topProdContainer.innerHTML += `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
               <div style="display: flex; gap: 15px; align-items: center;">
-                <span style="color: #666; font-size: 13px;">${idx + 1}</span>
+                <span style="color: var(--text-light); font-size: 13px;">${idx + 1}</span>
                 <div>
-                  <div style="color: #fff; font-size: 14px;">${p.name}</div>
-                  <div style="color: #888; font-size: 12px;">${p.qty} vendidos</div>
+                  <div style="color: var(--primary); font-size: 14px; font-weight:500;">${p.name}</div>
+                  <div style="color: var(--text-light); font-size: 12px;">${p.qty} vendidos</div>
                 </div>
               </div>
-              <div style="color: #d4af37; font-size: 14px; font-weight: 500;">${formatCurrency(p.price)}</div>
+              <div style="color: var(--primary); font-size: 14px; font-weight: 600;">${formatCurrency(p.price)}</div>
             </div>
           `;
         });
@@ -92,28 +114,28 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Stock
       if (!data.isInventarioOptimo) {
-        document.getElementById('dashStockCritico').innerHTML = `<div style="color: #f87171; font-size: 24px; font-weight: 600;">${data.stockCritico}</div><div style="color: #888; font-size: 12px;">Productos con poco stock</div>`;
+        document.getElementById('dashStockCritico').innerHTML = `<div style="color: var(--error); font-size: 24px; font-weight: 600;">${data.stockCritico}</div><div style="color: var(--text-light); font-size: 12px;">Productos con poco stock</div>`;
       }
 
       // Recent Orders
       const recentContainer = document.getElementById('dashUltimosPedidos');
       recentContainer.innerHTML = '';
       if (!data.recentOrders || data.recentOrders.length === 0) {
-        recentContainer.innerHTML = '<p style="color:#666; font-size:13px;">No hay pedidos recientes.</p>';
+        recentContainer.innerHTML = '<p style="color:var(--text-light); font-size:13px;">No hay pedidos recientes.</p>';
       } else {
         data.recentOrders.forEach(order => {
           const dateStr = new Date(order.createdAt).toLocaleDateString('es-CO', {day: 'numeric', month: 'short'});
           
-          let statusColor = '#facc15'; // Pendiente (amarillo)
-          let statusBg = 'rgba(250, 204, 21, 0.1)';
+          let statusColor = '#ca8a04'; // Pendiente (amarillo)
+          let statusBg = '#fef9c3';
           if (order.status === 'Confirmado' || order.status === 'En preparación') {
-            statusColor = '#4ade80'; statusBg = 'rgba(74, 222, 128, 0.1)';
+            statusColor = '#16a34a'; statusBg = '#dcfce7';
           } else if (order.status === 'Enviado') {
-            statusColor = '#60a5fa'; statusBg = 'rgba(96, 165, 250, 0.1)';
+            statusColor = '#0284c7'; statusBg = '#e0f2fe';
           } else if (order.status === 'Cancelado') {
-            statusColor = '#f87171'; statusBg = 'rgba(248, 113, 113, 0.1)';
+            statusColor = '#dc2626'; statusBg = '#fee2e2';
           } else if (order.status === 'Entregado') {
-            statusColor = '#a855f7'; statusBg = 'rgba(168, 85, 247, 0.1)';
+            statusColor = '#9333ea'; statusBg = '#f3e8ff';
           }
 
           let statusLabel = order.status.replace(' ', '_').toUpperCase();
@@ -122,14 +144,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
               <div>
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
-                  <span style="color: #d4af37; font-size: 14px; font-weight: 500;">${order.orderNumber}</span>
+                  <span style="color: var(--primary); font-size: 14px; font-weight: 600;">${order.orderNumber}</span>
                   <span style="font-size: 9px; letter-spacing: 1px; padding: 2px 6px; border-radius: 2px; color: ${statusColor}; background: ${statusBg}; border: 1px solid ${statusBg};">${statusLabel}</span>
                 </div>
-                <div style="color: #fff; font-size: 15px;">${order.customerName}</div>
+                <div style="color: var(--primary); font-size: 15px; font-weight:500;">${order.customerName}</div>
               </div>
               <div style="text-align: right;">
-                <div style="color: #fff; font-size: 15px; font-weight: 600; margin-bottom: 4px;">${formatCurrency(order.total)}</div>
-                <div style="color: #888; font-size: 13px;">${dateStr}</div>
+                <div style="color: var(--primary); font-size: 15px; font-weight: 600; margin-bottom: 4px;">${formatCurrency(order.total)}</div>
+                <div style="color: var(--text-light); font-size: 13px;">${dateStr}</div>
               </div>
             </div>
           `;

@@ -263,9 +263,12 @@
         document.getElementById('payment-flow').style.display = 'none';
 
         try {
+          const pubKey = await getPublicKey();
+          const wompiEnv = pubKey.startsWith('pub_test_') ? 'sandbox.wompi.co' : 'production.wompi.co';
+          
           // Verify transaction with Wompi API
-          const verifyRes = await fetch(`https://production.wompi.co/v1/transactions/${transactionId}`, {
-            headers: { 'Authorization': `Bearer ${await getPublicKey()}` }
+          const verifyRes = await fetch(`https://${wompiEnv}/v1/transactions/${transactionId}`, {
+            headers: { 'Authorization': `Bearer ${pubKey}` }
           });
 
           const verifyData = await verifyRes.json();

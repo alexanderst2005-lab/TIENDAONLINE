@@ -2,7 +2,14 @@ import { db } from '../../db';
 import { orders, orderItems } from '../../db/schema';
 import { verifyAuth } from '../utils/auth';
 import { desc, eq } from 'drizzle-orm';
-import { sendEmail, buildShippingEmail } from '../utils/email';
+import { 
+  sendEmail, 
+  buildShippingEmail, 
+  buildConfirmationEmail, 
+  buildPreparationEmail, 
+  buildDeliveredEmail, 
+  buildCancelledEmail 
+} from '../utils/email';
 
 export default async function handler(req: any, res: any) {
   try {
@@ -57,9 +64,6 @@ export default async function handler(req: any, res: any) {
       const updatedOrder = { ...order, ...updateData };
 
       if (order.customerEmail) {
-        const { buildConfirmationEmail, buildShippingEmail, buildPreparationEmail, buildDeliveredEmail, buildCancelledEmail } = await import('../utils/email');
-        const { sendEmail } = await import('../utils/email');
-        
         let emailData: { subject: string; html: string } | null = null;
         let updateFlags: any = {};
 

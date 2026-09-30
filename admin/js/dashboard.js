@@ -343,8 +343,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     const rawSizes = document.getElementById('prodSizes').value;
     const sizesArr = rawSizes ? rawSizes.split(',').map(s => s.trim()).filter(Boolean) : [];
     
+    // Mapa de colores comunes a códigos HEX para los círculos de la tienda
+    const colorMap = {
+      'blanco': '#ffffff', 'negro': '#000000', 'rojo': '#ff0000', 'azul': '#0000ff',
+      'verde': '#008000', 'amarillo': '#ffff00', 'rosa': '#ffc0cb', 'rosado': '#ffc0cb',
+      'morado': '#800080', 'gris': '#808080', 'beige': '#f5f5dc', 'naranja': '#ffa500',
+      'cafe': '#8b4513', 'café': '#8b4513', 'marrón': '#8b4513', 'marron': '#8b4513',
+      'celeste': '#87ceeb', 'fucsia': '#ff00ff', 'vino': '#722f37', 'lila': '#c8a2c8',
+      'mostaza': '#ffdb58', 'dorado': '#ffd700', 'plateado': '#c0c0c0', 'oliva': '#808000',
+      'turquesa': '#40e0d0', 'marfil': '#fffff0', 'crema': '#fffdd0', 'coral': '#ff7f50'
+    };
+
     const rawColors = document.getElementById('prodColors').value;
-    const colorsArr = rawColors ? rawColors.split(',').map(c => ({ name: c.trim(), hex: '#000000' })).filter(c => c.name) : [];
+    const colorsArr = rawColors ? rawColors.split(',').map(c => {
+      const name = c.trim();
+      const hex = colorMap[name.toLowerCase()] || '#cccccc'; // Gris por defecto si no lo encuentra
+      return { name, hex };
+    }).filter(c => c.name) : [];
     
     const rawComparePrice = document.getElementById('prodComparePrice').value;
 

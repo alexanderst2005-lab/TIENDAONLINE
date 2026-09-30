@@ -15,9 +15,10 @@
 
   <!-- Sidebar -->
   <aside class="sidebar">
-    <div class="sidebar-header" style="display: flex; align-items: center; gap: 10px;">
-      <img src="../images/logo.png" alt="Monatela" style="height: 36px; object-fit: contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-      <span style="display: none; font-family: 'Didot', 'Georgia', serif; font-size: 18px; font-weight: bold; letter-spacing: 2px; color: var(--primary);">MONATELA</span>
+    <div class="sidebar-header">
+      <svg width="150" height="30" viewBox="0 0 150 40" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="25" font-family="'Didot', serif" font-size="20" font-weight="bold" fill="#111111" letter-spacing="2">MONATELA</text>
+      </svg>
     </div>
     <nav class="sidebar-nav">
       <a href="#" class="nav-item active" data-page="dashboard"><i data-feather="home" class="nav-icon"></i> Dashboard</a>
@@ -42,14 +43,17 @@
   <main class="main-content">
     <header class="topbar">
       <div class="topbar-title" style="display: flex; align-items: center; gap: 15px;">
+        <svg width="120" height="24" viewBox="0 0 150 40" xmlns="http://www.w3.org/2000/svg" class="mobile-logo">
+          <text x="0" y="25" font-family="'Didot', serif" font-size="20" font-weight="bold" fill="#111111" letter-spacing="2">MONATELA</text>
+        </svg>
+        <span style="color: var(--border);" class="desktop-only">|</span>
+        <h1 id="pageTitle" style="font-size: 16px;" class="desktop-only">Dashboard</h1>
+      </div>
+      <div class="topbar-user" style="display: flex; align-items: center; gap: 15px;">
+        <span id="userNameDisplay">Admin</span>
         <button id="mobileMenuBtn" style="display: none; background: none; border: none; cursor: pointer; color: var(--primary); padding: 8px; border-radius: 6px; line-height: 0;">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
-        <h1 id="pageTitle">Dashboard</h1>
-      </div>
-      <div class="topbar-user">
-        <span id="userNameDisplay">Admin</span>
-        <div class="user-avatar" id="userInitialDisplay">A</div>
       </div>
     </header>
 
@@ -58,12 +62,8 @@
       <!-- Vista Dashboard -->
       <div id="view-dashboard" class="page-view" style="max-width: 800px; margin: 0 auto; color: var(--primary);">
         
-        <div style="margin-bottom: 30px;">
-          <h2 style="font-size: 24px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 5px; display: flex; align-items: center; gap: 10px;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-            COMMAND CENTER
-          </h2>
-          <p style="color: var(--text-light); font-size: 14px; margin: 0;">Resumen operativo — <span id="dashMonthName"></span></p>
+        <div style="margin-bottom: 20px; display: none;">
+          <span id="dashMonthName"></span>
         </div>
 
         <!-- KPI Grid 1 -->

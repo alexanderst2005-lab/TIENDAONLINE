@@ -336,7 +336,10 @@ body {
 .status-badge.error { background: #FDEDED; color: var(--error); }
 
 /* ================= RESPONSIVE MOBILE ================= */
+.mobile-logo { display: none; }
 @media (max-width: 768px) {
+  .desktop-only { display: none !important; }
+  .mobile-logo { display: block; }
   /* Show hamburger button */
   #mobileMenuBtn { display: flex !important; align-items: center; justify-content: center; }
 

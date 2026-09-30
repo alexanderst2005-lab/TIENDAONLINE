@@ -182,7 +182,51 @@ export function buildShippingEmail(order: any, items: any[]): { subject: string;
   return { subject, html };
 }
 
-// ─── Core send function ───────────────────────────────────────────────────────
+// ─── EMAIL 3: En preparación ──────────────────────────────────────────────────
+export function buildPreparationEmail(order: any, items: any[]): { subject: string; html: string } {
+  const subject = `⏳ Tu pedido ${order.orderNumber} está en preparación — ${STORE_NAME}`;
+  const html = emailWrapper(`
+    <h2 style="margin:0 0 6px;color:#111;font-size:22px;">¡Hola, ${order.customerName}! 📦</h2>
+    <p style="margin:0 0 24px;color:#555;font-size:15px;line-height:1.6;">
+      Queríamos avisarte que ya estamos preparando tu pedido <strong>${order.orderNumber}</strong>. Pronto te enviaremos la información de envío para que puedas hacerle seguimiento.
+    </p>
+    <p style="margin:28px 0 0;font-size:14px;color:#888;line-height:1.6;">
+      ¡Gracias por tu paciencia y por elegir ${STORE_NAME}! 💖
+    </p>
+  `);
+  return { subject, html };
+}
+
+// ─── EMAIL 4: Entregado ───────────────────────────────────────────────────────
+export function buildDeliveredEmail(order: any, items: any[]): { subject: string; html: string } {
+  const subject = `🎉 Tu pedido ${order.orderNumber} ha sido entregado — ${STORE_NAME}`;
+  const html = emailWrapper(`
+    <h2 style="margin:0 0 6px;color:#111;font-size:22px;">¡Hola, ${order.customerName}! 🛍️</h2>
+    <p style="margin:0 0 24px;color:#555;font-size:15px;line-height:1.6;">
+      Según nuestros registros, tu pedido <strong>${order.orderNumber}</strong> ha sido entregado exitosamente. Esperamos que disfrutes mucho tus productos.
+    </p>
+    <p style="margin:28px 0 0;font-size:14px;color:#888;line-height:1.6;">
+      Nos encantaría saber qué te parecieron. ¡Vuelve pronto a ${STORE_NAME}! 💖
+    </p>
+  `);
+  return { subject, html };
+}
+
+// ─── EMAIL 5: Cancelado ───────────────────────────────────────────────────────
+export function buildCancelledEmail(order: any, items: any[]): { subject: string; html: string } {
+  const subject = `❌ Tu pedido ${order.orderNumber} ha sido cancelado — ${STORE_NAME}`;
+  const html = emailWrapper(`
+    <h2 style="margin:0 0 6px;color:#111;font-size:22px;">Hola, ${order.customerName}.</h2>
+    <p style="margin:0 0 24px;color:#555;font-size:15px;line-height:1.6;">
+      Te informamos que el pedido <strong>${order.orderNumber}</strong> ha sido cancelado. Si crees que esto es un error o tienes alguna duda, por favor contáctanos respondiendo a este correo o vía WhatsApp.
+    </p>
+    <p style="margin:28px 0 0;font-size:14px;color:#888;line-height:1.6;">
+      ¡Esperamos verte pronto de vuelta en ${STORE_NAME}!
+    </p>
+  `);
+  return { subject, html };
+}
+
 export async function sendEmail({
   to,
   toName,

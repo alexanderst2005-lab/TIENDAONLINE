@@ -1,6 +1,7 @@
 import { db } from '../db';
-import { orders } from '../db/schema';
+import { orders, orderItems } from '../db/schema';
 import { eq } from 'drizzle-orm';
+import { sendEmail, buildConfirmationEmail } from './utils/email';
 
 export default async function handler(req: any, res: any) {
   if (req.method === 'POST') {
@@ -19,14 +20,39 @@ export default async function handler(req: any, res: any) {
 
       const order = orderList[0];
 
-      // Mark it as Confirmado
+      // Guard: only process if not already confirmed (prevent double-processing)
+      if (order.status === 'Confirmado' || order.status === 'En preparación' || order.status === 'Enviado' || order.status === 'Entregado') {
+        return res.status(200).json({ success: true, message: 'Pedido ya confirmado' });
+      }
+
+      // Mark as Confirmado
       await db.update(orders)
-        .set({ status: 'Confirmado' })
+        .set({ status: 'Confirmado', updatedAt: new Date() })
         .where(eq(orders.orderNumber, orderNumber));
 
-      return res.status(200).json({ success: true, message: 'Pago simulado con éxito' });
+      // Send confirmation email only once (check flag)
+      if (!order.confirmationEmailSent && order.customerEmail) {
+        // Fetch items for this order
+        const items = await db.select().from(orderItems).where(eq(orderItems.orderId, order.id));
+        const { subject, html } = buildConfirmationEmail({ ...order, status: 'Confirmado' }, items);
+        const sent = await sendEmail({
+          to: order.customerEmail,
+          toName: order.customerName,
+          subject,
+          html,
+        });
+
+        if (sent) {
+          // Mark email as sent to prevent duplicates
+          await db.update(orders)
+            .set({ confirmationEmailSent: true })
+            .where(eq(orders.orderNumber, orderNumber));
+        }
+      }
+
+      return res.status(200).json({ success: true, message: 'Pago confirmado y correo enviado' });
     } catch (err) {
-      console.error('Error in mock payment API:', err);
+      console.error('Error in pay API:', err);
       return res.status(500).json({ error: 'Error procesando el pago' });
     }
   }

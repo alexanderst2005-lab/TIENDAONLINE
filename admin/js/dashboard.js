@@ -406,19 +406,77 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('odStatusBtn')?.addEventListener('click', async () => {
     if (!currentOrderId) return;
     const newStatus = document.getElementById('odStatusSelect').value;
+
+    // Intercept "Enviado" — require tracking info first
+    if (newStatus === 'Enviado') {
+      openShippingModal();
+      return;
+    }
+
     try {
-      await fetch('/api/admin/orders', {
+      const res = await fetch('/api/admin/orders', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ id: currentOrderId, status: newStatus })
       });
+      if (!res.ok) throw new Error('Error al actualizar');
       alert('Estado guardado con éxito');
-      loadOrders(); // reload the background table
+      loadOrders();
     } catch (err) {
       console.error(err);
       alert('Error guardando estado');
     }
   });
+
+  // --- Shipping Modal Logic ---
+  window.openShippingModal = function() {
+    document.getElementById('shippingCarrier').value = '';
+    document.getElementById('shippingTracking').value = '';
+    document.getElementById('shippingModal').style.display = 'flex';
+  }
+
+  window.closeShippingModal = function() {
+    document.getElementById('shippingModal').style.display = 'none';
+  }
+
+  window.confirmShipping = async function() {
+    const carrier = document.getElementById('shippingCarrier').value.trim();
+    const trackingNumber = document.getElementById('shippingTracking').value.trim();
+
+    if (!carrier) {
+      alert('Por favor selecciona una transportadora.');
+      return;
+    }
+    if (!trackingNumber) {
+      alert('Por favor ingresa el número de guía.');
+      return;
+    }
+
+    const btn = document.getElementById('confirmShippingBtn');
+    btn.disabled = true;
+    btn.textContent = 'Guardando...';
+
+    try {
+      const res = await fetch('/api/admin/orders', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ id: currentOrderId, status: 'Enviado', carrier, trackingNumber })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Error al marcar como Enviado');
+
+      closeShippingModal();
+      closeOrderDetailModal();
+      alert('✅ Pedido marcado como Enviado. Se ha notificado al cliente por correo.');
+      loadOrders();
+    } catch (err) {
+      console.error(err);
+      alert('Error: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg> Confirmar Envío y Notificar Cliente`;
+    }
+  }
 
   // --- Modal Logic ---
   const modal = document.getElementById('productModal');

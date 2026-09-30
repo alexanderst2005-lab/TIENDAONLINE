@@ -498,6 +498,38 @@
       </div>
     </div>
   </div>
+  <!-- Modal: Información de Envío (requerido para estado Enviado) -->
+  <div id="shippingModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center;">
+    <div class="modal-content" style="background: white; padding: 30px; border-radius: 12px; width: 100%; max-width: 440px; box-shadow: 0 20px 60px rgba(0,0,0,0.2);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h2 style="margin:0; font-size: 18px;">🚚 Información de Envío</h2>
+        <button onclick="closeShippingModal()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: #888;">&times;</button>
+      </div>
+      <p style="margin: 0 0 24px; font-size: 13px; color: #666; line-height: 1.5;">Para marcar este pedido como <strong>Enviado</strong>, ingresa la transportadora y el número de guía. Se enviará un correo automático al cliente.</p>
+      <div class="form-group" style="margin-bottom: 16px;">
+        <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Transportadora *</label>
+        <select id="shippingCarrier" class="form-control" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:6px;">
+          <option value="">— Selecciona una transportadora —</option>
+          <option value="Servientrega">Servientrega</option>
+          <option value="Coordinadora">Coordinadora</option>
+          <option value="Deprisa">Deprisa</option>
+          <option value="Interrapidísimo">Interrapidísimo</option>
+          <option value="TCC">TCC</option>
+          <option value="Envia">Envia</option>
+          <option value="Domina">Domina</option>
+          <option value="Otra">Otra</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom: 24px;">
+        <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Número de Guía *</label>
+        <input type="text" id="shippingTracking" class="form-control" placeholder="Ej. 1234567890" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:6px;">
+      </div>
+      <button id="confirmShippingBtn" onclick="confirmShipping()" class="btn-primary" style="width:100%; padding:14px; font-size:15px; display:flex; align-items:center; justify-content:center; gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg>
+        Confirmar Envío y Notificar Cliente
+      </button>
+    </div>
+  </div>
 
   <script src="js/dashboard.js"></script>
 </body>

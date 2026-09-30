@@ -78,6 +78,13 @@ export const orders = pgTable('orders', {
   discount: integer('discount').default(0),
   paymentMethod: text('payment_method'),
   status: text('status').notNull().default('Pendiente'), // Pendiente, Confirmado, En preparación, Enviado, Entregado, Cancelado
+  // Shipping tracking
+  carrier: text('carrier'),           // transportadora
+  trackingNumber: text('tracking_number'),
+  shippedAt: timestamp('shipped_at'),
+  // Email control flags (prevent duplicate sends)
+  confirmationEmailSent: boolean('confirmation_email_sent').default(false),
+  shippingEmailSent: boolean('shipping_email_sent').default(false),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });

@@ -2,6 +2,7 @@ import { db } from '../../db';
 import { orders, orderItems } from '../../db/schema';
 import { verifyAuth } from '../utils/auth';
 import { desc, eq } from 'drizzle-orm';
+import { sendEmail, buildShippingEmail } from '../utils/email';
 
 export default async function handler(req: any, res: any) {
   try {
@@ -21,10 +22,56 @@ export default async function handler(req: any, res: any) {
     }
 
     if (req.method === 'PUT') {
-      const { id, status } = req.body;
+      const { id, status, carrier, trackingNumber } = req.body;
       if (!id || !status) return res.status(400).json({ error: 'Missing ID or status' });
 
-      await db.update(orders).set({ status }).where(eq(orders.id, id));
+      // Special handling for "Enviado" status — requires tracking info
+      if (status === 'Enviado') {
+        if (!carrier || !trackingNumber) {
+          return res.status(400).json({
+            error: 'Para marcar como Enviado debes proporcionar la transportadora y el número de guía.',
+            requiresTracking: true,
+          });
+        }
+
+        // Fetch current order to check email sentinel
+        const orderData = await db.select().from(orders).where(eq(orders.id, id));
+        if (orderData.length === 0) return res.status(404).json({ error: 'Order not found' });
+        const order = orderData[0];
+
+        // Update with tracking info
+        await db.update(orders).set({
+          status: 'Enviado',
+          carrier,
+          trackingNumber,
+          shippedAt: new Date(),
+          updatedAt: new Date(),
+        }).where(eq(orders.id, id));
+
+        // Send shipping email only if not already sent
+        if (!order.shippingEmailSent && order.customerEmail) {
+          const items = await db.select().from(orderItems).where(eq(orderItems.orderId, id));
+          const updatedOrder = { ...order, status: 'Enviado', carrier, trackingNumber, shippedAt: new Date() };
+          const { subject, html } = buildShippingEmail(updatedOrder, items);
+          const sent = await sendEmail({
+            to: order.customerEmail,
+            toName: order.customerName,
+            subject,
+            html,
+          });
+
+          if (sent) {
+            await db.update(orders)
+              .set({ shippingEmailSent: true })
+              .where(eq(orders.id, id));
+          }
+        }
+
+        return res.status(200).json({ message: 'Pedido marcado como Enviado y correo enviado al cliente.' });
+      }
+
+      // For all other status changes, just update normally
+      await db.update(orders).set({ status, updatedAt: new Date() }).where(eq(orders.id, id));
       return res.status(200).json({ message: 'Order updated' });
     }
 

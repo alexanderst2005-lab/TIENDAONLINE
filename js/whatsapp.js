@@ -93,6 +93,12 @@ function initCheckoutForm() {
       return;
     }
 
+    const termsCheckbox = document.getElementById('terms-checkbox');
+    if (termsCheckbox && !termsCheckbox.checked) {
+      alert('Debes aceptar los Términos y Condiciones para continuar.');
+      return;
+    }
+
     const items = Cart.get();
     if (items.length === 0) {
       alert('Tu carrito está vacío.');
@@ -102,7 +108,7 @@ function initCheckoutForm() {
     const submitBtn = document.getElementById('whatsapp-submit-btn');
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.textContent = 'PROCESANDO...';
+      submitBtn.querySelector('#btn-text').textContent = 'PROCESANDO...';
     }
 
     try {
@@ -124,9 +130,9 @@ function initCheckoutForm() {
       // Clear cart because order is already created in DB
       Cart.clear();
 
-      if (customerData.payment_method === 'Pago en Línea') {
+      if (customerData.payment_method === 'Pago en Línea' || customerData.payment_method === 'Sistecrédito') {
         // Redirect to test payment gateway
-        window.location.href = `pay.html?order=${data.orderNumber}&total=${subtotal}`;
+        window.location.href = `pay.html?order=${data.orderNumber}&total=${subtotal}&method=${customerData.payment_method}`;
         return;
       }
 
@@ -145,7 +151,7 @@ function initCheckoutForm() {
       alert('Hubo un problema generando tu pedido. Por favor intenta de nuevo.');
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = 'ENVIAR PEDIDO POR WHATSAPP';
+        submitBtn.querySelector('#btn-text').textContent = (customerData.payment_method === 'Contra Entrega') ? 'ENVIAR PEDIDO POR WHATSAPP' : 'IR A PAGAR SEGURO';
       }
     }
   });

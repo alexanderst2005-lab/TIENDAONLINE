@@ -50,7 +50,7 @@ export default async function handler(req: any, res: any) {
         }
       }
 
-      return res.status(200).json({ success: true, message: 'Pago confirmado y correo enviado' });
+      return res.status(200).json({ success: true, message: 'Pago confirmado y correo enviado', order });
     } catch (err) {
       console.error('Error in pay API:', err);
       return res.status(500).json({ error: 'Error procesando el pago' });

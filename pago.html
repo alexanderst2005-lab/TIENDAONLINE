@@ -235,23 +235,22 @@
         btnContainer.innerHTML = '<button type="button" id="start-wompi-btn" style="width: 100%; padding: 16px; background: #009ee3; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s;">Pagar con Wompi</button>';
 
         document.getElementById('start-wompi-btn').addEventListener('click', () => {
-          const checkout = new WidgetCheckout({
-            currency: 'COP',
-            amountInCents: amountInCents,
-            reference: reference,
-            publicKey: publicKey,
-            signature: { integrity: signature },
-            redirectUrl: redirectUrl,
-            customerData: {
-              email: '',
-              fullName: '',
-              phoneNumber: '',
-              phoneNumberPrefix: '+57'
-            }
-          });
-          checkout.open(function(result) {
-            console.log('Wompi closed:', result);
-          });
+          try {
+            const checkout = new WidgetCheckout({
+              currency: 'COP',
+              amountInCents: amountInCents,
+              reference: reference,
+              publicKey: publicKey,
+              signature: { integrity: signature },
+              redirectUrl: redirectUrl
+            });
+            checkout.open(function(result) {
+              console.log('Wompi closed:', result);
+            });
+          } catch (e) {
+            console.error('Error starting wompi:', e);
+            alert('Hubo un problema al abrir Wompi. Por favor intenta recargar la página.');
+          }
         });
 
       } catch (err) {

@@ -8,6 +8,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <!-- Feather Icons -->
   <script src="https://unpkg.com/feather-icons"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="admin-layout" style="display: none;"> <!-- Hidden until auth check -->
 
@@ -23,6 +25,7 @@
       <a href="#" class="nav-item" data-page="products"><i data-feather="shopping-bag" class="nav-icon"></i> Productos</a>
       <a href="#" class="nav-item" data-page="inventory"><i data-feather="package" class="nav-icon"></i> Inventario</a>
       <a href="#" class="nav-item" data-page="orders"><i data-feather="shopping-cart" class="nav-icon"></i> Pedidos</a>
+      <a href="#" class="nav-item" data-page="sales"><i data-feather="bar-chart-2" class="nav-icon"></i> Ventas</a>
       <a href="#" class="nav-item" data-page="categories"><i data-feather="list" class="nav-icon"></i> Categorías</a>
       <a href="#" class="nav-item" data-page="customers"><i data-feather="users" class="nav-icon"></i> Clientes</a>
       <a href="#" class="nav-item" data-page="content"><i data-feather="layout" class="nav-icon"></i> Contenido</a>
@@ -160,6 +163,35 @@
               <tr><td colspan="6" style="text-align: center;">En construcción...</td></tr>
             </tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- Vista Ventas -->
+      <div id="view-sales" class="page-view" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h3>Reporte de Ventas</h3>
+          <select id="salesPeriodSelect" class="form-control" style="padding: 10px; border-radius: 4px; border: 1px solid var(--border);">
+            <option value="today">Hoy</option>
+            <option value="7days" selected>Últimos 7 días</option>
+            <option value="30days">Últimos 30 días</option>
+            <option value="month">Este mes</option>
+          </select>
+        </div>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-title">Ventas Totales</div>
+            <div class="stat-value" id="salesTotalAmount">$0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Pedidos Completados</div>
+            <div class="stat-value" id="salesTotalOrders">0</div>
+          </div>
+        </div>
+
+        <div class="table-container" style="padding: 20px;">
+          <h3 style="margin-bottom: 15px; font-size: 16px;">Ventas a lo largo del tiempo</h3>
+          <canvas id="salesChart" width="400" height="150"></canvas>
         </div>
       </div>
 

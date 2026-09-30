@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (pageId === 'products') loadProducts();
       if (pageId === 'inventory') loadInventory();
       if (pageId === 'orders') loadOrders();
+      if (pageId === 'sales') loadSales();
       if (pageId === 'categories') loadCategories();
       if (pageId === 'customers') loadCustomers();
     });
@@ -619,6 +620,72 @@ document.addEventListener('DOMContentLoaded', async () => {
       alert('Stock actualizado');
     } catch(err) { console.error(err); }
   }
+
+  // --- Ventas ---
+  window.salesChartInstance = null;
+
+  async function loadSales(period = '7days') {
+    try {
+      const res = await fetch(`/api/admin/sales?period=${period}`, { headers: { 'Authorization': `Bearer ${token}` } });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+
+      document.getElementById('salesTotalAmount').textContent = formatCurrency(data.totalSales);
+      document.getElementById('salesTotalOrders').textContent = data.totalOrders;
+
+      const labels = data.chartData.map(d => d.date);
+      const values = data.chartData.map(d => d.amount);
+
+      const ctx = document.getElementById('salesChart').getContext('2d');
+      if (window.salesChartInstance) {
+        window.salesChartInstance.destroy();
+      }
+
+      window.salesChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Ventas (COP)',
+            data: values,
+            borderColor: '#111111',
+            backgroundColor: 'rgba(17, 17, 17, 0.05)',
+            fill: true,
+            tension: 0.3,
+            pointBackgroundColor: '#111111',
+            pointRadius: 4,
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) { return formatCurrency(value); }
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) { return formatCurrency(context.parsed.y); }
+              }
+            }
+          }
+        }
+      });
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+  document.getElementById('salesPeriodSelect')?.addEventListener('change', (e) => {
+    loadSales(e.target.value);
+  });
 
   // Initial Load
   loadDashboard();

@@ -136,10 +136,20 @@ function initCheckoutForm() {
       // Clear cart because order is already created in DB
       Cart.clear();
 
-      if (customerData.payment_method === 'Wompi') {
-        // Redirect to test payment gateway
-        window.location.href = `pago.html?order=${data.orderNumber}&total=${subtotal}`;
-        return;
+      if (customerData.payment_method === 'Mercado Pago') {
+        const prefRes = await fetch('/api/mercadopago/preference', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderNumber: data.orderNumber, total: subtotal })
+        });
+        if (!prefRes.ok) throw new Error('Error al conectar con Mercado Pago');
+        const prefData = await prefRes.json();
+        if (prefData.init_point) {
+          window.location.href = prefData.init_point;
+          return;
+        } else {
+          throw new Error('No se generó el enlace de pago');
+        }
       }
 
       // Add order number to notes for whatsapp

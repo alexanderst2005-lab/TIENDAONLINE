@@ -641,35 +641,53 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.salesChartInstance.destroy();
       }
 
+      // Create a nice gradient for the fill
+      let gradient = ctx.createLinearGradient(0, 0, 0, 350);
+      gradient.addColorStop(0, 'rgba(17, 17, 17, 0.2)');
+      gradient.addColorStop(1, 'rgba(17, 17, 17, 0)');
+
       window.salesChartInstance = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
           labels,
           datasets: [{
             label: 'Ventas (COP)',
             data: values,
-            backgroundColor: '#111111',
-            borderRadius: 4,
-            barThickness: 'flex',
-            maxBarThickness: 40
+            borderColor: '#111111',
+            backgroundColor: gradient,
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#ffffff',
+            pointBorderColor: '#111111',
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
           animation: {
-            duration: 500
+            duration: 800,
+            easing: 'easeOutQuart'
           },
           scales: {
             y: {
               beginAtZero: true,
               grid: {
                 color: 'rgba(0,0,0,0.05)',
-                drawBorder: false
+                drawBorder: false,
+                borderDash: [5, 5]
               },
               ticks: {
                 callback: function(value) { return formatCurrency(value); },
-                font: { family: "'Inter', sans-serif", size: 11 }
+                font: { family: "'Inter', sans-serif", size: 12 },
+                padding: 10
               }
             },
             x: {
@@ -678,7 +696,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 drawBorder: false
               },
               ticks: {
-                font: { family: "'Inter', sans-serif", size: 11 }
+                font: { family: "'Inter', sans-serif", size: 12 },
+                padding: 10
               }
             }
           },
@@ -688,10 +707,11 @@ document.addEventListener('DOMContentLoaded', async () => {
               backgroundColor: '#111111',
               titleFont: { family: "'Inter', sans-serif", size: 13 },
               bodyFont: { family: "'Inter', sans-serif", size: 14, weight: 'bold' },
-              padding: 10,
-              cornerRadius: 6,
+              padding: 12,
+              cornerRadius: 8,
+              displayColors: false,
               callbacks: {
-                label: function(context) { return ' ' + formatCurrency(context.parsed.y); }
+                label: function(context) { return formatCurrency(context.parsed.y); }
               }
             }
           }

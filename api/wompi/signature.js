@@ -4,7 +4,7 @@
  */
 import { createHash } from 'crypto';
 
-export function generateWompiSignature(reference: string, amountInCents: number, currency: string = 'COP'): string {
+export function generateWompiSignature(reference, amountInCents, currency = 'COP') {
   const integritySecret = process.env.WOMPI_INTEGRITY_SECRET;
   if (!integritySecret) throw new Error('WOMPI_INTEGRITY_SECRET not set');
   
@@ -12,7 +12,7 @@ export function generateWompiSignature(reference: string, amountInCents: number,
   return createHash('sha256').update(signatureString).digest('hex');
 }
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
   
   try {
@@ -31,7 +31,7 @@ export default async function handler(req: any, res: any) {
       publicKey,
       reference: orderNumber
     });
-  } catch (err: any) {
+  } catch (err) {
     console.error('[Wompi Signature]', err);
     return res.status(500).json({ error: err.message });
   }

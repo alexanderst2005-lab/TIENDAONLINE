@@ -14,7 +14,7 @@ import {
   buildConfirmationEmail
 } from '../utils/email';
 
-function verifyWompiWebhook(body: any, signature: string): boolean {
+function verifyWompiWebhook(body, signature) {
   const eventsSecret = process.env.WOMPI_EVENTS_SECRET;
   if (!eventsSecret) {
     console.warn('[Wompi Webhook] WOMPI_EVENTS_SECRET not set, skipping verification');
@@ -27,7 +27,7 @@ function verifyWompiWebhook(body: any, signature: string): boolean {
   return expected === signature;
 }
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
   
   try {

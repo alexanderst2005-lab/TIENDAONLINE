@@ -138,7 +138,7 @@ function initCheckoutForm() {
 
       if (customerData.payment_method === 'Mercado Pago' || customerData.payment_method === 'Sistecrédito') {
         // Redirect to test payment gateway
-        window.location.href = `pay.html?order=${data.orderNumber}&total=${subtotal}&method=${customerData.payment_method}`;
+        window.location.href = `pago.html?order=${data.orderNumber}&total=${subtotal}&method=${customerData.payment_method}`;
         return;
       }
 

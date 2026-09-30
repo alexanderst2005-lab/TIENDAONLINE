@@ -48,30 +48,91 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!response.ok) throw new Error('Error fetching dashboard data');
       const data = await response.json();
 
-      document.getElementById('statsSalesToday').textContent = formatCurrency(data.salesToday);
-      document.getElementById('statsPendingOrders').textContent = data.pendingOrders;
-      document.getElementById('statsActiveProducts').textContent = data.activeProducts;
-      document.getElementById('statsLowStock').textContent = data.lowStockProducts;
+      const months = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+      document.getElementById('dashMonthName').textContent = `${months[new Date().getMonth()]} de ${new Date().getFullYear()}`;
 
-      const tableBody = document.getElementById('recentOrdersTableBody');
-      tableBody.innerHTML = '';
-      if (data.recentOrders.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No hay pedidos recientes</td></tr>';
+      document.getElementById('dashIngresosMes').textContent = formatCurrency(data.ingresosMes);
+      document.getElementById('dashIngresosSemana').textContent = formatCurrency(data.ingresosSemana);
+      
+      const pChange = data.percentChange;
+      const pChangeEl = document.getElementById('dashPercentChange');
+      pChangeEl.textContent = `${pChange > 0 ? '+' : ''}${pChange}% vs semana anterior`;
+      pChangeEl.style.color = pChange >= 0 ? '#4ade80' : '#f87171';
+
+      document.getElementById('dashTotalPedidos').textContent = data.totalPedidos;
+      document.getElementById('dashPedidosConfirmados').textContent = `${data.confirmadosCount} confirmados`;
+      document.getElementById('dashIngresosTotales').textContent = formatCurrency(data.ingresosTotales);
+
+      // Top Products
+      const topProdContainer = document.getElementById('dashTopProducts');
+      topProdContainer.innerHTML = '';
+      if (!data.topProducts || data.topProducts.length === 0) {
+        topProdContainer.innerHTML = '<p style="color:#666; font-size:13px;">No hay datos aún.</p>';
+      } else {
+        data.topProducts.forEach((p, idx) => {
+          topProdContainer.innerHTML += `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <div style="display: flex; gap: 15px; align-items: center;">
+                <span style="color: #666; font-size: 13px;">${idx + 1}</span>
+                <div>
+                  <div style="color: #fff; font-size: 14px;">${p.name}</div>
+                  <div style="color: #888; font-size: 12px;">${p.qty} vendidos</div>
+                </div>
+              </div>
+              <div style="color: #d4af37; font-size: 14px; font-weight: 500;">${formatCurrency(p.price)}</div>
+            </div>
+          `;
+        });
+      }
+
+      // Status
+      document.getElementById('dashStatusEnviado').textContent = data.pedidosPorEstado['Enviado'] || 0;
+      document.getElementById('dashStatusPendiente').textContent = data.pedidosPorEstado['Pendiente'] || 0;
+      document.getElementById('dashStatusCancelado').textContent = data.pedidosPorEstado['Cancelado'] || 0;
+
+      // Stock
+      if (!data.isInventarioOptimo) {
+        document.getElementById('dashStockCritico').innerHTML = `<div style="color: #f87171; font-size: 24px; font-weight: 600;">${data.stockCritico}</div><div style="color: #888; font-size: 12px;">Productos con poco stock</div>`;
+      }
+
+      // Recent Orders
+      const recentContainer = document.getElementById('dashUltimosPedidos');
+      recentContainer.innerHTML = '';
+      if (!data.recentOrders || data.recentOrders.length === 0) {
+        recentContainer.innerHTML = '<p style="color:#666; font-size:13px;">No hay pedidos recientes.</p>';
       } else {
         data.recentOrders.forEach(order => {
-          const tr = document.createElement('tr');
-          const date = new Date(order.createdAt).toLocaleDateString();
-          let badgeClass = 'warning';
-          if (order.status === 'Confirmado' || order.status === 'En preparación') badgeClass = 'success';
-          if (order.status === 'Cancelado') badgeClass = 'error';
-          tr.innerHTML = `
-            <td>#${order.orderNumber}</td>
-            <td>${order.customerName}</td>
-            <td>${date}</td>
-            <td>${formatCurrency(order.total)}</td>
-            <td><span class="status-badge ${badgeClass}">${order.status}</span></td>
+          const dateStr = new Date(order.createdAt).toLocaleDateString('es-CO', {day: 'numeric', month: 'short'});
+          
+          let statusColor = '#facc15'; // Pendiente (amarillo)
+          let statusBg = 'rgba(250, 204, 21, 0.1)';
+          if (order.status === 'Confirmado' || order.status === 'En preparación') {
+            statusColor = '#4ade80'; statusBg = 'rgba(74, 222, 128, 0.1)';
+          } else if (order.status === 'Enviado') {
+            statusColor = '#60a5fa'; statusBg = 'rgba(96, 165, 250, 0.1)';
+          } else if (order.status === 'Cancelado') {
+            statusColor = '#f87171'; statusBg = 'rgba(248, 113, 113, 0.1)';
+          } else if (order.status === 'Entregado') {
+            statusColor = '#a855f7'; statusBg = 'rgba(168, 85, 247, 0.1)';
+          }
+
+          let statusLabel = order.status.replace(' ', '_').toUpperCase();
+
+          recentContainer.innerHTML += `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                  <span style="color: #d4af37; font-size: 14px; font-weight: 500;">${order.orderNumber}</span>
+                  <span style="font-size: 9px; letter-spacing: 1px; padding: 2px 6px; border-radius: 2px; color: ${statusColor}; background: ${statusBg}; border: 1px solid ${statusBg};">${statusLabel}</span>
+                </div>
+                <div style="color: #fff; font-size: 15px;">${order.customerName}</div>
+              </div>
+              <div style="text-align: right;">
+                <div style="color: #fff; font-size: 15px; font-weight: 600; margin-bottom: 4px;">${formatCurrency(order.total)}</div>
+                <div style="color: #888; font-size: 13px;">${dateStr}</div>
+              </div>
+            </div>
           `;
-          tableBody.appendChild(tr);
         });
       }
     } catch (err) {

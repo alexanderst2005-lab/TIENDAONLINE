@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (pageId === 'inventory') loadInventory();
       if (pageId === 'orders') loadOrders();
       if (pageId === 'categories') loadCategories();
-      if (pageId === 'collections') loadCollections();
       if (pageId === 'customers') loadCustomers();
     });
   });
@@ -193,11 +192,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Módulo en construcción (Próximamente)</td></tr>';
   }
 
-  function loadCollections() {
-    const tbody = document.getElementById('collectionsTableBody');
-    if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Módulo en construcción (Próximamente)</td></tr>';
-  }
-
   function loadCustomers() {
     const tbody = document.getElementById('customersTableBody');
     if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Módulo en construcción (Próximamente)</td></tr>';
@@ -300,7 +294,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('prodComparePrice').value = p.compareAtPrice || '';
         document.getElementById('prodStock').value = p.stock > 0 ? "1" : "0";
         document.getElementById('prodCategory').value = p.category;
-        document.getElementById('prodCollection').value = p.collectionId ? p.collectionId : '';
         document.getElementById('prodSizes').value = p.sizes ? p.sizes.join(', ') : '';
         document.getElementById('prodColors').value = p.colors ? p.colors.map(c => c.name).join(', ') : '';
         document.getElementById('prodIsNew').checked = !!p.isNew;

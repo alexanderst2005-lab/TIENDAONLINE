@@ -10,6 +10,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const pageViews = document.querySelectorAll('.page-view');
   const pageTitle = document.getElementById('pageTitle');
 
+  // Mobile sidebar helpers (declared early so navItems can reference them)
+  const _sidebar = document.querySelector('.sidebar');
+  const _overlay = document.createElement('div');
+  _overlay.style.cssText = 'display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.45); z-index:2500; cursor:pointer;';
+  document.body.appendChild(_overlay);
+  function openSidebar() { _sidebar.classList.add('active'); _overlay.style.display = 'block'; }
+  function closeSidebar() { _sidebar.classList.remove('active'); _overlay.style.display = 'none'; }
+
   navItems.forEach(item => {
     item.addEventListener('click', (e) => {
       e.preventDefault();
@@ -21,8 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       pageTitle.textContent = item.textContent.trim();
 
       // Close sidebar on mobile
-      document.querySelector('.sidebar').classList.remove('active');
-      document.querySelector('.admin-layout').classList.remove('sidebar-open');
+      if (typeof closeSidebar === 'function') closeSidebar();
       
       // Show View
       pageViews.forEach(view => {
@@ -45,20 +52,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Mobile menu toggle
+  // Mobile hamburger button
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const sidebar = document.querySelector('.sidebar');
-  const adminLayout = document.querySelector('.admin-layout');
+  _overlay.addEventListener('click', closeSidebar);
   if (mobileMenuBtn) {
-    mobileMenuBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
-      adminLayout.classList.toggle('sidebar-open');
-    });
-    // Close on overlay click
-    adminLayout.addEventListener('click', (e) => {
-      if (adminLayout.classList.contains('sidebar-open') && !sidebar.contains(e.target) && e.target !== mobileMenuBtn) {
-        sidebar.classList.remove('active');
-        adminLayout.classList.remove('sidebar-open');
-      }
+    mobileMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      _sidebar.classList.contains('active') ? closeSidebar() : openSidebar();
     });
   }
 

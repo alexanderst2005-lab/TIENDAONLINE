@@ -335,28 +335,90 @@ body {
 .status-badge.warning { background: #FFF3E0; color: #E65100; }
 .status-badge.error { background: #FDEDED; color: var(--error); }
 
-/* Responsive */
+/* ================= RESPONSIVE MOBILE ================= */
 @media (max-width: 768px) {
-  #mobileMenuBtn { display: block !important; }
+  /* Show hamburger button */
+  #mobileMenuBtn { display: flex !important; align-items: center; justify-content: center; }
+
+  /* Sidebar slides in from left */
   .sidebar {
     position: fixed;
     top: 0;
-    left: -250px;
+    left: -260px;
     height: 100vh;
-    z-index: 2000;
-    transition: left 0.3s ease;
+    width: 260px;
+    z-index: 3000;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 4px 0 20px rgba(0,0,0,0.15);
   }
   .sidebar.active {
     left: 0;
   }
+
+  /* Overlay behind sidebar */
   .admin-layout.sidebar-open::after {
     content: '';
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 1500;
+    background: rgba(0,0,0,0.45);
+    z-index: 2500;
+    cursor: pointer;
+  }
+
+  /* Main content takes full width */
+  .main-content {
+    width: 100%;
+  }
+
+  /* Topbar adjustments */
+  .topbar {
+    padding: 0 15px;
+    height: 56px;
+  }
+  .topbar-title h1 {
+    font-size: 16px;
+  }
+  #userNameDisplay {
+    display: none;
+  }
+
+  /* Content area padding */
+  .content-area {
+    padding: 15px;
+  }
+
+  /* Tables: hide some columns, make horizontally scrollable */
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .admin-table th, .admin-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* Dashboard KPI grids: 1 column on very small screens */
+  #view-dashboard [style*="grid-template-columns: repeat(auto-fit"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  @media (max-width: 400px) {
+    #view-dashboard [style*="grid-template-columns"] {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
+  /* Modals: full screen on mobile */
+  .modal > div, #orderDetailModal > div, #shippingModal > div, #productModal > div {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
   }
 }
+
 
 /* Action Buttons */
 .btn-action {

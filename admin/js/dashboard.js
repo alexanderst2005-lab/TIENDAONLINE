@@ -479,21 +479,21 @@ document.addEventListener('DOMContentLoaded', async () => {
           container.innerHTML += `
             <div style="margin-bottom: 15px;">
               <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                <span style="font-size: 14px; color: #fff;">${item.productName}</span>
-                <span style="font-size: 14px; color: #fff;">${formatCurrency(item.price)}</span>
+                <span style="font-size: 14px; color: var(--primary); font-weight: 500;">${item.productName}</span>
+                <span style="font-size: 14px; color: var(--primary); font-weight: 600;">${formatCurrency(item.price)}</span>
               </div>
-              <div style="color: #888; font-size: 12px; margin-bottom: 4px;">
+              <div style="color: var(--text-light); font-size: 12px; margin-bottom: 4px;">
                 Talla: <span style="text-transform: uppercase;">${variantText}</span>
               </div>
-              <div style="color: #666; font-size: 12px;">
+              <div style="color: var(--text-light); font-size: 12px;">
                 Cant: ${item.quantity} &times; ${formatCurrency(item.price)}
               </div>
             </div>
-            <hr style="border:0; border-top: 1px solid #444; margin: 15px 0;">
+            <hr style="border:0; border-top: 1px solid var(--border); margin: 15px 0;">
           `;
         });
       } else {
-        container.innerHTML = '<p style="color:#666;">No hay artículos</p>';
+        container.innerHTML = '<p style="color:var(--text-light);">No hay artículos</p>';
       }
       
       document.getElementById('odCreated').textContent = new Date(order.createdAt).toLocaleString('es-CO');

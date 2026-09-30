@@ -118,7 +118,11 @@
     <div id="card-form-container">
       <div class="form-group">
         <label>Número de tarjeta</label>
-        <input type="text" class="form-input" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number" inputmode="numeric">
+        <div style="position:relative;">
+          <input type="text" class="form-input" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number" inputmode="numeric" style="padding-right:60px;">
+          <span id="card-brand-icon" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:#555;"></span>
+        </div>
+        <p id="card-number-error" style="color:#e53e3e;font-size:12px;margin-top:5px;display:none;">Número de tarjeta inválido</p>
       </div>
       <div class="form-group">
         <label>Nombre en la tarjeta</label>
@@ -128,21 +132,12 @@
         <div class="form-group">
           <label>Fecha de vencimiento</label>
           <input type="text" class="form-input" id="card-expiry" placeholder="MM/AA" maxlength="5" autocomplete="cc-exp">
+          <p id="card-expiry-error" style="color:#e53e3e;font-size:12px;margin-top:5px;display:none;">Fecha inválida</p>
         </div>
         <div class="form-group">
           <label>Código de seguridad</label>
           <input type="text" class="form-input" id="card-cvv" placeholder="CVC" maxlength="4" autocomplete="cc-csc" inputmode="numeric">
         </div>
-      </div>
-      <div class="form-group">
-        <label>Cuotas</label>
-        <select class="form-input" id="card-installments">
-          <option value="1">1 cuota (sin interés)</option>
-          <option value="3">3 cuotas</option>
-          <option value="6">6 cuotas</option>
-          <option value="12">12 cuotas</option>
-          <option value="24">24 cuotas</option>
-        </select>
       </div>
       <button class="btn-pay-card" id="btn-pay-card" onclick="submitCardPayment()">
         <span class="btn-spinner" id="card-spinner"></span>
@@ -316,10 +311,42 @@
       document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
     }
 
+    // ---- Luhn Algorithm ----
+    function luhnCheck(num) {
+      let arr = (num + '').split('').reverse().map(Number);
+      let sum = arr.reduce((acc, val, idx) => {
+        if (idx % 2 === 1) { val *= 2; if (val > 9) val -= 9; }
+        return acc + val;
+      }, 0);
+      return sum % 10 === 0;
+    }
+
+    // ---- Detect card brand ----
+    function detectCardBrand(num) {
+      if (/^4/.test(num)) return 'VISA';
+      if (/^5[1-5]/.test(num) || /^2[2-7]/.test(num)) return 'Mastercard';
+      if (/^3[47]/.test(num)) return 'Amex';
+      if (/^6(?:011|5)/.test(num)) return 'Discover';
+      return '';
+    }
+
     // Format card number with spaces
     document.getElementById('card-number').addEventListener('input', function() {
       let v = this.value.replace(/\D/g, '').substring(0, 16);
       this.value = v.replace(/(.{4})/g, '$1 ').trim();
+      const brand = detectCardBrand(v);
+      const brandEl = document.getElementById('card-brand-icon');
+      brandEl.textContent = brand;
+      brandEl.style.color = brand === 'VISA' ? '#1a1f71' : brand === 'Mastercard' ? '#eb001b' : brand === 'Amex' ? '#2671b9' : '#555';
+      // Live validate once 16 digits
+      const errEl = document.getElementById('card-number-error');
+      if (v.length === 16) {
+        errEl.style.display = luhnCheck(v) ? 'none' : 'block';
+        this.style.borderColor = luhnCheck(v) ? '#4ade80' : '#e53e3e';
+      } else {
+        errEl.style.display = 'none';
+        this.style.borderColor = '';
+      }
     });
 
     // Format expiry
@@ -327,6 +354,21 @@
       let v = this.value.replace(/\D/g, '').substring(0, 4);
       if (v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2);
       this.value = v;
+      // Validate month
+      const errEl = document.getElementById('card-expiry-error');
+      if (v.length === 5) {
+        const [mm, yy] = v.split('/');
+        const month = parseInt(mm, 10);
+        const year = 2000 + parseInt(yy, 10);
+        const now = new Date();
+        const expDate = new Date(year, month - 1, 1);
+        const valid = month >= 1 && month <= 12 && expDate >= new Date(now.getFullYear(), now.getMonth(), 1);
+        errEl.style.display = valid ? 'none' : 'block';
+        this.style.borderColor = valid ? '#4ade80' : '#e53e3e';
+      } else {
+        errEl.style.display = 'none';
+        this.style.borderColor = '';
+      }
     });
 
     // Only numbers in cvv
@@ -340,11 +382,36 @@
       const expiry = document.getElementById('card-expiry').value.trim();
       const cvv = document.getElementById('card-cvv').value.trim();
 
-      if (number.length < 16) { alert('Ingresa un número de tarjeta válido (16 dígitos).'); return; }
+      // Length check
+      if (number.length < 15) {
+        document.getElementById('card-number-error').style.display = 'block';
+        document.getElementById('card-number-error').textContent = 'Ingresa un número de tarjeta completo.';
+        document.getElementById('card-number').focus();
+        return;
+      }
+      // Luhn check
+      if (!luhnCheck(number)) {
+        document.getElementById('card-number-error').style.display = 'block';
+        document.getElementById('card-number-error').textContent = 'Número de tarjeta inválido. Revisa los dígitos.';
+        document.getElementById('card-number').style.borderColor = '#e53e3e';
+        document.getElementById('card-number').focus();
+        return;
+      }
       if (!name) { alert('Ingresa el nombre como aparece en la tarjeta.'); return; }
       if (expiry.length < 5) { alert('Ingresa la fecha de vencimiento (MM/AA).'); return; }
+      // Expiry month/year check
+      const [mm, yy] = expiry.split('/');
+      const expDate = new Date(2000 + parseInt(yy, 10), parseInt(mm, 10) - 1, 1);
+      const now = new Date();
+      if (expDate < new Date(now.getFullYear(), now.getMonth(), 1)) {
+        document.getElementById('card-expiry-error').textContent = 'Tu tarjeta está vencida.';
+        document.getElementById('card-expiry-error').style.display = 'block';
+        document.getElementById('card-expiry').focus();
+        return;
+      }
       if (cvv.length < 3) { alert('Ingresa el código de seguridad (3 o 4 dígitos).'); return; }
 
+      const brand = detectCardBrand(number);
       const btn = document.getElementById('btn-pay-card');
       const spinner = document.getElementById('card-spinner');
       const lockIcon = document.getElementById('lock-icon');
@@ -355,7 +422,7 @@
       lockIcon.style.display = 'none';
       btnText.textContent = 'Procesando...';
 
-      processMockPayment('Tarjeta ****' + number.slice(-4));
+      processMockPayment((brand || 'Tarjeta') + ' ****' + number.slice(-4));
     }
 
     async function processMockPayment(methodName) {

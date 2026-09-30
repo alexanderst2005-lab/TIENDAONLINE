@@ -75,7 +75,16 @@ export default async function handler(req: any, res: any) {
       return res.status(200).json({ message: 'Order updated' });
     }
 
-    res.setHeader('Allow', ['GET', 'PUT']);
+    if (req.method === 'DELETE') {
+      const orderId = Number(req.query.id);
+      if (!orderId) return res.status(400).json({ error: 'Missing order ID' });
+      // Delete items first (FK), then the order
+      await db.delete(orderItems).where(eq(orderItems.orderId, orderId));
+      await db.delete(orders).where(eq(orders.id, orderId));
+      return res.status(200).json({ success: true });
+    }
+
+    res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   } catch (error: any) {
     console.error('Admin Orders Error:', error);

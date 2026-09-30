@@ -281,6 +281,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             <button class="btn-action edit" onclick="viewOrder('${o.id}')">
               <i data-feather="eye" style="width: 14px; height: 14px;"></i> Detalle
             </button>
+            <button class="btn-action delete" onclick="deleteOrder('${o.id}')" title="Eliminar pedido">
+              <i data-feather="trash-2" style="width: 14px; height: 14px;"></i>
+            </button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -289,6 +292,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         feather.replace();
       }
     } catch(err) { console.error(err); }
+  }
+
+  window.deleteOrder = async function(id) {
+    if (!confirm('¿Seguro que deseas eliminar este pedido? Esta acción no se puede deshacer.')) return;
+    try {
+      const res = await fetch(`/api/admin/orders?id=${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error('Error eliminando pedido');
+      alert('Pedido eliminado correctamente.');
+      loadOrders();
+    } catch(err) {
+      console.error(err);
+      alert('Error al eliminar el pedido.');
+    }
   }
 
   async function loadCategories() {

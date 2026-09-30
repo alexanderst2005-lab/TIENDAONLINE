@@ -164,10 +164,6 @@ export function buildShippingEmail(order: any, items: any[]): { subject: string;
           <td style="font-size:13px;color:#888;padding:4px 0;">N.° de Pedido</td>
           <td style="font-size:14px;font-weight:700;color:#111;text-align:right;">${order.orderNumber}</td>
         </tr>
-        <tr>
-          <td style="font-size:13px;color:#888;padding:4px 0;">Fecha de envío</td>
-          <td style="font-size:14px;color:#555;text-align:right;">${order.shippedAt ? new Date(order.shippedAt).toLocaleString('es-CO') : new Date().toLocaleString('es-CO')}</td>
-        </tr>
       </table>
     </div>
 

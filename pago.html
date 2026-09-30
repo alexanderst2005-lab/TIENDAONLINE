@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Pago Seguro — Monatela Boutique</title>
+  <title>Estado de Pago — Monatela Boutique</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
@@ -18,321 +18,106 @@
       padding: 0 20px;
     }
     .pay-header-logo { color: #fff; font-weight: 700; font-size: 16px; letter-spacing: 1px; }
-    .pay-header-secure { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.7); font-size: 12px; }
 
-    .container { padding: 24px 20px; max-width: 520px; margin: 0 auto; }
+    #status-screen { max-width: 520px; margin: 40px auto; padding: 20px; }
+    .status-card { background: #fff; border-radius: 16px; padding: 32px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); text-align: center; margin-bottom: 20px; }
+    
+    .status-icon { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .icon-success { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    .icon-failure { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .icon-pending { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    
+    .status-title { font-size: 24px; font-weight: 700; color: #111; margin-bottom: 6px; }
+    .status-subtitle { font-size: 14px; color: #666; margin-bottom: 28px; }
+    .status-amount { font-size: 40px; font-weight: 800; margin-bottom: 28px; }
+    
+    .color-success { color: #16a34a; }
+    .color-failure { color: #dc2626; }
+    .color-pending { color: #d97706; }
 
-    .order-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-    .order-label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-    .order-amount { font-size: 36px; font-weight: 700; color: #111; margin-bottom: 16px; }
-    .order-meta { display: flex; justify-content: space-between; font-size: 13px; color: #666; border-top: 1px solid #f0f0f0; padding-top: 14px; }
-    .order-meta span { font-weight: 600; color: #333; }
-
-    /* Wompi widget container */
-    .widget-wrapper {
-      background: #fff;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      margin-bottom: 20px;
-    }
-    .widget-title { font-size: 15px; font-weight: 600; margin-bottom: 16px; color: #111; }
-
-    /* Wompi button override styles */
-    #wompi-button-container {
-      display: flex;
-      justify-content: center;
-    }
-
-    /* Loading state */
-    .loading-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: #888;
-    }
-    .spinner { width: 36px; height: 36px; border: 3px solid #eee; border-top-color: #111; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Error state */
-    .error-state {
-      background: #fff5f5;
-      border: 1px solid #fecaca;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      color: #dc2626;
-    }
-
-    /* Back link */
-    .back-link {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: #666;
-      font-size: 13px;
-      text-decoration: none;
-      margin-bottom: 20px;
-      cursor: pointer;
-    }
-    .back-link:hover { color: #333; }
-
-    /* Wompi footer */
-    .wompi-footer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 24px 0;
-      color: #aaa;
-      font-size: 12px;
-    }
-    .wompi-footer-logo {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Success screen */
-    #success-screen { display: none; max-width: 520px; margin: 0 auto; padding: 20px; }
-    .success-card { background: #fff; border-radius: 16px; padding: 32px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); text-align: center; margin-bottom: 20px; }
-    .success-check { width: 64px; height: 64px; background: linear-gradient(135deg, #22c55e, #16a34a); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
-    .success-title { font-size: 24px; font-weight: 700; color: #111; margin-bottom: 6px; }
-    .success-subtitle { font-size: 14px; color: #666; margin-bottom: 28px; }
-    .success-amount { font-size: 40px; font-weight: 800; color: #16a34a; margin-bottom: 28px; }
     .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; }
     .info-row:last-child { border-bottom: none; }
     .info-label { color: #888; }
     .info-value { color: #111; font-weight: 500; text-align: right; max-width: 60%; }
+    
     .action-btn { width: 100%; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; margin-bottom: 10px; }
     .btn-primary-action { background: #111; color: #fff; }
     .btn-primary-action:hover { background: #333; }
     .btn-secondary-action { background: #f5f5f5; color: #333; }
     .btn-secondary-action:hover { background: #eee; }
   </style>
-  <script src="https://checkout.wompi.co/widget.js"></script>
 </head>
 <body>
 
   <div class="pay-header">
     <span class="pay-header-logo">Monatela Boutique</span>
-    <div class="pay-header-secure">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-      Pago seguro con Wompi
-    </div>
   </div>
 
-  <!-- SUCCESS SCREEN -->
-  <div id="success-screen">
-    <div class="success-card">
-      <div class="success-check">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <h1 class="success-title">¡Pago aprobado!</h1>
-      <p class="success-subtitle">Tu pedido ha sido confirmado</p>
-      <div class="success-amount" id="s-amount"></div>
+  <div id="status-screen">
+    <div class="status-card">
+      <div class="status-icon" id="s-icon"></div>
+      <h1 class="status-title" id="s-title">Procesando...</h1>
+      <p class="status-subtitle" id="s-subtitle">Revisando estado del pago</p>
+      <div class="status-amount" id="s-amount"></div>
 
       <div style="text-align:left; margin-top: 10px;">
         <div class="info-row"><span class="info-label">N.° de Pedido</span><span class="info-value" id="s-order"></span></div>
-        <div class="info-row"><span class="info-label">ID Transacción Wompi</span><span class="info-value" id="s-txid" style="font-size:11px;"></span></div>
-        <div class="info-row"><span class="info-label">Nombre</span><span class="info-value" id="s-name"></span></div>
-        <div class="info-row"><span class="info-label">Teléfono</span><span class="info-value" id="s-phone"></span></div>
-        <div class="info-row"><span class="info-label">Correo</span><span class="info-value" id="s-email"></span></div>
+        <div class="info-row"><span class="info-label">ID Transacción</span><span class="info-value" id="s-txid" style="font-size:11px;"></span></div>
       </div>
     </div>
 
-    <button class="action-btn btn-primary-action" onclick="window.print()">
-      🖨️ Descargar / Imprimir comprobante
+    <button id="btn-print" class="action-btn btn-primary-action" onclick="window.print()" style="display:none;">
+      🖨️ Descargar comprobante
     </button>
     <button class="action-btn btn-secondary-action" onclick="window.location.href='/'">
       ← Volver a la tienda
     </button>
   </div>
 
-  <!-- PAYMENT FLOW -->
-  <div id="payment-flow">
-    <div class="container">
-
-      <a class="back-link" onclick="history.back()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-        Volver
-      </a>
-
-      <!-- Order summary -->
-      <div class="order-card">
-        <div class="order-label">Total a pagar</div>
-        <div class="order-amount" id="display-amount">$0</div>
-        <div class="order-meta">
-          <div>Pedido <span id="display-order"></span></div>
-          <div>Monatela Boutique</div>
-        </div>
-      </div>
-
-      <!-- Widget Wompi -->
-      <div class="widget-wrapper">
-        <div class="widget-title">Selecciona tu método de pago</div>
-        <div id="wompi-loading" class="loading-state">
-          <div class="spinner"></div>
-          <p>Cargando pasarela de pago...</p>
-        </div>
-        <div id="wompi-error" class="error-state" style="display:none;">
-          <p>⚠️ No se pudo cargar la pasarela de pago.</p>
-          <p style="margin-top:8px;font-size:13px;color:#666;">Intenta recargar la página o contacta soporte.</p>
-        </div>
-        <form id="wompi-button-container"></form>
-      </div>
-
-      <!-- Wompi footer -->
-      <div class="wompi-footer">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        Pagos procesados de forma segura por
-        <strong style="color:#009ee3;">Wompi</strong>
-      </div>
-    </div>
-  </div>
-
   <script>
-    // Parse URL params
     const params = new URLSearchParams(window.location.search);
+    const status = params.get('status');
     const orderNumber = params.get('order') || '';
     const total = parseInt(params.get('total') || '0', 10);
+    const paymentId = params.get('payment_id') || '—';
 
     function formatCurrency(n) {
       return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(n);
     }
 
-    document.getElementById('display-amount').textContent = formatCurrency(total);
-    document.getElementById('display-order').textContent = orderNumber;
+    if (!status) {
+      window.location.href = '/';
+    } else {
+      document.getElementById('s-amount').textContent = formatCurrency(total);
+      document.getElementById('s-order').textContent = orderNumber;
+      document.getElementById('s-txid').textContent = paymentId;
 
-    async function initWompi() {
-      try {
-        // Get signature from backend
-        const res = await fetch('/api/wompi/signature', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ orderNumber, amountCOP: total })
-        });
+      const iconEl = document.getElementById('s-icon');
+      const titleEl = document.getElementById('s-title');
+      const subEl = document.getElementById('s-subtitle');
+      const amountEl = document.getElementById('s-amount');
 
-        if (!res.ok) throw new Error('Could not generate payment signature');
-
-        const { signature, amountInCents, publicKey, reference } = await res.json();
-
-        if (!publicKey) throw new Error('Public key not configured');
-
-        // Hide loading
-        document.getElementById('wompi-loading').style.display = 'none';
-
-        // Redirect URL after payment
-        const redirectUrl = `${window.location.origin}/pago.html?order=${orderNumber}&total=${total}&wompi=1`;
-
-        // Create standard button
-        const btnContainer = document.getElementById('wompi-button-container');
-        btnContainer.innerHTML = '<button type="button" id="start-wompi-btn" style="width: 100%; padding: 16px; background: #009ee3; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s;">Pagar con Wompi</button>';
-
-        document.getElementById('start-wompi-btn').addEventListener('click', () => {
-          try {
-            const checkout = new WidgetCheckout({
-              currency: 'COP',
-              amountInCents: amountInCents,
-              reference: reference,
-              publicKey: publicKey,
-              signature: { integrity: signature },
-              redirectUrl: redirectUrl
-            });
-            checkout.open(function(result) {
-              console.log('Wompi closed:', result);
-            });
-          } catch (e) {
-            console.error('Error starting wompi:', e);
-            alert('Hubo un problema al abrir Wompi. Por favor intenta recargar la página.');
-          }
-        });
-
-      } catch (err) {
-        console.error('[Wompi Init]', err);
-        document.getElementById('wompi-loading').style.display = 'none';
-        document.getElementById('wompi-error').style.display = 'block';
+      if (status === 'success' || status === 'approved') {
+        iconEl.className = 'status-icon icon-success';
+        iconEl.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        titleEl.textContent = '¡Pago aprobado!';
+        subEl.textContent = 'Tu pedido ha sido confirmado. Enviaremos los detalles por correo.';
+        amountEl.className = 'status-amount color-success';
+        document.getElementById('btn-print').style.display = 'block';
+      } else if (status === 'pending') {
+        iconEl.className = 'status-icon icon-pending';
+        iconEl.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+        titleEl.textContent = 'Pago pendiente';
+        subEl.textContent = 'Tu pago está siendo procesado. Te avisaremos cuando se confirme.';
+        amountEl.className = 'status-amount color-pending';
+      } else {
+        iconEl.className = 'status-icon icon-failure';
+        iconEl.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+        titleEl.textContent = 'Pago rechazado';
+        subEl.textContent = 'Hubo un problema con tu pago. Por favor intenta nuevamente.';
+        amountEl.className = 'status-amount color-failure';
       }
     }
-
-    // Check if returning from Wompi redirect
-    async function checkWompiReturn() {
-      const wompiReturn = params.get('wompi');
-      const transactionId = params.get('id'); // Wompi appends ?id=TRANSACTION_ID on redirect
-
-      if (wompiReturn === '1' && transactionId) {
-        // Show loading while we verify
-        document.getElementById('payment-flow').style.display = 'none';
-
-        try {
-          const pubKey = await getPublicKey();
-          const wompiEnv = pubKey.startsWith('pub_test_') ? 'sandbox.wompi.co' : 'production.wompi.co';
-          
-          // Verify transaction with Wompi API
-          const verifyRes = await fetch(`https://${wompiEnv}/v1/transactions/${transactionId}`, {
-            headers: { 'Authorization': `Bearer ${pubKey}` }
-          });
-
-          const verifyData = await verifyRes.json();
-          const tx = verifyData.data;
-
-          if (tx && tx.status === 'APPROVED') {
-            // Show success screen
-            document.getElementById('success-screen').style.display = 'block';
-            document.getElementById('s-amount').textContent = formatCurrency(total);
-            document.getElementById('s-order').textContent = orderNumber;
-            document.getElementById('s-txid').textContent = transactionId;
-
-            // Get order info from our backend for name/email/phone
-            try {
-              const orderRes = await fetch(`/api/checkout?order=${orderNumber}`);
-              if (orderRes.ok) {
-                const orderData = await orderRes.json();
-                document.getElementById('s-name').textContent = orderData.customerName || '—';
-                document.getElementById('s-phone').textContent = orderData.customerPhone || '—';
-                document.getElementById('s-email').textContent = orderData.customerEmail || '—';
-              }
-            } catch(_) {}
-
-          } else {
-            // Payment failed or pending
-            document.getElementById('payment-flow').style.display = 'block';
-            const status = tx?.status || 'DECLINED';
-            if (status === 'DECLINED' || status === 'ERROR') {
-              alert('⚠️ Tu pago fue rechazado. Por favor intenta de nuevo o elige otro método de pago.');
-            }
-            initWompi();
-          }
-
-        } catch (err) {
-          console.error('[Wompi Verify]', err);
-          document.getElementById('payment-flow').style.display = 'block';
-          initWompi();
-        }
-        return;
-      }
-
-      // Normal flow - initialize Wompi
-      initWompi();
-    }
-
-    async function getPublicKey() {
-      const res = await fetch('/api/wompi/signature', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderNumber, amountCOP: total })
-      });
-      const data = await res.json();
-      return data.publicKey;
-    }
-
-    // Start
-    checkWompiReturn();
   </script>
 </body>
 </html>

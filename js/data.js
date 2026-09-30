@@ -36,15 +36,27 @@ let PRODUCTS = [];
 window.PRODUCTS_READY = fetch("/api/products").then(r => r.json()).then(data => { PRODUCTS = data; }).catch(e => console.error("Error loading DB", e));
 
 // ============================================
-// CATEGORÍAS (MUJER Y CUIDADO)
+// CATEGORÍAS (DINÁMICAS)
 // ============================================
-const CATEGORIES = [
-  { id: 'todas',      label: 'Todos los productos', slug: 'todas' },
-  { id: 'blusas',     label: 'Blusas y Tops',       slug: 'blusas',     image: 'images/cat-camisetas.jpg' },
-  { id: 'vestidos',   label: 'Vestidos',            slug: 'vestidos',   image: 'images/cat-polo.jpg' },
-  { id: 'pantalones', label: 'Pantalones y Faldas', slug: 'pantalones', image: 'images/cat-pantaloneta.jpg' },
-  { id: 'cuidado',    label: 'Cuidado Corporal',    slug: 'cuidado',    image: 'images/cat-jeans.jpg' },
+let CATEGORIES = [
+  { id: 'todas', label: 'Todos los productos', slug: 'todas' }
 ];
+
+window.CATEGORIES_READY = fetch("/api/categories")
+  .then(r => r.json())
+  .then(data => {
+    if (data && data.length > 0) {
+      data.forEach(c => {
+        CATEGORIES.push({
+          id: c.slug,
+          label: c.name,
+          slug: c.slug,
+          image: 'images/cat-camisetas.jpg' // Default image for dynamically added categories
+        });
+      });
+    }
+  })
+  .catch(e => console.error("Error loading categories", e));
 
 // ============================================
 // PRECIOS MIN/MAX (para slider de filtros)

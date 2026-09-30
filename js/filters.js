@@ -375,7 +375,9 @@ function initFromURL() {
 // ============================================
 // INIT ALL
 // ============================================
-document.addEventListener('DOMContentLoaded', async () => { if(window.PRODUCTS_READY) await window.PRODUCTS_READY;
+document.addEventListener('DOMContentLoaded', async () => { 
+  if (window.PRODUCTS_READY) await window.PRODUCTS_READY;
+  if (window.CATEGORIES_READY) await window.CATEGORIES_READY;
   initFromURL();
   initFilterDrawer();
   initSort();

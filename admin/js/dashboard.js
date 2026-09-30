@@ -207,10 +207,119 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch(err) { console.error(err); }
   }
 
-  function loadCategories() {
-    const tbody = document.getElementById('categoriesTableBody');
-    if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Módulo en construcción (Próximamente)</td></tr>';
+  async function loadCategories() {
+    try {
+      const response = await fetch('/api/admin/categories', { headers: { 'Authorization': `Bearer ${token}` } });
+      const data = await response.json();
+      
+      // Update table
+      const tbody = document.getElementById('categoriesTableBody');
+      if (tbody) {
+        tbody.innerHTML = '';
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No hay categorías creadas</td></tr>';
+        } else {
+          data.forEach(c => {
+            const tr = document.createElement('tr');
+            const statusClass = c.isActive ? 'success' : 'error';
+            const statusText = c.isActive ? 'Activo' : 'Oculto';
+            tr.innerHTML = `
+              <td style="font-weight:500;">${c.name}</td>
+              <td style="color:var(--text-light);">${c.slug}</td>
+              <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+              <td>
+                <button class="btn-action edit" onclick="editCategory('${c.id}', '${c.name}', '${c.slug}', ${c.isActive})">
+                  <i data-feather="edit-2" style="width:14px;height:14px;"></i> Editar
+                </button>
+                <button class="btn-action delete" onclick="deleteCategory('${c.id}')">
+                  <i data-feather="trash-2" style="width:14px;height:14px;"></i> Eliminar
+                </button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+          if (typeof feather !== 'undefined') feather.replace();
+        }
+      }
+
+      // Update product select
+      const prodSelect = document.getElementById('prodCategory');
+      if (prodSelect) {
+        prodSelect.innerHTML = '';
+        data.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c.slug;
+          opt.textContent = c.name;
+          prodSelect.appendChild(opt);
+        });
+      }
+    } catch(err) {
+      console.error(err);
+    }
   }
+
+  // --- Category Modal Logic ---
+  window.openCategoryModal = function() {
+    document.getElementById('catModalTitle').textContent = 'Agregar Categoría';
+    document.getElementById('categoryForm').reset();
+    document.getElementById('catId').value = '';
+    document.getElementById('categoryModal').style.display = 'flex';
+  }
+
+  window.closeCategoryModal = function() {
+    document.getElementById('categoryModal').style.display = 'none';
+  }
+
+  window.editCategory = function(id, name, slug, isActive) {
+    document.getElementById('catModalTitle').textContent = 'Editar Categoría';
+    document.getElementById('catId').value = id;
+    document.getElementById('catName').value = name;
+    document.getElementById('catSlug').value = slug;
+    document.getElementById('catActive').checked = isActive;
+    document.getElementById('categoryModal').style.display = 'flex';
+  }
+
+  window.deleteCategory = async function(id) {
+    if (!confirm('¿Seguro que deseas eliminar esta categoría?')) return;
+    try {
+      await fetch(`/api/admin/categories?id=${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      loadCategories();
+    } catch (err) {
+      console.error(err);
+      alert('Error eliminando categoría');
+    }
+  }
+
+  document.getElementById('categoryForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('catId').value;
+    const name = document.getElementById('catName').value;
+    const slug = document.getElementById('catSlug').value;
+    const isActive = document.getElementById('catActive').checked;
+    
+    const method = id ? 'PUT' : 'POST';
+    const payload = { name, slug, isActive };
+    if (id) payload.id = parseInt(id, 10);
+    
+    try {
+      await fetch('/api/admin/categories', {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
+      closeCategoryModal();
+      loadCategories();
+    } catch (err) {
+      console.error(err);
+      alert('Error al guardar categoría');
+    }
+  });
 
   function loadCustomers() {
     const tbody = document.getElementById('customersTableBody');

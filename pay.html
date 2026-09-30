@@ -3,606 +3,326 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Mercado Pago - Pasarela de Pagos</title>
+  <title>Pago Seguro — Monatela Boutique</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    body { background: #fff; color: #333; min-height: 100vh; }
-    .mock-header { background: #009ee3; height: 50px; display: flex; align-items: center; justify-content: flex-end; padding: 0 15px; }
-    .close-btn { color: white; background: none; border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .container { padding: 20px; max-width: 500px; margin: 0 auto; }
+    body { background: #f7f7f7; color: #333; min-height: 100vh; }
 
-    .commerce-info { display: flex; justify-content: center; margin-bottom: 20px; }
-    .commerce-badge { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 20px; border: 1px solid #e0e0e0; font-size: 14px; color: #555; }
-    .ver-mas { text-align: center; font-size: 14px; font-weight: 600; text-decoration: underline; margin-bottom: 30px; cursor: pointer; }
+    .pay-header {
+      background: #111;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+    .pay-header-logo { color: #fff; font-weight: 700; font-size: 16px; letter-spacing: 1px; }
+    .pay-header-secure { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.7); font-size: 12px; }
 
-    .amount-section { margin-bottom: 30px; }
-    .amount-section h3 { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
-    .amount-box { border: 1px solid #b7f0c1; border-radius: 8px; padding: 20px; display: flex; align-items: center; gap: 15px; }
-    .check-icon { width: 28px; height: 28px; background: #4ade80; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .amount-val { font-size: 32px; font-weight: 700; }
+    .container { padding: 24px 20px; max-width: 520px; margin: 0 auto; }
 
-    .payment-options-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
-    .category-title { font-size: 17px; font-weight: 500; margin-bottom: 12px; color: #333; margin-top: 25px; }
+    .order-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .order-label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .order-amount { font-size: 36px; font-weight: 700; color: #111; margin-bottom: 16px; }
+    .order-meta { display: flex; justify-content: space-between; font-size: 13px; color: #666; border-top: 1px solid #f0f0f0; padding-top: 14px; }
+    .order-meta span { font-weight: 600; color: #333; }
 
-    .option-card { border: 1px solid #e0e0e0; border-radius: 12px; padding: 16px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; cursor: pointer; transition: all 0.2s; }
-    .option-card:hover { background: #f5f5f5; border-color: #bbb; }
-    .option-card.selected { border-color: #333; background: #fafafa; }
-    .option-left { display: flex; align-items: center; gap: 15px; }
-    .icon-box { width: 44px; height: 44px; background: #111; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
-    .icon-box img { width: 100%; height: 100%; object-fit: cover; }
-    .option-text h4 { font-size: 15px; font-weight: 500; color: #333; }
-    .option-text p { font-size: 13px; color: #777; margin-top: 3px; }
-    .option-right { display: flex; align-items: center; gap: 8px; }
-    .arrow-icon { opacity: 0.4; }
+    /* Wompi widget container */
+    .widget-wrapper {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      margin-bottom: 20px;
+    }
+    .widget-title { font-size: 15px; font-weight: 600; margin-bottom: 16px; color: #111; }
 
-    /* Card logos inline */
-    .card-logos { display: flex; gap: 6px; align-items: center; }
-    .card-logo { height: 22px; }
+    /* Wompi button override styles */
+    #wompi-button-container {
+      display: flex;
+      justify-content: center;
+    }
 
-    /* Card form */
-    #card-form-container { display: none; background: #f8f8f8; border: 1px solid #ddd; border-radius: 12px; padding: 20px; margin-top: -4px; margin-bottom: 12px; }
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 6px; }
-    .form-input { width: 100%; padding: 12px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; font-family: inherit; background: #fff; transition: border-color 0.2s; }
-    .form-input:focus { outline: none; border-color: #333; }
-    .form-row { display: flex; gap: 12px; }
-    .form-row .form-group { flex: 1; }
-    .btn-pay-card { width: 100%; padding: 14px; background: #111; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-    .btn-pay-card:hover { background: #333; }
-    .btn-pay-card:disabled { background: #999; cursor: not-allowed; }
-
-    /* Digital wallet form */
-    #nequi-form-container, #daviplata-form-container { display: none; background: #f8f8f8; border: 1px solid #ddd; border-radius: 12px; padding: 20px; margin-top: -4px; margin-bottom: 12px; }
-
-    /* Processing Overlay */
-    #processing-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.93); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 999; }
-    .spinner { width: 40px; height: 40px; border: 4px solid #e0e0e0; border-top-color: #333; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
-    .btn-spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
+    /* Loading state */
+    .loading-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888;
+    }
+    .spinner { width: 36px; height: 36px; border: 3px solid #eee; border-top-color: #111; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Success Screen */
-    #success-screen { display: none; text-align: center; padding: 60px 20px; }
-    .success-icon { width: 80px; height: 80px; background: #4ade80; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; }
+    /* Error state */
+    .error-state {
+      background: #fff5f5;
+      border: 1px solid #fecaca;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      color: #dc2626;
+    }
 
-    .wompi-footer { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 40px; padding-bottom: 40px; color: #777; font-size: 13px; font-weight: 500; }
+    /* Back link */
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #666;
+      font-size: 13px;
+      text-decoration: none;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+    .back-link:hover { color: #333; }
+
+    /* Wompi footer */
+    .wompi-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 24px 0;
+      color: #aaa;
+      font-size: 12px;
+    }
+    .wompi-footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Success screen */
+    #success-screen { display: none; max-width: 520px; margin: 0 auto; padding: 20px; }
+    .success-card { background: #fff; border-radius: 16px; padding: 32px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); text-align: center; margin-bottom: 20px; }
+    .success-check { width: 64px; height: 64px; background: linear-gradient(135deg, #22c55e, #16a34a); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .success-title { font-size: 24px; font-weight: 700; color: #111; margin-bottom: 6px; }
+    .success-subtitle { font-size: 14px; color: #666; margin-bottom: 28px; }
+    .success-amount { font-size: 40px; font-weight: 800; color: #16a34a; margin-bottom: 28px; }
+    .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: #888; }
+    .info-value { color: #111; font-weight: 500; text-align: right; max-width: 60%; }
+    .action-btn { width: 100%; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; margin-bottom: 10px; }
+    .btn-primary-action { background: #111; color: #fff; }
+    .btn-primary-action:hover { background: #333; }
+    .btn-secondary-action { background: #f5f5f5; color: #333; }
+    .btn-secondary-action:hover { background: #eee; }
   </style>
 </head>
 <body>
-  <div class="mock-header">
-    <button class="close-btn" onclick="window.location.href='/'" aria-label="Cerrar">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </button>
-  </div>
 
-  <div id="payment-flow" class="container">
-
-    <div class="commerce-info">
-      <div class="commerce-badge">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="#333"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-        Monatela Boutique <span style="opacity:0.4; margin-left:4px; font-size:11px;">▼</span>
-      </div>
+  <div class="pay-header">
+    <span class="pay-header-logo">Monatela Boutique</span>
+    <div class="pay-header-secure">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Pago seguro con Wompi
     </div>
-    <div class="ver-mas">Ver más</div>
-
-    <div class="amount-section">
-      <h3>¿Cuánto vas a pagar?</h3>
-      <div class="amount-box">
-        <div class="check-icon">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </div>
-        <div class="amount-val" id="display-amount">$0</div>
-      </div>
-    </div>
-
-    <h2 class="payment-options-title">¿Cómo quieres pagar?</h2>
-
-    <!-- TARJETAS -->
-    <h3 class="category-title">Tarjetas</h3>
-    <div class="option-card" id="card-option" onclick="toggleCardForm()">
-      <div class="option-left">
-        <div class="icon-box" style="background:#1a1f36;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        </div>
-        <div class="option-text"><h4>Tarjeta débito o crédito</h4></div>
-      </div>
-      <div class="option-right">
-        <div class="card-logos">
-          <!-- Mastercard SVG -->
-          <svg class="card-logo" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg"><rect width="38" height="24" rx="3" fill="#f5f5f5"/><circle cx="15" cy="12" r="7" fill="#eb001b"/><circle cx="23" cy="12" r="7" fill="#f79e1b"/><path d="M19 6.8a7 7 0 010 10.4A7 7 0 0119 6.8z" fill="#ff5f00"/></svg>
-          <!-- Visa SVG -->
-          <svg class="card-logo" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg"><rect width="38" height="24" rx="3" fill="#f5f5f5"/><text x="5" y="17" font-family="Arial" font-weight="900" font-size="13" fill="#1a1f71">VISA</text></svg>
-          <!-- Amex SVG -->
-          <svg class="card-logo" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg"><rect width="38" height="24" rx="3" fill="#2671b9"/><text x="5" y="17" font-family="Arial" font-weight="700" font-size="9" fill="white">AMEX</text></svg>
-        </div>
-        <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </div>
-    </div>
-
-    <!-- CARD FORM -->
-    <div id="card-form-container">
-      <div class="form-group">
-        <label>Número de tarjeta</label>
-        <div style="position:relative;">
-          <input type="text" class="form-input" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number" inputmode="numeric" style="padding-right:60px;">
-          <span id="card-brand-icon" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:#555;"></span>
-        </div>
-        <p id="card-number-error" style="color:#e53e3e;font-size:12px;margin-top:5px;display:none;">Número de tarjeta inválido</p>
-      </div>
-      <div class="form-group">
-        <label>Nombre del titular</label>
-        <input type="text" class="form-input" id="card-name" placeholder="Ingresa nombre y apellido del titular" autocomplete="cc-name">
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Fecha de vencimiento</label>
-          <input type="text" class="form-input" id="card-expiry" placeholder="MM/AA" maxlength="5" autocomplete="cc-exp">
-          <p id="card-expiry-error" style="color:#e53e3e;font-size:12px;margin-top:5px;display:none;">Fecha inválida</p>
-        </div>
-        <div class="form-group">
-          <label>Código de seguridad</label>
-          <input type="text" class="form-input" id="card-cvv" placeholder="Ingresa tu código de seguridad" maxlength="4" autocomplete="cc-csc" inputmode="numeric">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Documento del titular</label>
-        <div style="display: flex; gap: 10px;">
-          <select class="form-input" id="doc-type" style="width: 30%;">
-            <option value="CC">CC</option>
-            <option value="CE">CE</option>
-            <option value="NIT">NIT</option>
-            <option value="Pasaporte">Pasaporte</option>
-          </select>
-          <input type="text" class="form-input" id="doc-number" placeholder="Ingresa el número" style="width: 70%;" inputmode="numeric">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>¿En cuántas cuotas deseas pagar?</label>
-        <select class="form-input" id="card-installments">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="6">6</option>
-          <option value="12">12</option>
-          <option value="24">24</option>
-          <option value="36">36</option>
-        </select>
-      </div>
-      <button class="btn-pay-card" id="btn-pay-card" onclick="submitCardPayment()">
-        <span class="btn-spinner" id="card-spinner"></span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="lock-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0110 0v4"></path></svg>
-        <span id="card-btn-text">Pagar de forma segura</span>
-      </button>
-    </div>
-
-    <!-- BILLETERAS -->
-    <h3 class="category-title">Billeteras digitales</h3>
-
-    <div class="option-card" id="nequi-option" onclick="toggleNequiForm()">
-      <div class="option-left">
-        <div class="icon-box" style="background:#290038; padding:4px;">
-          <!-- Nequi N logo approximation -->
-          <svg width="28" height="28" viewBox="0 0 100 100">
-            <text x="50" y="75" font-family="Arial Black" font-size="80" font-weight="900" fill="white" text-anchor="middle">N</text>
-          </svg>
-        </div>
-        <div class="option-text"><h4>Nequi</h4></div>
-      </div>
-      <div class="option-right">
-        <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </div>
-    </div>
-
-    <!-- Nequi FORM -->
-    <div id="nequi-form-container">
-      <div class="form-group">
-        <label>Número de celular Nequi</label>
-        <input type="tel" class="form-input" id="nequi-phone" placeholder="Ej: 3001234567" maxlength="10" inputmode="numeric">
-      </div>
-      <p style="font-size:12px; color:#777; margin-bottom:16px;">Recibirás una notificación push en la app Nequi para aprobar el pago.</p>
-      <button class="btn-pay-card" style="background:#290038;" onclick="processMockPayment('Nequi')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"></path></svg>
-        Pagar con Nequi
-      </button>
-    </div>
-
-    <div class="option-card" id="daviplata-option" onclick="toggleDaviPlataForm()">
-      <div class="option-left">
-        <div class="icon-box" style="background:#ed1c24; padding:4px;">
-          <!-- DaviPlata red icon -->
-          <svg width="28" height="28" viewBox="0 0 100 100">
-            <text x="50" y="75" font-family="Arial" font-size="60" font-weight="900" fill="white" text-anchor="middle">D</text>
-          </svg>
-        </div>
-        <div class="option-text"><h4>DaviPlata</h4></div>
-      </div>
-      <div class="option-right">
-        <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </div>
-    </div>
-
-    <!-- DaviPlata FORM -->
-    <div id="daviplata-form-container">
-      <div class="form-group">
-        <label>Número de celular DaviPlata</label>
-        <input type="tel" class="form-input" id="daviplata-phone" placeholder="Ej: 3001234567" maxlength="10" inputmode="numeric">
-      </div>
-      <p style="font-size:12px; color:#777; margin-bottom:16px;">Recibirás un mensaje de texto para autorizar el cobro.</p>
-      <button class="btn-pay-card" style="background:#ed1c24;" onclick="processMockPayment('DaviPlata')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"></path></svg>
-        Pagar con DaviPlata
-      </button>
-    </div>
-
-
-
-    <!-- CRÉDITOS -->
-    <h3 class="category-title">Créditos</h3>
-    <div class="option-card" onclick="processMockPayment('Sistecrédito')">
-      <div class="option-left">
-        <div class="icon-box" style="background:#00c853; font-size:22px; font-weight:900; color:white; display:flex; align-items:center; justify-content:center;">
-          <span style="font-family:Arial Black; font-size:20px; font-weight:900; color:white;">S</span>
-        </div>
-        <div class="option-text">
-          <h4>Sistecrédito</h4>
-          <p>Compra ahora, paga después</p>
-        </div>
-      </div>
-      <div class="option-right">
-        <!-- Sistecrédito block letters -->
-        <span style="font-family:Arial Black; font-size:10px; background:#f0f0f0; padding:3px 6px; border-radius:4px; font-weight:900; color:#333;">SU<br>MAS</span>
-        <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </div>
-    </div>
-
-    <div class="wompi-footer">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="#009ee3"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
-      <div style="display: flex; flex-direction: column; align-items: flex-start;">
-        <span style="font-size: 11px; color: #777; line-height: 1;">PAGOS SEGUROS POR</span>
-        <strong style="font-size: 18px; letter-spacing: -0.5px; color: #009ee3; font-family: 'Arial', sans-serif; line-height: 1.1;">mercado pago</strong>
-      </div>
-    </div>
-  </div>
-
-  <!-- LOADING OVERLAY -->
-  <div id="processing-overlay">
-    <div class="spinner"></div>
-    <h2 style="font-size:20px; font-weight:600; color:#333;">Procesando pago...</h2>
-    <p style="color:#666; margin-top:10px;">No cierres ni recargues esta ventana</p>
   </div>
 
   <!-- SUCCESS SCREEN -->
-  <div id="success-screen" class="container">
-    <div style="text-align:center; padding: 40px 20px;">
-      
-      <!-- Green Check -->
-      <div style="width: 50px; height: 50px; background: #00905a; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+  <div id="success-screen">
+    <div class="success-card">
+      <div class="success-check">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
+      <h1 class="success-title">¡Pago aprobado!</h1>
+      <p class="success-subtitle">Tu pedido ha sido confirmado</p>
+      <div class="success-amount" id="s-amount"></div>
 
-      <!-- Title -->
-      <h1 style="font-size: 26px; font-weight: 700; color: #111; margin-bottom: 5px;">¡Pago aprobado!</h1>
-      
-      <!-- Amount -->
-      <div style="font-size: 34px; font-weight: 700; color: #00905a; margin-bottom: 5px;" id="success-amount"></div>
-      
-      <!-- Date -->
-      <div style="color: #666; font-size: 14px; margin-bottom: 25px;" id="success-date"></div>
-
-      <!-- Green Info Box -->
-      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; font-size: 14px; color: #333; margin-bottom: 30px; line-height: 1.5;">
-        Hemos registrado tu pago.<br>
-        Guarda estos datos por si necesitas consultar tu compra.<br><br>
-        También te enviamos un comprobante a<br>
-        <strong id="success-email-box"></strong>
+      <div style="text-align:left; margin-top: 10px;">
+        <div class="info-row"><span class="info-label">N.° de Pedido</span><span class="info-value" id="s-order"></span></div>
+        <div class="info-row"><span class="info-label">ID Transacción Wompi</span><span class="info-value" id="s-txid" style="font-size:11px;"></span></div>
+        <div class="info-row"><span class="info-label">Nombre</span><span class="info-value" id="s-name"></span></div>
+        <div class="info-row"><span class="info-label">Teléfono</span><span class="info-value" id="s-phone"></span></div>
+        <div class="info-row"><span class="info-label">Correo</span><span class="info-value" id="s-email"></span></div>
       </div>
+    </div>
 
-      <!-- Transaction Info -->
-      <div style="text-align: left; margin-bottom: 20px;">
-        <h3 style="font-size: 18px; color: #111; margin-bottom: 15px;">Información de la transacción</h3>
-        
-        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px; color: #555;">
-          <span>Transacción #</span>
-          <span id="success-ref" style="color: #111;"></span>
-        </div>
-        
-        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px; color: #555;">
-          <span>Referencia</span>
-          <span id="success-order" style="color: #111;"></span>
-        </div>
+    <button class="action-btn btn-primary-action" onclick="window.print()">
+      🖨️ Descargar / Imprimir comprobante
+    </button>
+    <button class="action-btn btn-secondary-action" onclick="window.location.href='/'">
+      ← Volver a la tienda
+    </button>
+  </div>
 
-        <div style="display: flex; justify-content: space-between; font-size: 14px; color: #555;">
-          <span>Método de pago</span>
-          <span id="success-method" style="color: #111; font-weight: 500; display: flex; align-items: center; gap: 6px;"></span>
-        </div>
-      </div>
+  <!-- PAYMENT FLOW -->
+  <div id="payment-flow">
+    <div class="container">
 
-      <hr style="border: 0; border-top: 1px solid #ddd; margin: 25px 0;">
+      <a class="back-link" onclick="history.back()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        Volver
+      </a>
 
-      <!-- Payer Info -->
-      <div style="text-align: left; margin-bottom: 40px;">
-        <h3 style="font-size: 18px; color: #111; margin-bottom: 15px;">Información del pagador</h3>
-        
-        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px; color: #555;">
-          <span>Nombre</span>
-          <span id="success-name" style="color: #111;"></span>
-        </div>
-        
-        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px; color: #555;">
-          <span>Teléfono</span>
-          <span id="success-phone" style="color: #111;"></span>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; font-size: 14px; color: #555;">
-          <span>Email</span>
-          <span id="success-email" style="color: #111;"></span>
+      <!-- Order summary -->
+      <div class="order-card">
+        <div class="order-label">Total a pagar</div>
+        <div class="order-amount" id="display-amount">$0</div>
+        <div class="order-meta">
+          <div>Pedido <span id="display-order"></span></div>
+          <div>Monatela Boutique</div>
         </div>
       </div>
 
-      <!-- Buttons -->
-      <button onclick="window.print()" style="background: transparent; color: #111; border: 1px solid #ccc; padding: 14px 20px; border-radius: 30px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 15px;">Descargar comprobante</button>
-      
-      <button onclick="window.location.href='index.html'" style="background: #111; color: white; border: none; padding: 14px 20px; border-radius: 30px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%;">Volver al comercio</button>
+      <!-- Widget Wompi -->
+      <div class="widget-wrapper">
+        <div class="widget-title">Selecciona tu método de pago</div>
+        <div id="wompi-loading" class="loading-state">
+          <div class="spinner"></div>
+          <p>Cargando pasarela de pago...</p>
+        </div>
+        <div id="wompi-error" class="error-state" style="display:none;">
+          <p>⚠️ No se pudo cargar la pasarela de pago.</p>
+          <p style="margin-top:8px;font-size:13px;color:#666;">Intenta recargar la página o contacta soporte.</p>
+        </div>
+        <div id="wompi-button-container"></div>
+      </div>
+
+      <!-- Wompi footer -->
+      <div class="wompi-footer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Pagos procesados de forma segura por
+        <strong style="color:#009ee3;">Wompi</strong>
+      </div>
     </div>
   </div>
 
   <script>
-    const formatCurrency = (val) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(val).replace(',00', '');
-    const urlParams = new URLSearchParams(window.location.search);
-    const orderNumber = urlParams.get('order');
-    const total = parseInt(urlParams.get('total') || '0', 10);
+    // Parse URL params
+    const params = new URLSearchParams(window.location.search);
+    const orderNumber = params.get('order') || '';
+    const total = parseInt(params.get('total') || '0', 10);
 
-    if (!orderNumber || !total) { alert('Error en los datos de pago.'); window.location.href = 'index.html'; }
+    function formatCurrency(n) {
+      return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(n);
+    }
+
     document.getElementById('display-amount').textContent = formatCurrency(total);
+    document.getElementById('display-order').textContent = orderNumber;
 
-    function toggleCardForm() {
-      const form = document.getElementById('card-form-container');
-      const opt = document.getElementById('card-option');
-      const isOpen = form.style.display === 'block';
-      closeAllForms();
-      if (!isOpen) { form.style.display = 'block'; opt.classList.add('selected'); }
-    }
-
-    function toggleNequiForm() {
-      const form = document.getElementById('nequi-form-container');
-      const opt = document.getElementById('nequi-option');
-      const isOpen = form.style.display === 'block';
-      closeAllForms();
-      if (!isOpen) { form.style.display = 'block'; opt.classList.add('selected'); }
-    }
-
-    function toggleDaviPlataForm() {
-      const form = document.getElementById('daviplata-form-container');
-      const opt = document.getElementById('daviplata-option');
-      const isOpen = form.style.display === 'block';
-      closeAllForms();
-      if (!isOpen) { form.style.display = 'block'; opt.classList.add('selected'); }
-    }
-
-    function closeAllForms() {
-      document.getElementById('card-form-container').style.display = 'none';
-      document.getElementById('nequi-form-container').style.display = 'none';
-      document.getElementById('daviplata-form-container').style.display = 'none';
-      document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-    }
-
-    // ---- Luhn Algorithm ----
-    function luhnCheck(num) {
-      let arr = (num + '').split('').reverse().map(Number);
-      let sum = arr.reduce((acc, val, idx) => {
-        if (idx % 2 === 1) { val *= 2; if (val > 9) val -= 9; }
-        return acc + val;
-      }, 0);
-      return sum % 10 === 0;
-    }
-
-    // ---- Detect card brand ----
-    function detectCardBrand(num) {
-      if (/^4/.test(num)) return 'VISA';
-      if (/^5[1-5]/.test(num) || /^2[2-7]/.test(num)) return 'Mastercard';
-      if (/^3[47]/.test(num)) return 'Amex';
-      if (/^6(?:011|5)/.test(num)) return 'Discover';
-      return '';
-    }
-
-    // Format card number with spaces
-    document.getElementById('card-number').addEventListener('input', function() {
-      let v = this.value.replace(/\D/g, '').substring(0, 16);
-      this.value = v.replace(/(.{4})/g, '$1 ').trim();
-      const brand = detectCardBrand(v);
-      const brandEl = document.getElementById('card-brand-icon');
-      const errEl = document.getElementById('card-number-error');
-      
-      const isComplete = v.length === 16;
-      const isValid = isComplete && luhnCheck(v);
-      
-      // Select colors based on validity
-      let brandColor = '#777';
-      let bgColor = '#eee';
-      if (isValid) {
-        brandColor = brand === 'VISA' ? '#1a1f71' : brand === 'Mastercard' ? '#eb001b' : brand === 'Amex' ? '#2671b9' : '#000';
-        bgColor = brand === 'VISA' ? '#f5f5f5' : brand === 'Mastercard' ? '#f5f5f5' : brand === 'Amex' ? '#2671b9' : '#f5f5f5';
-        if (brand === 'Amex') brandColor = 'white'; // White text on blue bg for Amex
-      }
-
-      // Generate SVG
-      if (brand) {
-        if (brand === 'VISA') {
-          if (isValid) {
-            brandEl.innerHTML = `<svg width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#fff"/><text x="4" y="17" font-family="Arial" font-style="italic" font-weight="900" font-size="13" fill="#1a1f71">VISA</text></svg>`;
-          } else {
-            brandEl.innerHTML = `<svg width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#444"/><text x="4" y="17" font-family="Arial" font-style="italic" font-weight="900" font-size="13" fill="#fff">VISA</text></svg>`;
-          }
-        } else if (brand === 'Mastercard') {
-          if (isValid) {
-            brandEl.innerHTML = `<svg width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#f5f5f5"/><circle cx="15" cy="12" r="7" fill="#eb001b"/><circle cx="23" cy="12" r="7" fill="#f79e1b"/><path d="M19 6.8a7 7 0 010 10.4A7 7 0 0119 6.8z" fill="#ff5f00"/></svg>`;
-          } else {
-            brandEl.innerHTML = `<svg width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#eee"/><circle cx="15" cy="12" r="7" fill="#999"/><circle cx="23" cy="12" r="7" fill="#bbb"/><path d="M19 6.8a7 7 0 010 10.4A7 7 0 0119 6.8z" fill="#aaa"/></svg>`;
-          }
-        } else {
-          brandEl.innerHTML = `<svg width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="${bgColor}"/><text x="4" y="17" font-family="Arial" font-style="italic" font-weight="900" font-size="11" fill="${brandColor}">${brand.toUpperCase()}</text></svg>`;
-        }
-      } else {
-        brandEl.innerHTML = '';
-      }
-
-      // Live validate
-      if (v.length > 0 && !isComplete) {
-        errEl.style.display = 'block';
-        errEl.textContent = 'El número de tu tarjeta está incompleto.';
-        this.style.borderColor = '#e53e3e';
-      } else if (isComplete && !isValid) {
-        errEl.style.display = 'block';
-        errEl.textContent = 'Número de tarjeta inválido. Revisa los dígitos.';
-        this.style.borderColor = '#e53e3e';
-      } else if (isValid) {
-        errEl.style.display = 'none';
-        this.style.borderColor = '#4ade80';
-      } else {
-        errEl.style.display = 'none';
-        this.style.borderColor = '';
-      }
-    });
-
-    // Format expiry
-    document.getElementById('card-expiry').addEventListener('input', function() {
-      let v = this.value.replace(/\D/g, '').substring(0, 4);
-      if (v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2);
-      this.value = v;
-      // Validate month
-      const errEl = document.getElementById('card-expiry-error');
-      if (v.length === 5) {
-        const [mm, yy] = v.split('/');
-        const month = parseInt(mm, 10);
-        const year = 2000 + parseInt(yy, 10);
-        const now = new Date();
-        const expDate = new Date(year, month - 1, 1);
-        const valid = month >= 1 && month <= 12 && expDate >= new Date(now.getFullYear(), now.getMonth(), 1);
-        errEl.style.display = valid ? 'none' : 'block';
-        this.style.borderColor = valid ? '#4ade80' : '#e53e3e';
-      } else {
-        errEl.style.display = 'none';
-        this.style.borderColor = '';
-      }
-    });
-
-    // Only numbers in cvv
-    document.getElementById('card-cvv').addEventListener('input', function() {
-      this.value = this.value.replace(/\D/g, '');
-    });
-
-    function submitCardPayment() {
-      const number = document.getElementById('card-number').value.replace(/\s/g, '');
-      const name = document.getElementById('card-name').value.trim();
-      const expiry = document.getElementById('card-expiry').value.trim();
-      const cvv = document.getElementById('card-cvv').value.trim();
-
-      // Length check
-      if (number.length < 15) {
-        document.getElementById('card-number-error').style.display = 'block';
-        document.getElementById('card-number-error').textContent = 'Ingresa un número de tarjeta completo.';
-        document.getElementById('card-number').focus();
-        return;
-      }
-      // Luhn check
-      if (!luhnCheck(number)) {
-        document.getElementById('card-number-error').style.display = 'block';
-        document.getElementById('card-number-error').textContent = 'Número de tarjeta inválido. Revisa los dígitos.';
-        document.getElementById('card-number').style.borderColor = '#e53e3e';
-        document.getElementById('card-number').focus();
-        return;
-      }
-      if (!name) { alert('Ingresa el nombre como aparece en la tarjeta.'); return; }
-      if (expiry.length < 5) { alert('Ingresa la fecha de vencimiento (MM/AA).'); return; }
-      // Expiry month/year check
-      const [mm, yy] = expiry.split('/');
-      const expDate = new Date(2000 + parseInt(yy, 10), parseInt(mm, 10) - 1, 1);
-      const now = new Date();
-      if (expDate < new Date(now.getFullYear(), now.getMonth(), 1)) {
-        document.getElementById('card-expiry-error').textContent = 'Tu tarjeta está vencida.';
-        document.getElementById('card-expiry-error').style.display = 'block';
-        document.getElementById('card-expiry').focus();
-        return;
-      }
-      if (cvv.length < 3) { alert('Ingresa el código de seguridad (3 o 4 dígitos).'); return; }
-
-      const docNumber = document.getElementById('doc-number').value.trim();
-      if (!docNumber) { alert('Ingresa el documento del titular.'); return; }
-
-      const brand = detectCardBrand(number);
-      const btn = document.getElementById('btn-pay-card');
-      const spinner = document.getElementById('card-spinner');
-      const lockIcon = document.getElementById('lock-icon');
-      const btnText = document.getElementById('card-btn-text');
-
-      btn.disabled = true;
-      spinner.style.display = 'block';
-      lockIcon.style.display = 'none';
-      btnText.textContent = 'Procesando...';
-
-      processMockPayment((brand || 'Tarjeta') + ' ****' + number.slice(-4));
-    }
-
-    async function processMockPayment(methodName) {
-      document.getElementById('processing-overlay').style.display = 'flex';
+    async function initWompi() {
       try {
-        const response = await fetch('/api/pay', {
+        // Get signature from backend
+        const res = await fetch('/api/wompi/signature', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ orderNumber })
+          body: JSON.stringify({ orderNumber, amountCOP: total })
         });
-        const resData = await response.json();
 
-        setTimeout(() => {
-          document.getElementById('processing-overlay').style.display = 'none';
-          if (response.ok) {
-            const dateStr = new Date().toLocaleString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
-            
-            document.getElementById('payment-flow').style.display = 'none';
-            document.getElementById('success-screen').style.display = 'block';
-            
-            document.getElementById('success-amount').textContent = formatCurrency(total);
-            document.getElementById('success-order').textContent = orderNumber;
-            
-            let methodHtml = methodName;
-            if (methodName.includes('****')) {
-              methodHtml = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="background: #333; color: white; padding: 2px; border-radius: 4px; margin-right: 4px;"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M2 10h20"></path></svg> ` + methodName;
-            }
-            document.getElementById('success-method').innerHTML = methodHtml;
-            
-            document.getElementById('success-date').textContent = dateStr.replace(',', ' –');
-            
-            // Random Wompi transaction ID logic like 12179094-...
-            const r1 = Math.floor(Math.random() * 90000000 + 10000000);
-            const r2 = Math.floor(Math.random() * 9000000000 + 1000000000);
-            const r3 = Math.floor(Math.random() * 90000 + 10000);
-            document.getElementById('success-ref').textContent = `${r1}-${r2}-${r3}`;
+        if (!res.ok) throw new Error('Could not generate payment signature');
 
-            const orderInfo = resData.order || {};
-            const userEmail = orderInfo.customerEmail || 'correo@ejemplo.com';
-            
-            document.getElementById('success-email-box').textContent = userEmail;
-            document.getElementById('success-email').textContent = userEmail;
-            document.getElementById('success-name').textContent = orderInfo.customerName || 'Cliente';
-            document.getElementById('success-phone').textContent = orderInfo.customerPhone || 'N/A';
-            
-          } else {
-            alert(resData.error || 'La transacción fue rechazada. Verifica los datos e intenta de nuevo.');
-            const btn = document.getElementById('btn-pay-card');
-            if (btn) {
-              btn.disabled = false;
-              document.getElementById('card-spinner').style.display = 'none';
-              document.getElementById('lock-icon').style.display = 'block';
-              document.getElementById('card-btn-text').textContent = 'Pagar de forma segura';
-            }
-          }
-        }, 1800);
+        const { signature, amountInCents, publicKey, reference } = await res.json();
+
+        if (!publicKey) throw new Error('Public key not configured');
+
+        // Hide loading
+        document.getElementById('wompi-loading').style.display = 'none';
+
+        // Redirect URL after payment
+        const redirectUrl = `${window.location.origin}/pay.html?order=${orderNumber}&total=${total}&wompi=1`;
+
+        // Create Wompi checkout script dynamically
+        const script = document.createElement('script');
+        script.src = 'https://checkout.wompi.co/widget.js';
+        script.setAttribute('data-render', 'button');
+        script.setAttribute('data-public-key', publicKey);
+        script.setAttribute('data-currency', 'COP');
+        script.setAttribute('data-amount-in-cents', String(amountInCents));
+        script.setAttribute('data-reference', reference);
+        script.setAttribute('data-signature:integrity', signature);
+        script.setAttribute('data-redirect-url', redirectUrl);
+        script.setAttribute('data-customer-data:email', '');
+        script.setAttribute('data-customer-data:full-name', '');
+        script.setAttribute('data-customer-data:phone-number', '');
+        script.setAttribute('data-customer-data:phone-number-prefix', '+57');
+
+        document.getElementById('wompi-button-container').appendChild(script);
+
       } catch (err) {
-        console.error(err);
-        document.getElementById('processing-overlay').style.display = 'none';
-        alert('Error de conexión con la pasarela.');
+        console.error('[Wompi Init]', err);
+        document.getElementById('wompi-loading').style.display = 'none';
+        document.getElementById('wompi-error').style.display = 'block';
       }
     }
+
+    // Check if returning from Wompi redirect
+    async function checkWompiReturn() {
+      const wompiReturn = params.get('wompi');
+      const transactionId = params.get('id'); // Wompi appends ?id=TRANSACTION_ID on redirect
+
+      if (wompiReturn === '1' && transactionId) {
+        // Show loading while we verify
+        document.getElementById('payment-flow').style.display = 'none';
+
+        try {
+          // Verify transaction with Wompi API
+          const verifyRes = await fetch(`https://production.wompi.co/v1/transactions/${transactionId}`, {
+            headers: { 'Authorization': `Bearer ${await getPublicKey()}` }
+          });
+
+          const verifyData = await verifyRes.json();
+          const tx = verifyData.data;
+
+          if (tx && tx.status === 'APPROVED') {
+            // Show success screen
+            document.getElementById('success-screen').style.display = 'block';
+            document.getElementById('s-amount').textContent = formatCurrency(total);
+            document.getElementById('s-order').textContent = orderNumber;
+            document.getElementById('s-txid').textContent = transactionId;
+
+            // Get order info from our backend for name/email/phone
+            try {
+              const orderRes = await fetch(`/api/checkout?order=${orderNumber}`);
+              if (orderRes.ok) {
+                const orderData = await orderRes.json();
+                document.getElementById('s-name').textContent = orderData.customerName || '—';
+                document.getElementById('s-phone').textContent = orderData.customerPhone || '—';
+                document.getElementById('s-email').textContent = orderData.customerEmail || '—';
+              }
+            } catch(_) {}
+
+          } else {
+            // Payment failed or pending
+            document.getElementById('payment-flow').style.display = 'block';
+            const status = tx?.status || 'DECLINED';
+            if (status === 'DECLINED' || status === 'ERROR') {
+              alert('⚠️ Tu pago fue rechazado. Por favor intenta de nuevo o elige otro método de pago.');
+            }
+            initWompi();
+          }
+
+        } catch (err) {
+          console.error('[Wompi Verify]', err);
+          document.getElementById('payment-flow').style.display = 'block';
+          initWompi();
+        }
+        return;
+      }
+
+      // Normal flow - initialize Wompi
+      initWompi();
+    }
+
+    async function getPublicKey() {
+      const res = await fetch('/api/wompi/signature', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderNumber, amountCOP: total })
+      });
+      const data = await res.json();
+      return data.publicKey;
+    }
+
+    // Start
+    checkWompiReturn();
   </script>
 </body>
 </html>

@@ -341,9 +341,82 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  window.viewOrder = function(id) {
-    alert('Función para ver detalles del pedido ' + id + ' en construcción.');
+  let currentOrderId = null;
+
+  window.viewOrder = async function(id) {
+    try {
+      const response = await fetch(`/api/admin/orders?id=${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
+      const order = await response.json();
+      if (!order || order.error) {
+        alert('Error cargando pedido');
+        return;
+      }
+      
+      currentOrderId = order.id;
+      document.getElementById('orderDetailTitle').textContent = `Pedido #${order.orderNumber}`;
+      document.getElementById('orderDetailDate').textContent = `Fecha: ${new Date(order.createdAt).toLocaleString()}`;
+      
+      document.getElementById('odName').textContent = order.customerName || 'N/A';
+      document.getElementById('odPhone').textContent = order.customerPhone || 'N/A';
+      document.getElementById('odEmail').textContent = order.customerEmail || 'N/A';
+      document.getElementById('odCity').textContent = order.customerCity || 'N/A';
+      document.getElementById('odAddress').textContent = order.customerAddress || 'N/A';
+      
+      document.getElementById('odStatusSelect').value = order.status;
+      
+      const tbody = document.getElementById('odItemsTable');
+      tbody.innerHTML = '';
+      if (order.items && order.items.length > 0) {
+        order.items.forEach(item => {
+          const tr = document.createElement('tr');
+          const variantText = [item.size, item.color].filter(Boolean).join(' - ') || 'N/A';
+          const imgSrc = item.image ? (item.image.startsWith('http') || item.image.startsWith('data:') ? item.image : `../${item.image}`) : '';
+          const imgHtml = imgSrc ? `<img src="${imgSrc}" width="40" style="border-radius:4px; vertical-align:middle; margin-right:10px;">` : '';
+          
+          tr.innerHTML = `
+            <td>${imgHtml}${item.productName}</td>
+            <td><span class="status-badge" style="background:#eee;color:#333;">${variantText}</span></td>
+            <td>${formatCurrency(item.price)}</td>
+            <td>${item.quantity}</td>
+            <td style="font-weight:600;">${formatCurrency(item.price * item.quantity)}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } else {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No hay productos en este pedido</td></tr>';
+      }
+      
+      document.getElementById('odSubtotal').textContent = formatCurrency(order.subtotal);
+      document.getElementById('odShipping').textContent = formatCurrency(order.shipping || 0);
+      document.getElementById('odTotal').textContent = formatCurrency(order.total);
+      
+      document.getElementById('orderDetailModal').style.display = 'flex';
+    } catch(err) {
+      console.error(err);
+      alert('Error al cargar detalle del pedido');
+    }
   }
+
+  window.closeOrderDetailModal = function() {
+    document.getElementById('orderDetailModal').style.display = 'none';
+  }
+
+  document.getElementById('odStatusBtn')?.addEventListener('click', async () => {
+    if (!currentOrderId) return;
+    const newStatus = document.getElementById('odStatusSelect').value;
+    try {
+      await fetch('/api/admin/orders', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ id: currentOrderId, status: newStatus })
+      });
+      alert('Estado guardado con éxito');
+      loadOrders(); // reload the background table
+    } catch (err) {
+      console.error(err);
+      alert('Error guardando estado');
+    }
+  });
 
   // --- Modal Logic ---
   const modal = document.getElementById('productModal');

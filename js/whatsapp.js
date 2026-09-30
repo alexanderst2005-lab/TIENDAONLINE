@@ -136,7 +136,7 @@ function initCheckoutForm() {
       // Clear cart because order is already created in DB
       Cart.clear();
 
-      if (customerData.payment_method === 'Pago en Línea' || customerData.payment_method === 'Sistecrédito') {
+      if (customerData.payment_method === 'Mercado Pago' || customerData.payment_method === 'Sistecrédito') {
         // Redirect to test payment gateway
         window.location.href = `pay.html?order=${data.orderNumber}&total=${subtotal}&method=${customerData.payment_method}`;
         return;
@@ -157,7 +157,7 @@ function initCheckoutForm() {
       alert('Hubo un problema generando tu pedido. Por favor intenta de nuevo.');
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.querySelector('#btn-text').textContent = (customerData.payment_method === 'Contra Entrega') ? 'ENVIAR PEDIDO POR WHATSAPP' : 'IR A PAGAR SEGURO';
+        submitBtn.querySelector('#btn-text').textContent = (customerData.payment_method === 'Contra Entrega' || customerData.payment_method === 'Transferencia') ? 'ENVIAR PEDIDO POR WHATSAPP' : 'IR A PAGAR SEGURO';
       }
     }
   });

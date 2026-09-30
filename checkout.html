@@ -189,10 +189,17 @@
                   </div>
                 </label>
                 <label style="display: flex; align-items: center; gap: 10px; padding: 15px; border: 1px solid var(--color-border); border-radius: 8px; cursor: pointer; transition: all 0.2s;">
-                  <input type="radio" name="payment_method" value="Pago en Línea" style="accent-color: var(--color-primary); transform: scale(1.2);">
+                  <input type="radio" name="payment_method" value="Transferencia" style="accent-color: var(--color-primary); transform: scale(1.2);">
                   <div style="display: flex; flex-direction: column;">
-                    <span style="font-weight: 600; color: var(--color-text);">Pago en Línea (Nequi, Bancolombia, Tarjeta)</span>
-                    <span style="font-size: 0.8rem; color: var(--color-text-secondary);">Recibirás un link de pago por WhatsApp para completar tu compra.</span>
+                    <span style="font-weight: 600; color: var(--color-text);">Pago por transferencia (WHATSAPP)</span>
+                    <span style="font-size: 0.8rem; color: var(--color-text-secondary);">Acuerda el pago por transferencia bancaria directa (Nequi, Daviplata, Bancolombia).</span>
+                  </div>
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; padding: 15px; border: 1px solid var(--color-border); border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                  <input type="radio" name="payment_method" value="Mercado Pago" style="accent-color: var(--color-primary); transform: scale(1.2);">
+                  <div style="display: flex; flex-direction: column;">
+                    <span style="font-weight: 600; color: var(--color-text);">TARJETAS / PSE / BANCOLOMBIA</span>
+                    <span style="font-size: 0.8rem; color: var(--color-text-secondary);">Pago 100% seguro procesado por MERCADO PAGO</span>
                   </div>
                 </label>
                 <label style="display: flex; align-items: center; gap: 10px; padding: 15px; border: 1px solid var(--color-border); border-radius: 8px; cursor: pointer; transition: all 0.2s;">
@@ -248,7 +255,7 @@
               
               radios.forEach(r => {
                 r.addEventListener('change', (e) => {
-                  if (e.target.value === 'Contra Entrega') {
+                  if (e.target.value === 'Contra Entrega' || e.target.value === 'Transferencia') {
                     btnText.textContent = 'ENVIAR PEDIDO POR WHATSAPP';
                     btnIcon.style.display = 'inline-block';
                     if (waInfoBox) waInfoBox.style.display = 'flex';

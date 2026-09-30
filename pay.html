@@ -234,22 +234,7 @@
       </button>
     </div>
 
-    <!-- EFECTIVO -->
-    <h3 class="category-title">Efectivo</h3>
-    <div class="option-card" onclick="processMockPayment('Corresponsales Bancolombia')">
-      <div class="option-left">
-        <div class="icon-box" style="background:#fdda24;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
-        </div>
-        <div class="option-text">
-          <h4>Corresponsales Bancolombia</h4>
-          <p>Paga en punto físico</p>
-        </div>
-      </div>
-      <div class="option-right">
-        <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </div>
-    </div>
+
 
     <!-- CRÉDITOS -->
     <h3 class="category-title">Créditos</h3>
@@ -423,13 +408,53 @@
       this.value = v.replace(/(.{4})/g, '$1 ').trim();
       const brand = detectCardBrand(v);
       const brandEl = document.getElementById('card-brand-icon');
-      brandEl.textContent = brand;
-      brandEl.style.color = brand === 'VISA' ? '#1a1f71' : brand === 'Mastercard' ? '#eb001b' : brand === 'Amex' ? '#2671b9' : '#555';
-      // Live validate once 16 digits
       const errEl = document.getElementById('card-number-error');
-      if (v.length === 16) {
-        errEl.style.display = luhnCheck(v) ? 'none' : 'block';
-        this.style.borderColor = luhnCheck(v) ? '#4ade80' : '#e53e3e';
+      
+      const isComplete = v.length === 16;
+      const isValid = isComplete && luhnCheck(v);
+      
+      // Select colors based on validity
+      let brandColor = '#777';
+      let bgColor = '#eee';
+      if (isValid) {
+        brandColor = brand === 'VISA' ? '#1a1f71' : brand === 'Mastercard' ? '#eb001b' : brand === 'Amex' ? '#2671b9' : '#000';
+        bgColor = brand === 'VISA' ? '#f5f5f5' : brand === 'Mastercard' ? '#f5f5f5' : brand === 'Amex' ? '#2671b9' : '#f5f5f5';
+        if (brand === 'Amex') brandColor = 'white'; // White text on blue bg for Amex
+      }
+
+      // Generate SVG
+      if (brand) {
+        if (brand === 'VISA') {
+          if (isValid) {
+            brandEl.innerHTML = `<svg width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#fff"/><text x="4" y="17" font-family="Arial" font-style="italic" font-weight="900" font-size="13" fill="#1a1f71">VISA</text></svg>`;
+          } else {
+            brandEl.innerHTML = `<svg width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#444"/><text x="4" y="17" font-family="Arial" font-style="italic" font-weight="900" font-size="13" fill="#fff">VISA</text></svg>`;
+          }
+        } else if (brand === 'Mastercard') {
+          if (isValid) {
+            brandEl.innerHTML = `<svg width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#f5f5f5"/><circle cx="15" cy="12" r="7" fill="#eb001b"/><circle cx="23" cy="12" r="7" fill="#f79e1b"/><path d="M19 6.8a7 7 0 010 10.4A7 7 0 0119 6.8z" fill="#ff5f00"/></svg>`;
+          } else {
+            brandEl.innerHTML = `<svg width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="#eee"/><circle cx="15" cy="12" r="7" fill="#999"/><circle cx="23" cy="12" r="7" fill="#bbb"/><path d="M19 6.8a7 7 0 010 10.4A7 7 0 0119 6.8z" fill="#aaa"/></svg>`;
+          }
+        } else {
+          brandEl.innerHTML = `<svg width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="3" fill="${bgColor}"/><text x="4" y="17" font-family="Arial" font-style="italic" font-weight="900" font-size="11" fill="${brandColor}">${brand.toUpperCase()}</text></svg>`;
+        }
+      } else {
+        brandEl.innerHTML = '';
+      }
+
+      // Live validate
+      if (v.length > 0 && !isComplete) {
+        errEl.style.display = 'block';
+        errEl.textContent = 'El número de tu tarjeta está incompleto.';
+        this.style.borderColor = '#e53e3e';
+      } else if (isComplete && !isValid) {
+        errEl.style.display = 'block';
+        errEl.textContent = 'Número de tarjeta inválido. Revisa los dígitos.';
+        this.style.borderColor = '#e53e3e';
+      } else if (isValid) {
+        errEl.style.display = 'none';
+        this.style.borderColor = '#4ade80';
       } else {
         errEl.style.display = 'none';
         this.style.borderColor = '';

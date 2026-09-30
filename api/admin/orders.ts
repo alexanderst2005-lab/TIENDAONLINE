@@ -1,6 +1,6 @@
 import { db } from '../../db';
 import { orders, orderItems } from '../../db/schema';
-import { verifyAuth } from '../utils/auth';
+import { verifyAuth } from '../_utils/auth';
 import { desc, eq } from 'drizzle-orm';
 import { 
   sendEmail, 
@@ -9,7 +9,7 @@ import {
   buildPreparationEmail, 
   buildDeliveredEmail, 
   buildCancelledEmail 
-} from '../utils/email';
+} from '../_utils/email';
 
 export default async function handler(req: any, res: any) {
   try {

@@ -1,7 +1,7 @@
 import { db } from '../db';
 import { orders, orderItems } from '../db/schema';
 import { eq } from 'drizzle-orm';
-import { sendEmail, buildConfirmationEmail } from './utils/email';
+import { sendEmail, buildConfirmationEmail } from './_utils/email';
 
 export default async function handler(req: any, res: any) {
   if (req.method === 'POST') {

@@ -12,7 +12,7 @@ import { eq } from 'drizzle-orm';
 import { 
   sendEmail, 
   buildConfirmationEmail
-} from '../utils/email';
+} from '../_utils/email';
 
 function verifyWompiWebhook(body, signature) {
   const eventsSecret = process.env.WOMPI_EVENTS_SECRET;

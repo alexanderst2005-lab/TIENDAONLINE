@@ -1,6 +1,6 @@
 import { db } from '../../db';
 import { orders } from '../../db/schema';
-import { verifyAuth } from '../utils/auth';
+import { verifyAuth } from '../_utils/auth';
 import { gte, and, not, eq } from 'drizzle-orm';
 
 export default async function handler(req: any, res: any) {

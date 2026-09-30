@@ -121,13 +121,19 @@ function initCheckoutForm() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Error creando pedido');
 
+      // Clear cart because order is already created in DB
+      Cart.clear();
+
+      if (customerData.payment_method === 'Pago en Línea') {
+        // Redirect to test payment gateway
+        window.location.href = `pay.html?order=${data.orderNumber}&total=${subtotal}`;
+        return;
+      }
+
       // Add order number to notes for whatsapp
       customerData.notes = (customerData.notes ? customerData.notes + '\n\n' : '') + 'Número de pedido web: ' + data.orderNumber;
 
       sendOrderToWhatsApp(customerData);
-      
-      // Clear cart
-      Cart.clear();
       
       // Optionally redirect to a thank you page, but WhatsApp opens in a new tab anyway
       setTimeout(() => {

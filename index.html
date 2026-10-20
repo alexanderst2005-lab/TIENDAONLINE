@@ -9,10 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="preload" as="image" href="images/hero-f1.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="images/hero-m1.jpg" media="(max-width: 768px)" fetchpriority="high">
+  <link rel="preload" as="image" href="images/hero-f1.jpg" media="(min-width: 769px)" fetchpriority="high">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive-images.css">
 </head>
 <body>
 
@@ -102,19 +104,25 @@
 
     <!-- Slide 1 -->
     <div class="hero-slide active" role="group" aria-label="Slide 1 de 3">
-      <img class="slide-image" src="images/hero-f1.jpg" alt="La Vitrina Textil Colección Femenina" loading="eager" fetchpriority="high" decoding="async">
+      <picture>
+        <source media="(max-width: 768px)" srcset="images/hero-m1.jpg">
+        <img class="slide-image" src="images/hero-f1.jpg" alt="La Vitrina Textil Colección Femenina" loading="eager" fetchpriority="high" decoding="async">
+      </picture>
       <div class="slide-overlay"></div>
       <div class="slide-content">
         <p class="slide-overline">LA VITRINA TEXTIL</p>
         <h1 class="slide-title">Moda femenina<br>con esencia.</h1>
-        <p class="slide-subtitle">Prendas diseñadas para resaltar tu belleza y productos para cuidar de ti.</p>
+        <p class="slide-subtitle">Prendas diseñadas para resaltar tu belleza y tu estilo.</p>
         <a href="catalogo.html" class="btn btn-white slide-btn">Explorar Colección</a>
       </div>
     </div>
 
     <!-- Slide 2 -->
     <div class="hero-slide" role="group" aria-label="Slide 2 de 3">
-      <img class="slide-image" src="images/hero-f2.jpg" alt="Nueva Colección Ropa Femenina" loading="lazy" decoding="async">
+      <picture>
+        <source media="(max-width: 768px)" srcset="images/hero-m2.jpg">
+        <img class="slide-image" src="images/hero-f2.jpg" alt="Nueva Colección Ropa Femenina" loading="lazy" decoding="async">
+      </picture>
       <div class="slide-overlay"></div>
       <div class="slide-content">
         <p class="slide-overline">Ropa Femenina</p>
@@ -126,7 +134,10 @@
 
     <!-- Slide 3 -->
     <div class="hero-slide" role="group" aria-label="Slide 3 de 3">
-      <img class="slide-image" src="images/hero-f3.jpg" alt="Colección Destacada Femenina" loading="lazy" decoding="async">
+      <picture>
+        <source media="(max-width: 768px)" srcset="images/hero-m3.jpg">
+        <img class="slide-image" src="images/hero-f3.jpg" alt="Colección Destacada Femenina" loading="lazy" decoding="async">
+      </picture>
       <div class="slide-overlay"></div>
       <div class="slide-content">
         <p class="slide-overline">Colección Destacada</p>
@@ -234,7 +245,10 @@
      BANNER EDITORIAL
      ============================================ -->
 <section class="banner-editorial" aria-label="Banner Editorial">
-  <img class="banner-bg" src="images/banner-f.jpg" alt="Tu estilo. Tu fuerza." loading="lazy">
+  <picture>
+    <source media="(max-width: 768px)" srcset="images/banner-m.jpg">
+    <img class="banner-bg" src="images/banner-f.jpg" alt="Tu estilo. Tu fuerza." loading="lazy">
+  </picture>
   <div class="banner-overlay"></div>
   <div class="banner-content">
     <h2 class="banner-title" data-reveal>Tu esencia.<br>Tu estilo.</h2>

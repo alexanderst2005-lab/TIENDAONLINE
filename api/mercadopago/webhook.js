@@ -41,7 +41,7 @@ export default async function handler(req, res) {
             try {
               const itemsList = typeof order.items === 'string' ? JSON.parse(order.items) : order.items;
               const html = buildConfirmationEmail(order, itemsList);
-              await sendEmail(order.customerEmail, 'Confirmación de Pago - Monatela Boutique', html);
+              await sendEmail(order.customerEmail, 'Confirmación de Pago - La Vitrina Textil', html);
             } catch (e) {
               console.error('Error enviando correo de MP:', e);
             }

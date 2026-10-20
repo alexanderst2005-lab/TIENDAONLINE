@@ -1,5 +1,5 @@
 /* ============================================
-   MONATELA BOUTIQUE — DATA.JS
+   LA VITRINA TEXTIL — DATA.JS
    Configuración Central y Base de Datos de Productos
    Moda Femenina y Cuidado Corporal
    ============================================ */
@@ -14,7 +14,7 @@ const CONFIG = {
   whatsappNumber: '573229148593',
 
   // Nombre de la tienda
-  storeName: 'Monatela Boutique',
+  storeName: 'La Vitrina Textil',
 
   // Moneda
   currency: 'COP',
@@ -51,7 +51,7 @@ window.CATEGORIES_READY = fetch("/api/categories")
           id: c.slug,
           label: c.name,
           slug: c.slug,
-          image: 'images/cat-camisetas.jpg' // Default image for dynamically added categories
+          image: 'images/cat-blusas.jpg' // Default image for dynamically added categories
         });
       });
     }

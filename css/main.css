@@ -10,15 +10,15 @@
    ============================================ */
 :root {
   /* Colors */
-  --color-black:         #3f4c44;
-  --color-charcoal:      #4b5a50;
-  --color-bg-warm:       #fbfaf8;
+  --color-black:         #A36558;
+  --color-charcoal:      #8a5247;
+  --color-bg-warm:       #fbf6f3;
   --color-bg-white:      #FFFFFF;
-  --color-text-primary:  #3f4c44;
-  --color-text-secondary:#7a8a81;
-  --color-accent:        #eda78e;
-  --color-border:        #e3e6e4;
-  --color-border-light:  #f0f2f1;
+  --color-text-primary:  #4a2f29;
+  --color-text-secondary:#8c6f66;
+  --color-accent:        #d9a08f;
+  --color-border:        #eadad4;
+  --color-border-light:  #f4ebe7;
 
   /* Typography */
   --font-serif:    'Cormorant Garamond', Georgia, serif;

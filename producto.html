@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">Producto — Monatela Boutique</title>
-  <meta name="description" id="page-desc" content="Detalle del producto en Monatela Boutique.">
+  <title id="page-title">Producto — La Vitrina Textil</title>
+  <meta name="description" id="page-desc" content="Detalle del producto en La Vitrina Textil.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -20,8 +20,8 @@
   <div class="scroll-progress" id="scroll-progress"></div>
   <div class="header-inner">
     <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
-    <a href="index.html" class="site-logo" aria-label="Monatela Boutique - Inicio">
-      <img src="images/logo-lavitrina.png" alt="Monatela Boutique" style="height: 60px; width: 60px; border-radius: 50%; object-fit: cover;">
+    <a href="index.html" class="site-logo" aria-label="La Vitrina Textil - Inicio">
+      <img src="images/logo-lavitrina.png" alt="La Vitrina Textil" style="height: 60px; width: 60px; border-radius: 50%; object-fit: cover;">
     </a>
     <nav class="site-nav">
       <a href="index.html" class="nav-link">Inicio</a>
@@ -117,7 +117,7 @@
 
           <!-- Action Buttons -->
           <div class="product-actions" style="display: grid !important; grid-template-columns: 1fr 54px !important; gap: 12px !important; margin-top: 2rem !important; align-items: stretch !important;">
-            <button class="btn" id="add-to-cart-btn" style="height: 54px; background: #000; color: #fff; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem; font-weight: 600; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 100%; transition: background 0.2s ease;">
+            <button class="btn" id="add-to-cart-btn" style="height: 54px; background: #A36558; color: #fff; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem; font-weight: 600; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 100%; transition: background 0.2s ease;">
               Añadir a la bolsa
             </button>
             <button class="btn-heart" id="product-wishlist-btn" aria-label="Añadir a favoritos">
@@ -151,7 +151,7 @@
     <div class="footer-main">
 
       <div class="footer-brand">
-        <a href="index.html" class="footer-logo"><img src="images/logo-lavitrina.png" alt="Monatela Boutique" style="height: 80px; width: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem;"></a>
+        <a href="index.html" class="footer-logo"><img src="images/logo-lavitrina.png" alt="La Vitrina Textil" style="height: 80px; width: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem;"></a>
         <p class="footer-tagline">Moda femenina con esencia para vestirte todos los días.</p>
         <div class="footer-socials">
           <a href="https://www.instagram.com/lavitrinatextil?obrf=bG4ycXB6Y3p3cmFy" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
@@ -199,7 +199,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copyright">© 2026 Monatela Boutique. Todos los derechos reservados.</p>
+      <p class="footer-copyright">© 2026 La Vitrina Textil. Todos los derechos reservados.</p>
     </div>
   </div>
 </footer>
@@ -259,10 +259,10 @@
     }
 
     currentProduct = p;
-    document.title = `${p.name} — Monatela Boutique`;
+    document.title = `${p.name} — La Vitrina Textil`;
 
     // WA Button setup
-    const waMessage = `Hola, estoy interesado en este producto de Monatela Boutique: *${p.name}*. Quisiera consultar disponibilidad y tallas.`;
+    const waMessage = `Hola, estoy interesado en este producto de La Vitrina Textil: *${p.name}*. Quisiera consultar disponibilidad y tallas.`;
     const waBtn = document.getElementById('wa-consult-btn');
     if (waBtn) waBtn.href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(waMessage)}`;
 
@@ -324,7 +324,7 @@
 
   function renderProduct(p) {
     document.getElementById('product-content').style.display = 'block';
-    document.getElementById('page-title').textContent = `${p.name} — Monatela Boutique`;
+    document.getElementById('page-title').textContent = `${p.name} — La Vitrina Textil`;
     document.getElementById('page-desc').content = p.description;
     document.getElementById('product-breadcrumb-name').textContent = p.name;
     const pcLabel = document.getElementById('product-category-label');
@@ -465,7 +465,7 @@
     <button onclick="document.getElementById('size-guide-modal').style.display='none'" aria-label="Cerrar" style="position:absolute; right:1.5rem; top:1.5rem; background:none; border:none; font-size:1.75rem; line-height:1; cursor:pointer; color:#777; transition:color 0.2s;" onmouseover="this.style.color='#000'" onmouseout="this.style.color='#777'">&times;</button>
     
     <div style="text-align:center; margin-bottom:2rem;">
-      <p style="font-family:var(--font-sans); font-size:0.7rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#999; margin-bottom:0.4rem;">Monatela Boutique</p>
+      <p style="font-family:var(--font-sans); font-size:0.7rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#999; margin-bottom:0.4rem;">La Vitrina Textil</p>
       <h2 style="font-family:var(--font-serif); font-size:2rem; font-weight:400; color:#111; margin:0 0 0.5rem 0;">Guía de Tallas para Mujer</h2>
       <p style="font-family:var(--font-sans); font-size:0.85rem; color:#666; margin:0;">Medidas corporales de referencia expresadas en centímetros (cm).</p>
     </div>
